@@ -1,0 +1,13 @@
+scHLens_be/job
+scHLens_be/job_attachment
+scHLens_be/sample
+scHLens_be/sample_job
+scHLens_be/globalAttachment
+scHLens_be/.vscode
+scHLens_be/.idea
+scHLens_be/__pycache__
+scHLens_be/lib/__pycache__
+scHLens_fe/.vscode
+scHLens_fe/node_modules
+scHLens_fe/.history
+scHLens_fe/dist

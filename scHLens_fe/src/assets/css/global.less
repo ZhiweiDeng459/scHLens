@@ -1,0 +1,36 @@
+body {
+    margin: 0;
+}
+
+header {
+    background-color: rgb(220, 220, 220);
+    padding: 2px 0 2px 5px;
+    user-select: none;
+}
+
+
+circle.chosen,
+circle.possible {
+    fill-opacity: 1;
+    stroke: black;
+}
+
+.lasso path {
+    fill-opacity: 0.6;
+    stroke: rgb(64, 169, 255);
+    stroke-width: 2px;
+}
+
+.lasso .drawn {
+    fill-opacity: 0.05;
+}
+
+.lasso .loop_close {
+    fill: none;
+    stroke-dasharray: 4, 4;
+}
+
+.lasso .origin {
+    fill: #3399ff;
+    fill-opacity: 0.5;
+}
