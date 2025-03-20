@@ -13,7 +13,7 @@
     <p class="body">
       Figure 1 illustrates the positions of these views and the controller
       within the system: Areas A-E correspond to <b>Cell Projection View</b>,
-      <b>Gene Projection View</b>, <b>Differential Gene Expression View</b>,
+      <b>Gene Projection View</b>, <b>Distribution of Gene Expression View</b>,
       <b>Marker Gene View</b> and <b>Hierarchy Navigation</b>. Area F is
       <b>controller bar</b>. The following sections will provide a detailed
       introduction to these components and their associated interactions.
@@ -80,13 +80,13 @@
       Views - Interactions - Switch Current Genes".
     </p>
 
-    <h2 id="t_DiffView">Differential Gene Expression View</h2>
+    <h2 id="t_DiffView">Distribution of Gene Expression View</h2>
     <div class="image-container">
       <img class="image" src="tutorials/img/diff_gene.jpg" />
-      <b class="image-title">Figure 4. The Differential Gene Expression View</b>
+      <b class="image-title">Figure 4. The Distribution of Gene Expression View</b>
     </div>
     <p class="body">
-      The Differential Gene Expression View uses a violin plot to indicate the
+      The Distribution of Gene Expression View uses a violin plot to indicate the
       expression of specific gene(s) in each group (as shown in Figure 8), aiming
       to compare gene expression differences across groups. The violin plot uses
       kernel density plot to show the distribution of the gene's expression
@@ -244,7 +244,7 @@
 
     <h2 id="t_SwitchGenes">Switch Current Genes</h2>
     <p class="body">
-      Gene Projection View and Differential Gene Expression View display
+      Gene Projection View and Distribution of Gene Expression View display
       information about one or several specific genes.
       <b>These genes are shown in the Controller Bar and can be modified.</b>
     </p>

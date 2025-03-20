@@ -2,7 +2,7 @@
         <div class="gene-expression-container">
             <div class="view-header">
                 <div>
-                    <a id="gene-expression-title">Differential Gene Expression View</a>
+                    <a id="gene-expression-title">Distribution of Gene Expression View</a>
                     <!-- <el-button type="primary" icon="el-icon-download" style="padding:2px;margin:0px 5px" @click="save"></el-button>
                     <el-tooltip content="Display the difference of gene-expression among clusters" placement="top">
                         <i class="el-icon-question"></i>

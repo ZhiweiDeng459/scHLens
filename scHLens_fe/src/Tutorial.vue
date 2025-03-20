@@ -39,7 +39,7 @@
                             
                             <el-menu-item index="/tutorial/analysiswithViews/1/1" @click="scrollTo('t_CellPrjectionView')">Cell Projection View</el-menu-item>
                             <el-menu-item index="/tutorial/analysiswithViews/1/2" @click="scrollTo('t_GeneProjectionView')">Gene Projection View</el-menu-item>
-                            <el-menu-item index="/tutorial/analysiswithViews/1/3" @click="scrollTo('t_DiffView')">Differential Gene Expression View</el-menu-item>
+                            <el-menu-item index="/tutorial/analysiswithViews/1/3" @click="scrollTo('t_DiffView')">Distribution of Gene Expression View</el-menu-item>
                             <el-menu-item index="/tutorial/analysiswithViews/1/4" @click="scrollTo('t_MarkerGeneView')">Marker Gene View</el-menu-item>
                             <el-menu-item index="/tutorial/analysiswithViews/1/5" @click="scrollTo('t_HierarchyNavigation1')">Hierarchy Navigation</el-menu-item>
                             <el-menu-item index="/tutorial/analysiswithViews/1/6" @click="scrollTo('t_Controller')">Controller Bar</el-menu-item>

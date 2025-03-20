@@ -86,15 +86,15 @@
     <p class="body">
       If you want to know the correspondence of cells across different nodes,
       you should choose the "Discover Correspondence" option in the context menu
-      of the Cell Projection View (as shown in Figure 5). The Correspondence
+      of the Cell Projection View (as shown in Figure 3). The Correspondence
       Explorer will pop up after you click this option.
     </p>
     <div class="image-container">
       <img class="image" src="tutorials/img/Correspondence_discover.jpg" />
-      <b class="image-title">Figure 5. Discover Correspondence</b>
+      <b class="image-title">Figure 3. Discover Correspondence</b>
     </div>
     <p class="body">
-      In the Correspondence Explorer(Shown as Figure 6), the left side displays
+      In the Correspondence Explorer(Shown as Figure 4), the left side displays
       a tree identical to the Hierarchy Navigation, while the right side
       provides an overview of the correspondence. You can left-click to select
       an ancestor node of the current node on the tree. The overview on the
@@ -120,9 +120,9 @@
       ancestor nodes (usually the Global Plot). In the Hierarchy Navigation, we
       can left-click to select local nodes as merge-data providers for the merge
       and their ancestor nodes as merge-data receivers. The provider is
-      highlighted with a green border (Figure 7(B)), offering annotations and
+      highlighted with a green border (Figure 5(B)), offering annotations and
       good visual patterns; the receiver is highlighted with a blue border
-      (Figure 7(A)), merging the provided data into itself.
+      (Figure 5(A)), merging the provided data into itself.
     </p>
     <div class="image-container">
       <img class="image" src="tutorials/img/merge.jpg" />
@@ -131,7 +131,7 @@
     <p class="body">
       After selecting the nodes, we use the "Merge" option in the context menu
       of the Hierarchical Navigation and set the merge options in the pop-up
-      dialog (shown in Figure 8). The "Merge with Projection" option determines
+      dialog (shown in Figure 6). The "Merge with Projection" option determines
       whether to include the good visual patterns from the Local Plot into the
       merged data. The "Merge with Labels (Annotations)" option determines
       whether to include the annotations from the Local Plot in the merged data.

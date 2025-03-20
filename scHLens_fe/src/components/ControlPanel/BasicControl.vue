@@ -93,7 +93,6 @@
                     title="Are you sure you want to delete the current job? This action is irreversible.">
                     <el-button type="danger" class="form-buttons" size="mini" slot="reference">Delete Job</el-button>
                 </el-popconfirm>
->
 
             </el-form-item>
         </el-form>
