@@ -839,7 +839,7 @@ export default {
 
                 }).catch((err)=>{
                     this.$message({
-                        'message':'THIS DATASET IS INVALID',
+                        'message':'CONNECTION LOST OR THIS DATASET IS INVALID',
                         'type':'error',
                         'showClose':true,
                     })

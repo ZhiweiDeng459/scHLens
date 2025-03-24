@@ -752,7 +752,7 @@ def check_dataset():
                 'content':'This data set contains invalid values (such as null values).',
             },to=f'general_info_{JobId}',namespace='/')
 
-    except Exception:
+    except Exception as e:
         ## remove invalid data set
         removeCustomDataSet(JobId=JobId,dataset_name=dataset_name)
         ## 返回请求
