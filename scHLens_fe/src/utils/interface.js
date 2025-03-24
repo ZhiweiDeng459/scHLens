@@ -432,6 +432,7 @@ export function queryGsea(JobId,ViewId,organism,gene_set_name,cluster_id,logfold
 
 export function testConnection(){
     return io(window.location.origin,{
+        path:window.location.pathname + 'socket.io',
         reconnection: true, // 默认为true
         reconnectionDelay: 1000, // 重新连接的延迟（毫秒）
         auth:{
@@ -442,7 +443,8 @@ export function testConnection(){
 }
 
 export function createNewSocket(JobId){
-    return io(window.location.origin + window.location.pathname,{
+    return io(window.location.origin,{
+        path:window.location.pathname + 'socket.io',
         reconnection: true, // 默认为true
         reconnectionDelay: 1000, // 重新连接的延迟（毫秒）
         auth:{
@@ -450,6 +452,7 @@ export function createNewSocket(JobId){
             'JobId':JobId,
         }
     })
+
 
 
 }
