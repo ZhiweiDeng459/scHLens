@@ -215,7 +215,7 @@
                         'JobId':JobId
                     }"
                     :auto-upload="false"
-                    action="/api/upload">
+                    :action="uploadPath">
                     <i class="el-icon-upload"></i>
                     <div class="el-upload__text">Drag file to this,or &nbsp;<em>Click to add</em></div>
                 </el-upload>
@@ -329,6 +329,7 @@ export default {
             /**
              * 文件上传相关
              */
+            uploadPath : '/api/upload',
             uploadDialogVisible : false,
             fileList:[],
             upType:'csv',
@@ -914,6 +915,8 @@ export default {
             this.mode = mode;//global or local
             this.openPipeline();
         })
+        //设定上传数据集文件的url
+        this.uploadPath = window.location.pathname + 'api/upload'
     }
 };
 </script>

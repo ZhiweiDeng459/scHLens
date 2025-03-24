@@ -33,7 +33,7 @@
                     'JobId':JobId
                 }"
                 :auto-upload="false"
-                action="/api/uploadGeneSets">
+                :action="uploadPath">
                 <i class="el-icon-upload"></i>
                 <div class="el-upload__text">Drag file to this,or &nbsp;<em>Click to add</em></div>
             </el-upload>
@@ -88,10 +88,11 @@ export default {
              fileList:[],//文件的List
              geneSetName:'',//基因集名词
              geneSetType:'Human',//基因集种类
-             geneSetTypeList:['Human','Mouse']
+             geneSetTypeList:['Human','Mouse'],
              /**
-              * 
+              * gene set上传相关
               */
+             uploadPath:'/api/uploadGeneSets',
 
         }
     },
@@ -215,6 +216,9 @@ export default {
 
         },
 
+    },
+    mounted(){
+        this.uploadPath = `${window.location.pathname}api/uploadGeneSets`
     }
 }
 </script>
