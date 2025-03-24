@@ -12,24 +12,10 @@
                     <b class="about-unit-header-text">Location</b>
                 </div>
                 <ul>
-                    <li><a>Computer building #412, 932 Lushan S Rd, Yuelu District, Changsha, Hunan, China</a></li>
+                    <li><a>Information building #429A, 932 Yudai Rd, Yuelu District, Changsha, Hunan, China</a></li>
                 </ul>
             </div>
 
-            <hr width="90%" size="2" color="lightgray" >
-            
-            <div class="about-unit">
-                <div class="about-unit-header">
-                    <img src="icons/telephone.svg" class="about-unit-header-icon"/>
-                    <b class="about-unit-header-text">Telephone</b>
-                </div>
-                <ul>
-                    <li><a>+86-0731-88879560</a></li>
-                </ul>
-                <ul>
-                    <li><a>+86-13245011336</a></li>
-                </ul>
-            </div>
 
             <hr width="90%" size="2" color="lightgray" >
 
@@ -39,14 +25,8 @@
                     <b class="about-unit-header-text">Email</b>
                 </div>
                 <ul>
-                    <li><a>xiajiazhi@csu.edu.cn</a></li>
-                </ul>
-                <ul>
                     <li><a>rqzheng@csu.edu.cn</a></li>
-                </ul>
-                <ul>
-                    <li><a>dengzhiwei@csu.edu.cn</a></li>
-                </ul>   
+                </ul> 
             </div>
 
         </div>

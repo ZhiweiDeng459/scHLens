@@ -406,7 +406,7 @@ export default {
                 {
                     rank:0,
                     id:'SP',
-                    name:"Sampling"
+                    name:"Downsampling"
                 },
                 {
                     rank:1,
@@ -458,7 +458,7 @@ export default {
                 {
                     rank:0,
                     id:'SP',
-                    name:"Sampling"
+                    name:"Downsampling"
                 },
                 {
                     rank:1,
