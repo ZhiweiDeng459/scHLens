@@ -3,6 +3,7 @@ module.exports = {
     devServer: {
         host: "localhost",
         port: "8081",
+        // https: true,
         proxy: {
             "/api": { //普通api
                 target: "http://127.0.0.1:5003/scHLens",

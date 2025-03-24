@@ -442,7 +442,7 @@ export function testConnection(){
 }
 
 export function createNewSocket(JobId){
-    return io(window.location.origin,{
+    return io(window.location.origin + window.location.pathname,{
         reconnection: true, // 默认为true
         reconnectionDelay: 1000, // 重新连接的延迟（毫秒）
         auth:{
