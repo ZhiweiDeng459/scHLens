@@ -755,6 +755,7 @@ def check_dataset():
     except Exception as e:
         ## remove invalid data set
         removeCustomDataSet(JobId=JobId,dataset_name=dataset_name)
+        e.print_exc()
         ## 返回请求
         response = {
             'type':'invalidDatasetException',
