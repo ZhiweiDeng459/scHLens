@@ -12,7 +12,9 @@
                     <b class="about-unit-header-text">Location</b>
                 </div>
                 <ul>
-                    <li><a>Information building #429A, 932 Yudai Rd, Yuelu District, Changsha, Hunan, China</a></li>
+                    <li style="margin-bottom: 15px;"><a>Information building #429A, Central South University, Yuelu District, Changsha, Hunan, China</a></li>
+                    <li style="margin-bottom: 15px;"><a>Computer building #412, Central South University, Yuelu District, Changsha, Hunan, China</a></li>
+
                 </ul>
             </div>
 
@@ -24,8 +26,10 @@
                     <img src="icons/email.svg" class="about-unit-header-icon"/>
                     <b class="about-unit-header-text">Email</b>
                 </div>
-                <ul>
-                    <li><a>rqzheng@csu.edu.cn</a></li>
+                <ul style="margin-bottom: 15px;">
+                    <li style="margin-bottom: 15px;"><a>rqzheng@csu.edu.cn</a></li>
+                    <li style="margin-bottom: 15px;"><a>zhiweideng@csu.edu.cn</a></li>
+
                 </ul> 
             </div>
 

@@ -21,7 +21,7 @@ pip install -r ./scHLens_be/requirements.txt
 
 **Step2. R prerequisites**
 
-Install R 4.2.2, and then run the following commands:
+Install `R 4.2.2`, and then run the following commands to install packages and set R_HOME:
 
 ```
 Rscript ./scHLens_be/package.R
@@ -29,6 +29,8 @@ ENV R_HOME=/usr/lib/R
 ```
 
 **Step3. Node.js prerequisites**
+
+Install `Node.js 16.19.0`，and then run the following commands:
 
 ```
 cd ./scHLens_fe
@@ -62,3 +64,4 @@ Then, you can access scHLens via http://localhost:8081
 
 ## Docker version
 
+We also provide a more docker version 
