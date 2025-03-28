@@ -77,13 +77,17 @@ Then, you can access scHLens via http://localhost:8081 (local) or http://your_ip
   unzip sample.zip -d .
   ```
 
-+ scHLens also provides three demos to 展示the cases in our paper. You can download them from http://www.csuligroup.com:32768/resource/sample_job.zip (`sample_job.rar`)，and then extract the contents into the `scHLens/scHLens_be/sample_job` folder:
+  These datasets will be added to the dataset list of your scHLens.
+
++ scHLens also provides three demos to illustrate the cases in our manuscript. You can download them from http://www.csuligroup.com:32768/resource/sample_job.zip (`sample_job.rar`)，and then extract the contents into the `scHLens/scHLens_be/sample_job` folder:
 
   ```
   cd scHLens/scHLens_be
   wget http://www.csuligroup.com:32768/resource/sample_job.zip
   unzip sample_job.zip -d .
   ```
+
+  These demos can be loaded by 'Use Samples' button in the 'Enter a Job' dialog of scHLens.
 
 
 
@@ -95,7 +99,7 @@ We recommend allocating at least 8GB of memory space and 50GB of disk space for 
 
 ## Online version
 
-
+We provide an online scHLens at http://schlens.csuligroup.com
 
 
 

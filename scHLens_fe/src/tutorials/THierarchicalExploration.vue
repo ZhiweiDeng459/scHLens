@@ -2,15 +2,19 @@
   <div class="container">
     <b class="title">Hierarchical Exploration</b>
     <p class="body">
-      Because of the hierarchical and complex nature of cell types, a comprehensive
-      analysis of scRNA-seq data is challenging to achieve in a single
-      analytical run. Therefore, employing a hierarchical and interactive
+      Because of the hierarchical and complex nature of cell types, a
+      comprehensive analysis of scRNA-seq data is challenging to achieve in a
+      single analytical run. Therefore, employing a hierarchical and interactive
       exploration way is more appropriate.
     </p>
     <p class="body">
       The workflow of Hierarchical Exploration is simple:
-      <b>Create Local Plot</b>, <b>Find good pattern in Local Plot</b> and then
-      <b>Merge the Local Results</b>.
+      <b>Annotate groups in the Global Plot</b>, <b>Create Local Plot</b>,
+      <b>Find good pattern and Annotate groups in Local Plot</b> and then
+      <b>Merge the Local Results</b>. For the process of "Annotate groups in
+      Global Plot" and "Annotate groups in Local Plot", please refer to "Analysis
+      with Views - Interactions - Annotation." We will describe the remaining
+      steps in detail below.
     </p>
     <p class="body">
       <b>Global Plot</b> refers to the initial views created after the first
@@ -22,7 +26,7 @@
       Additionally, cells can be selected from a Local Plot to create subsequent
       Local Plots. This creation process forms a tree-like structure, which is
       represented using Hierarchy Navigation. Detailed explanations can be found
-      in the section "Hierarchical Exploration - Hierarchical Tree."
+      in the section "Hierarchical Exploration - Hierarchical Navigation."
     </p>
 
     <h1 id="t_CrateLocalPlot">Create Local Plot & Find Good Pattern</h1>
@@ -82,7 +86,9 @@
       <b class="image-title">Figure 2. Hierarchy Navigation</b>
     </div>
 
-    <h1 id="t_DiscoverCorrespondence">Discover the correspondence of cells across different nodes</h1>
+    <h1 id="t_DiscoverCorrespondence">
+      Discover the correspondence of cells across different nodes
+    </h1>
     <p class="body">
       If you want to know the correspondence of cells across different nodes,
       you should choose the "Discover Correspondence" option in the context menu
@@ -145,7 +151,6 @@
       <img class="image" src="tutorials/img/merge-options.png" />
       <b class="image-title">Figure 6. Merge Options</b>
     </div>
-
   </div>
 </template>
 
