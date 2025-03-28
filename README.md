@@ -87,12 +87,21 @@ Then, you can access scHLens via http://localhost:8081 (local) or http://your_ip
 
 
 
+## Hardware Requirements
+
+We recommend allocating at least 8GB of memory space and 50GB of disk space for scHLens.
+
+
+
+## Online version
+
+
+
+
+
 ## Docker version
 
 We offer a deployable Docker version of scHLens (https://hub.docker.com/r/zhiweideng975/schlens), allowing users to effortlessly deploy and run the software on their own high-performance local servers.
 
 
 
-## Hardware Requirements
-
-We recommend allocating at least 8GB of memory space and 50GB of disk space for scHLens.
