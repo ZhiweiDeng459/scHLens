@@ -28,7 +28,7 @@ Rscript ./scHLens_be/package.R
 export R_HOME=/usr/lib64/R 			#R directory
 ```
 
-**Step3. Python prerequisites **
+**Step3. Python prerequisites**
 
 It is recommended to use Anaconda3 for managing the environment:
 
