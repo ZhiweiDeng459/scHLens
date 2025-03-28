@@ -16,24 +16,25 @@ This web-server is based on `python 3.7.12`, `R 4.2.2`, `Node.js 16.19.0`. You c
 git clone https://github.com/ZhiweiDeng459/scHLens.git
 ```
 
-**Step2. Python prerequisites **
-
-It is recommended to use Anaconda3 for managing the environment:
-
-```
-cd scHLens
-conda create --name scHLens python=3.7.13
-pip install -r ./scHLens_be/requirements.txt
-```
-
-**Step3. R prerequisites**
+**Step2. R prerequisites**
 
 Install `R 4.2.2`, and then run the following commands:
 
 ```
 cd scHLens
 Rscript ./scHLens_be/package.R
-ENV R_HOME=/usr/lib/R
+export R_HOME=/usr/lib64/R 			#R directory
+```
+
+**Step3. Python prerequisites **
+
+It is recommended to use Anaconda3 for managing the environment:
+
+```
+cd scHLens
+conda create --name scHLens python=3.7.13
+conda activate scHLens
+pip install -r ./scHLens_be/requirements.txt
 ```
 
 **Step4. Node.js prerequisites**
@@ -60,14 +61,19 @@ conda activate scHLens
 python app.py
 ```
 
-Then, you can access scHLens via http://localhost:8081 (local) or http://your_ip:8081(network)
+Then, you can access scHLens via http://localhost:8081 (local) or http://your_ip:8081 (network)
 
 
 
-## Additional Samples
+## Additional Resource
 
-+ scHLens provides three scRNA-seq datasets, 分别为 PBMC-3k , you can 从 XXX 下载它，然后将其解压为scHLens/scHLens_be的sample文件夹。
-+ scHLens provides three datasets , you can 从 XXX 下载它，然后将其解压为scHLens/scHLens_be的sample_job文件夹。
+scHLens provides three scRNA-seq datasets, 分别为 PBMC-3K, Human Pancreatic dataset and Human Lung Cancer dataset. you can 从 XXX 下载它(`sample.rar`)，然后将其解压为scHLens/scHLens_be的sample文件夹。
+
+```
+
+```
+
+
 
 
 
