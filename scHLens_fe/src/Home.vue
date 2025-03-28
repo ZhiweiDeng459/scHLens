@@ -12,7 +12,12 @@
             alt="Flag Counter"
             border="0"
         /></a> -->
-        <a href='https://clustrmaps.com/site/1c56d'  title='Visit tracker'><img src='//clustrmaps.com/map_v2.png?cl=ffffff&w=550&t=tt&d=2KYfHIZwB-VTu7d5cWrNgBIQJMtFcIzN8wpfedn98qM&co=2d78ad&ct=ffffff'/></a>      </div>
+        <!-- <a href='https://clustrmaps.com/site/1c56d'  title='Visit tracker'>
+          <img src='//clustrmaps.com/map_v2.png?cl=ffffff&w=550&t=tt&d=2KYfHIZwB-VTu7d5cWrNgBIQJMtFcIzN8wpfedn98qM&co=2d78ad&ct=ffffff'/>
+        </a> -->
+          <img src='//clustrmaps.com/map_v2.png?cl=ffffff&w=550&t=tt&d=2KYfHIZwB-VTu7d5cWrNgBIQJMtFcIzN8wpfedn98qM&co=2d78ad&ct=ffffff'/>
+
+        </div>
       <div class="content-box content2">
         <div class="content-box-title">
           <b class="content-box-title-text">What is scHLens?</b>

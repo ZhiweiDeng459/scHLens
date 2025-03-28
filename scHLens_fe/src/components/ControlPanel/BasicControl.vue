@@ -442,7 +442,7 @@ export default {
                 {
                     rank:5,
                     id:'MK',
-                    name:"Marker Identification"
+                    name:"DEG Identification"
                 },
                 // {
                 //     rank:7,
@@ -494,7 +494,7 @@ export default {
                 {
                     rank:5,
                     id:'MK',
-                    name:"Marker Identification"
+                    name:"DEG Identification"
                 },
                 // {
                 //     rank:7,

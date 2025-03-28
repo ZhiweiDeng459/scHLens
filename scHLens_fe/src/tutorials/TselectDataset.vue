@@ -57,7 +57,12 @@
         You can find this dataset in the dataset dropdown menu.
       </li>
     </ol>
-
+    <a class="body">
+      <b class="body">Note:</b>&nbsp;&nbsp;The "Stratified" method in the
+      Downsampling module of the pipeline requires a dataset with labels. If you
+      want to upload a dataset with labels, you should upload it in h5ad format
+      and set the labels in AnnData.obs['label'].
+    </a>
   </div>
 </template>
 
@@ -87,9 +92,9 @@ h1 {
   margin-top: 60px;
 }
 
-h2{
+h2 {
   margin-top: 40px;
-  font-size:29px
+  font-size: 29px;
 }
 
 .body {

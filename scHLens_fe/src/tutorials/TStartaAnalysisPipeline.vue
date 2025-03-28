@@ -8,7 +8,7 @@
     </p>
     <ol>
       <li class="body">
-        <b>Sampling</b>: Sample the dataset to speed up the pipeline and reduce
+        <b>Downsampling</b>: Downsample the dataset to speed up the pipeline and reduce
         memory usage.
       </li>
       <li class="body">
@@ -32,7 +32,7 @@
         assisting analysts in identifying cell types.
       </li>
       <li class="body">
-        <b>Marker Identification</b>: Discover marker genes that characterize
+        <b>Differential Expressed Gene Identification (DEG Identification)</b>: Discover differential expressed genes that characterize
         each cell group.
       </li>
     </ol>

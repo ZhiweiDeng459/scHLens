@@ -7,7 +7,7 @@
                         <el-select v-model="markerMethod" placeholder="Select..." size="mini" style="width:110px">
                             <el-option v-for="item in markerOptions" :key="item.value" :label="item.label" :value="item.value"></el-option>
                         </el-select>
-                        <el-tooltip content="marker gene method" placement="right">
+                        <el-tooltip content="DEG Identification method" placement="right">
                             <i class="el-icon-question"></i>
                         </el-tooltip>
                     </div>
@@ -15,7 +15,7 @@
                 <el-form-item class="form-item" label="nGenes">
                     <div style="display:flex;justify-content:space-between;align-items:center">
                         <el-input v-model="nGenes" size="mini" style="width: 110px;"></el-input>
-                        <el-tooltip content="nGenes" placement="right">
+                        <el-tooltip content="The number of DEGs" placement="right">
                             <i class="el-icon-question"></i>
                         </el-tooltip>
                     </div>

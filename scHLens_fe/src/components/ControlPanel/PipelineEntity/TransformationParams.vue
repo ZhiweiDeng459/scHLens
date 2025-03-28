@@ -65,7 +65,7 @@
                     <el-form-item class="form-item" label="top Genes">
                         <div style="display:flex;justify-content:space-between;align-items:center">
                             <el-input v-model="featureParams['HighlyVariable'].topGenes" size="mini" style="width: 110px;"></el-input>
-                            <el-tooltip content="Number of highly-variable genes to keep" placement="right">
+                            <el-tooltip content="The number of top genes (ranked by variability) to keep. This parameter cannot be set together with 'min Mean', 'max Mean', 'min Dispersion', or 'max Dispersion'." placement="right">
                                 <i class="el-icon-question"></i>
                             </el-tooltip>
                         </div>
@@ -73,7 +73,7 @@
                     <el-form-item class="form-item" label="min Mean">
                         <div style="display:flex;justify-content:space-between;align-items:center">
                             <el-input v-model="featureParams['HighlyVariable'].minMean" size="mini" style="width: 110px;"></el-input>
-                            <el-tooltip content="min Mean" placement="right">
+                            <el-tooltip content="The lower bound on Mean for a gene. This parameter cannot be set together with 'top Genes'" placement="right">
                                 <i class="el-icon-question"></i>
                             </el-tooltip>
                         </div>
@@ -81,7 +81,7 @@
                     <el-form-item class="form-item" label="max Mean">
                         <div style="display:flex;justify-content:space-between;align-items:center">
                             <el-input v-model="featureParams['HighlyVariable'].maxMean" size="mini" style="width: 110px;"></el-input>
-                            <el-tooltip content="max Mean" placement="right">
+                            <el-tooltip content="The upper bound on Mean for a gene. This parameter cannot be set together with 'top Genes'" placement="right">
                                 <i class="el-icon-question"></i>
                             </el-tooltip>
                         </div>
@@ -89,7 +89,7 @@
                     <el-form-item class="form-item" label="min Disp">
                         <div style="display:flex;justify-content:space-between;align-items:center">
                             <el-input v-model="featureParams['HighlyVariable'].minDisp" size="mini" style="width: 110px;"></el-input>
-                            <el-tooltip content="min Dispersion" placement="right">
+                            <el-tooltip content="The lower bound on Dispersion for a gene. This parameter cannot be set together with 'top Genes'" placement="right">
                                 <i class="el-icon-question"></i>
                             </el-tooltip>
                         </div>
@@ -97,7 +97,7 @@
                     <el-form-item class="form-item" label="max Disp">
                         <div style="display:flex;justify-content:space-between;align-items:center">
                             <el-input v-model="featureParams['HighlyVariable'].maxDisp" size="mini" style="width: 110px;"></el-input>
-                            <el-tooltip content="max Dispersion" placement="right">
+                            <el-tooltip content="The upper bound on Dispersion for a gene. This parameter cannot be set together with 'top Genes'" placement="right">
                                 <i class="el-icon-question"></i>
                             </el-tooltip>
                         </div>

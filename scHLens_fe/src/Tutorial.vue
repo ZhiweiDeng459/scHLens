@@ -18,7 +18,7 @@
                         <span class="menu-item-text-1" slot="title">Enter a Job</span>
                         <el-menu-item index="/tutorial/enterjob/1" @click="scrollTo('t_WhatisJob')">What is Job?</el-menu-item>
                         <el-menu-item index="/tutorial/enterjob/2" @click="scrollTo('t_WhatisJobID')">What is Job ID?</el-menu-item>
-                        <el-menu-item index="/tutorial/enterjob/3" @click="scrollTo('t_CreateLoadJob')">Create a New Job & Load an Existing Job</el-menu-item>
+                        <el-menu-item index="/tutorial/enterjob/3" @click="scrollTo('t_CreateLoadJob')">Create a New Job & Load an Existing Job & Use Samples</el-menu-item>
                         <el-menu-item index="/tutorial/enterjob/4" @click="scrollTo('t_ExportImportJob')">Export the Job & Import the Job</el-menu-item>
                         <el-menu-item index="/tutorial/enterjob/5" @click="scrollTo('t_DeleteJob')">Delete Job</el-menu-item>
                     </el-submenu>

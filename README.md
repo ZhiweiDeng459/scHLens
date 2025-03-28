@@ -4,6 +4,8 @@ This is the repository for scHLens. scHLens is an interactive analysis platform 
 
 ![system](./system.png)
 
+
+
 ## Quick start
 
 This web-server is based on `python 3.7.12`, `R 4.2.2`, `Node.js 16.19.0`. You can launch this web-server using the following steps:
@@ -67,16 +69,43 @@ Then, you can access scHLens via http://localhost:8081 (local) or http://your_ip
 
 ## Additional Resource
 
-scHLens provides three scRNA-seq datasets, 分别为 PBMC-3K, Human Pancreatic dataset and Human Lung Cancer dataset. you can 从 XXX 下载它(`sample.rar`)，然后将其解压为scHLens/scHLens_be的sample文件夹。
++ scHLens provides three scRNA-seq datasets: PBMC-3K, Human Pancreatic dataset and Human Lung Cancer dataset. You can download them from http://www.csuligroup.com:32768/resource/sample.zip (`sample.rar`)，and then extract the contents into the `scHLens/scHLens_be/sample` folder:
 
-```
+  ```
+  cd scHLens/scHLens_be
+  wget http://www.csuligroup.com:32768/resource/sample.zip
+  unzip sample.zip -d .
+  ```
 
-```
+  These datasets will be added to the dataset list of your scHLens.
+
++ scHLens also provides three demos to illustrate the cases in our manuscript. You can download them from http://www.csuligroup.com:32768/resource/sample_job.zip (`sample_job.rar`)，and then extract the contents into the `scHLens/scHLens_be/sample_job` folder:
+
+  ```
+  cd scHLens/scHLens_be
+  wget http://www.csuligroup.com:32768/resource/sample_job.zip
+  unzip sample_job.zip -d .
+  ```
+
+  These demos can be loaded by 'Use Samples' button in the 'Enter a Job' dialog of scHLens.
 
 
+
+## Hardware Requirements
+
+We recommend allocating at least 8GB of memory space and 50GB of disk space for scHLens.
+
+
+
+## Online version
+
+We provide an online scHLens at http://schlens.csuligroup.com
 
 
 
 ## Docker version
 
 We offer a deployable Docker version of scHLens (https://hub.docker.com/r/zhiweideng975/schlens), allowing users to effortlessly deploy and run the software on their own high-performance local servers.
+
+
+

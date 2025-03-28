@@ -1,25 +1,40 @@
 <template>
-    <div class="container">
-        <b class="title">Introduction</b>
-        <p class="body">scHLens is an interactive analysis platform for hierarchically and interactively exploring
-            cellular heterogeneity of scRNA-seq dataset, with various visualization views. scHLens focused on the cell
-            type annotation of scRNA-seq. The main novelty of scHLens includes two aspects. Firstly, for each layer,
-            scHLens provided a customized pipeline for gene selection, cell visualization, clustering, differential
-            expressed gene analysis and cell type annotation. Then, scHLens provided a hierarchical analytical mode to
-            explore cellular heterogeneity, and proposed a novel hierarchically visualization method to integrate
-            different levels of cells subgroups. This web platform allows users to easily select, export, delete and
-            reanalyze specific cell groups of their interest. </p>
-        <p class="body">The system's workflow is composed of five steps: <b>Enter a Job</b>, <b>Select a Dataset</b>,
-            <b>Start the User-defined Pipeline</b>, <b>Analyze with Interactive Views</b>, <b>Hierarchically
-                Explore</b>. Each step will be explained in detail below.</p>
-    </div>
+  <div class="container">
+    <b class="title">Introduction</b>
+    <p class="body">
+      scHLens is an interactive analysis platform for hierarchically and
+      interactively exploring cellular heterogeneity of scRNA-seq dataset, with
+      various visualization views. scHLens focused on the cell type annotation
+      of scRNA-seq. The main novelty of scHLens includes two aspects. Firstly,
+      for each layer, scHLens provided a customized pipeline for gene selection,
+      cell visualization, clustering, differential expressed gene analysis and
+      cell type annotation. Then, scHLens provided a hierarchical analytical
+      mode to explore cellular heterogeneity, and proposed a novel
+      hierarchically visualization method to integrate different levels of cells
+      subgroups. This web platform allows users to easily select, export, delete
+      and reanalyze specific cell groups of their interest.
+    </p>
+    <p class="body">
+      The system's workflow is composed of five steps: <b>Enter a Job</b>,
+      <b>Select a Dataset</b>, <b>Start the User-defined Pipeline</b>,
+      <b>Analyze with Interactive Views</b>, <b>Hierarchically Explore</b>. Each
+      step will be explained in detail below.
+    </p>
+    <p class="body">
+      <b
+        >To better demonstrate the cases in our manuscript, we have integrated
+        predefined demos into scHLens. For details on how to use them, please
+        refer to "Enter a Job - Create a New Job & Load an Existing Job & Use
+        Samples - Use Samples".</b
+      >
+    </p>
+  </div>
 </template>
 
 <script>
 export default {
-    name: "TIntroduction",
-
-}
+  name: "TIntroduction",
+};
 </script>
 
 <style lang="less" scoped>
@@ -42,9 +57,9 @@ h1 {
   margin-top: 60px;
 }
 
-h2{
+h2 {
   margin-top: 40px;
-  font-size:29px
+  font-size: 29px;
 }
 
 .body {

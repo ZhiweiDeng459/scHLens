@@ -25,42 +25,50 @@
       ID is crucial for loading previous jobs.
     </p>
 
-    <h1 id="t_CreateLoadJob">Create a New Job & Load an Existing Job</h1>
+    <h1 id="t_CreateLoadJob">
+      Create a New Job & Load an Existing Job & Use Samples
+    </h1>
     <p class="body">
       <b>Create a New Job</b>: To begin a new analysis, click the green "Create
-      new Job" button (Area B in Figure 1). This action will initiate a new job,
+      new Job" button (Area C in Figure 1). This action will initiate a new job,
       ready to record the user's analysis process and results.
     </p>
     <p class="body">
       <b>Load an Existing Job</b>: To reproduce a previous work, enter the
-      corresponding Job ID into the designated text box (Area C in Figure 1) and
+      corresponding Job ID into the designated text box (Area B in Figure 1) and
       click the blue "Load Exist Job" button (Area D in Figure 1) . Then this
       job will be loaded, allowing for continuation from the last auto-saved
       state.
     </p>
-
-    <h1 id="t_ExportImportJob">Export the Job & Import the Job</h1>
+    <p class="body">
+      <b>Use Samples</b>: scHLens provides three Sample Jobs to illustrate the
+      cases in manuscript. You can click the 'Use Samples' button (Bottom-Right
+      corner in Figure 1) to select a sample to load.
+    </p>
+    <h1 id="t_ExportImportJob">
+      Export the Job & Import the Job
+    </h1>
     <div class="image-container">
       <img class="image" src="tutorials/img/Job.png" />
-      <b class="image-title">Figure 2. Upload / Export / Delete job</b>
+      <b class="image-title">Figure 2. Export / Delete job</b>
     </div>
     <p class="body">
       If you want to migrate a job to another deployment version of scHLens or
       save a job's current state for future rollback, you can export the current
       state of the job as an importable local file. To export the job, click the
-      blue 'Export Job' button (Area B in Figure 2), and you will receive a
+      blue 'Export Job' button (Area A in Figure 2), and you will receive a
       compressed job file. To import the local file into a different system,
-      click the blue 'Upload Job' button (Area A in Figure 2), select the file,
-      and you will be able to access this job in the new system via the same Job
-      ID. If a job with the same name already exists in the new system, the
-      imported job will overwrite the original one.
+      click the blue 'Import Saved Job' button (Area E in Figure 1), select the
+      file, and you will be able to access this job in the new system via the
+      same Job ID. If a job with the same name already exists in the new system,
+      the imported job will overwrite the original one.
     </p>
 
     <h1 id="t_DeleteJob">Delete Job</h1>
     <p class="body">
       To ensure data security, you can delete your job after completing the
-      analysis. You just need to click the red 'Delete' button (Area C in Figure
-      2).
+      analysis. You just need to click the red 'Delete Job' button (Area B in
+      Figure 2).
     </p>
   </div>
 </template>
@@ -91,9 +99,9 @@ h1 {
   margin-top: 60px;
 }
 
-h2{
+h2 {
   margin-top: 40px;
-  font-size:29px
+  font-size: 29px;
 }
 
 .body {
