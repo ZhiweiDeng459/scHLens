@@ -827,7 +827,17 @@ export default {
 
             const loading = Loading.service({ fullscreen: true });
 
-            checkDataSet(this.JobId,this.uploadDatasetName)
+
+            //检查是否所有的文件都被上传
+            let allSuccess = true;
+            for(let f of fileList){
+                if(f.status != 'success'){
+                    allSuccess = false;
+                    break;
+                }
+            }
+            if(allSuccess){
+                checkDataSet(this.JobId,this.uploadDatasetName)
                 .then((response)=>{
                     this.$message({
                         'message':'UPLOAD COMPLETE',
@@ -848,13 +858,15 @@ export default {
 
                 })
 
-            this.$refs.upload.clearFiles();
-            this.upType = 'csv'
-            this.uploadDatasetName = ''
-            this.closeUploadPanel();
+                this.$refs.upload.clearFiles();
+                this.upType = 'csv'
+                this.uploadDatasetName = ''
+                this.closeUploadPanel();
 
-            this.fileList = []
-            this.updateFileRequirements()
+                this.fileList = []
+                this.updateFileRequirements()
+
+            }
 
         },
         errorUploadFile(err,file,fileList){ //注意，这里的fileList是上传前的fileList，而不是上传后清空的fileList
