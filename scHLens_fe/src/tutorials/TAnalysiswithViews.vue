@@ -347,14 +347,20 @@
       <img class="image" src="tutorials/img/Annotation.jpg" />
       <b class="image-title">Figure 11. Annotatio</b>
     </div>
-
-    <h2 id="t_SaveImages">Save the images</h2>
+    <p class="body">
+      In addition to using the built-in Gene Sets, you can also upload your own Gene Set. As shown in Figure 12, click
+      the blue "+" button and upload a JSON-formatted Gene Set file in the pop-up window. The Gene Set format follows
+      the example of <a href="/download/CellMarker_2024.json" download="Sample.json">Sample.json</a>. </p>
+    <div class="image-container">
+      <img class="image" src="tutorials/img/uploadGeneSet.png" />
+      <b class="image-title">Figure 12. Upload your Gene Set</b>
+    </div>
+      <h2 id="t_SaveImages">Save the images</h2>
     <p class="body">
       Each view, except for the Hierarchy Navigation, can save the view as an
       SVG file. To do this, you need to click the "Save this image" option in
       the context menu of these views.
     </p>
-
     <h2 id="t_Refreshing">Refreshing Views</h2>
     <p class="body">
       The right button in Controller Bar, marked with a recycling icon, is used

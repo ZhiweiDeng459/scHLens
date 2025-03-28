@@ -58,8 +58,8 @@ export default {
                     label: "wilcoxon-test",
                 },
                 {
-                    value: "wilcoxon-test(TLE)",
-                    label: "wilcoxon-test(TLE)",
+                    value: "wilcoxon-test(TIE)",
+                    label: "wilcoxon-test(TIE)",
                 },
                 {
                     value: "logreg",
