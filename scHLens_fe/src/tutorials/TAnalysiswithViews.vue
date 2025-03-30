@@ -345,7 +345,7 @@
     </p>
     <div class="image-container">
       <img class="image" src="tutorials/img/Annotation.jpg" />
-      <b class="image-title">Figure 11. Annotatio</b>
+      <b class="image-title">Figure 11. Annotation</b>
     </div>
     <p class="body">
       In addition to using the built-in Gene Sets, you can also upload your own Gene Set. As shown in Figure 12, click
