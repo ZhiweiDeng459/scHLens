@@ -350,7 +350,7 @@
     <p class="body">
       In addition to using the built-in Gene Sets, you can also upload your own Gene Set. As shown in Figure 12, click
       the blue "+" button and upload a JSON-formatted Gene Set file in the pop-up window. The Gene Set format follows
-      the example of <a href="/download/CellMarker_2024.json" download="Sample.json">Sample.json</a>. </p>
+      the example of <a href="http://www.csuligroup.com:32768/resource/sampleGeneSets.json" download="Sample.json">Sample.json</a>. </p>
     <div class="image-container">
       <img class="image" src="tutorials/img/uploadGeneSet.png" />
       <b class="image-title">Figure 12. Upload your Gene Set</b>
