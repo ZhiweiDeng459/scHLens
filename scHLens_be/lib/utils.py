@@ -529,7 +529,6 @@ def saveCustomDataSetConfig(JobId,dataset_name,dataset_config):
 ## 随机采样
 def sampleAdataRandom(adata,sampling_num = None,sampling_radio = None):
 
-
     # check
     if sampling_num is None and sampling_radio is None:
         return adata

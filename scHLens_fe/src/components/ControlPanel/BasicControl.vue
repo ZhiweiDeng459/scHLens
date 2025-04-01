@@ -626,7 +626,7 @@ export default {
                 Params[entity.id] = this.$refs['PipelineEntity' + entity.index][0].getParams();           
             });
 
-            //参数合法性检查
+            //参数合法性检查 - 对于每个取值为Nan的，都去掉
             
 
             //开始计算

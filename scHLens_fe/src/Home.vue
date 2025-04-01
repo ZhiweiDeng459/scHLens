@@ -31,7 +31,7 @@
             pipeline for gene selection, cell visualization, clustering,
             differential expressed gene analysis and cell type annotation. Then,
             scHLens provided a hierarchical analytical mode to explore cellular
-            hetero-geneity, and proposed a novel hierarchically visualization
+            heterogeneity, and proposed a novel hierarchically visualization
             method to integrate different levels of cells subgroups. This web
             platform allows users to easily select, export, delete and reanalyze
             specific cell groups of their interest. We believe that this
