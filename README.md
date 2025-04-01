@@ -69,7 +69,7 @@ Then, you can access scHLens via http://localhost:8081 (local) or http://your_ip
 
 ## Additional Resource
 
-+ scHLens provides three scRNA-seq datasets: PBMC-3K, Human Pancreatic dataset and Human Lung Cancer dataset. You can download them from http://www.csuligroup.com:32768/resource/sample.zip (`sample.rar`)，and then extract the contents into the `scHLens/scHLens_be/sample` folder:
++ scHLens provides three scRNA-seq datasets: PBMC-3K, Human Pancreatic dataset and Human Lung Cancer dataset. You can download them from http://www.csuligroup.com:32768/resource/sample.zip (`sample.zip`)，and then extract the contents into the `scHLens/scHLens_be/sample` folder:
 
   ```
   cd scHLens/scHLens_be
@@ -79,7 +79,7 @@ Then, you can access scHLens via http://localhost:8081 (local) or http://your_ip
 
   These datasets will be added to the dataset list of your scHLens.
 
-+ scHLens also provides three demos to illustrate the cases in our manuscript. You can download them from http://www.csuligroup.com:32768/resource/sample_job.zip (`sample_job.rar`)，and then extract the contents into the `scHLens/scHLens_be/sample_job` folder:
++ scHLens also provides three demos to illustrate the cases in our manuscript. You can download them from http://www.csuligroup.com:32768/resource/sample_job.zip (`sample_job.zip`)，and then extract the contents into the `scHLens/scHLens_be/sample_job` folder:
 
   ```
   cd scHLens/scHLens_be
