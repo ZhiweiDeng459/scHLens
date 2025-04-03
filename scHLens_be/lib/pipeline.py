@@ -781,7 +781,7 @@ def CL(adata):
     if 'leiden' in adata.uns['params']['CL']:
         try: #预降维
             target_dimensions = 40
-            if adata.shape[1] > target_dimensions:
+            if adata.shape[1] > target_dimensions and adata.shape[0] > target_dimensions:
                 sc.pp.pca(adata,n_comps=target_dimensions) 
             else:
                 adata.obsm['X_pca'] = adata.X
@@ -789,7 +789,7 @@ def CL(adata):
         except Exception as e:
             raise pipelineException(
                 location='Clustering - leiden - Pre-dimensionality reduction',
-                advice=':The error may be due to: 1. The dataset currently has too few genes; 2. The current dataset contains invalid data;',
+                advice=':The error may be due to: 1. The dataset currently has too few genes or cells; 2. The current dataset contains invalid data;',
                 message=str(e))
         try: ##neighbor
             neigh_params = {}
@@ -839,14 +839,14 @@ def CL(adata):
     elif 'kmeans' in adata.uns['params']['CL']:
         try: # 预降维
             target_dimensions = 40
-            if adata.shape[1] > target_dimensions:
+            if adata.shape[1] > target_dimensions and adata.shape[0] > target_dimensions:
                 sc.pp.pca(adata,n_comps=target_dimensions) 
             else:
                 adata.obsm['X_pca'] = adata.X          
         except Exception as e:
             raise pipelineException(
                 location='Clustering - k-means - Pre-dimensionality reduction',
-                advice=':The error may be due to: 1. The dataset currently has too few genes; 2. The current dataset contains invalid data;',
+                advice=':The error may be due to: 1. The dataset currently has too few genes or cells; 2. The current dataset contains invalid data;',
                 message=str(e))
         try: # 聚类
             kmeans_params = {}
@@ -871,14 +871,14 @@ def CL(adata):
     elif 'sc3s' in adata.uns['params']['CL']:
         try: # 预降维
             target_dimensions = 40
-            if adata.shape[1] > target_dimensions:
+            if adata.shape[1] > target_dimensions and adata.shape[0] > target_dimensions:
                 sc.pp.pca(adata,n_comps=target_dimensions) 
             else:
                 adata.obsm['X_pca'] = adata.X            
         except Exception as e:
             raise pipelineException(
                 location='Clustering - sc3s - Pre-dimensionality reduction',
-                advice=':The error may be due to: 1. The dataset currently has too few genes; 2. The current dataset contains invalid data;',
+                advice=':The error may be due to: 1. The dataset currently has too few genes or cells; 2. The current dataset contains invalid data;',
                 message=str(e))
         try: # 聚类
             sc3s_params = {}
