@@ -147,16 +147,27 @@ export default {
             if(this.clusterMethod == 'leiden'){
                 Params['leiden'] = {}
                 if(this.clusterParams['leiden']['resolution'] != ''){
-                    Params['leiden']['resolution'] = Number(this.clusterParams['leiden']['resolution']);
+                    let num = Number(this.clusterParams['leiden']['resolution']);
+                    if(!Number.isNaN(num)){
+                        Params['leiden']['resolution'] = num
+                    }
+                    
                 }
                 if(this.clusterParams['leiden']['resolution'] != ''){
-                    Params['leiden']['n_neighbors'] = Number(this.clusterParams['leiden']['n_neighbors']);
+                    let num = Number(this.clusterParams['leiden']['n_neighbors']);
+                    if(!Number.isNaN(num)){
+                        Params['leiden']['n_neighbors'] = num
+                    }
                 }
             }
             else if(this.clusterMethod == 'kmeans'){
                 Params['kmeans'] = {}
                 if(this.clusterParams['kmeans']['n_clusters'] != ''){
-                    Params['kmeans']['n_clusters'] = Number(this.clusterParams['kmeans']['n_clusters']);
+                    let num = Number(this.clusterParams['kmeans']['n_clusters']);
+                    if(!Number.isNaN(num)){
+                        Params['kmeans']['n_clusters'] = num
+                    }
+                    
                 }
             }
             // else if(this.clusterMethod == 'louvain'){
@@ -171,7 +182,10 @@ export default {
             else if(this.clusterMethod == 'sc3s'){
                 Params['sc3s'] = {}
                 if(this.clusterParams['sc3s']['n_clusters'] != ''){
-                    Params['sc3s']['n_clusters'] = Number(this.clusterParams['sc3s']['n_clusters']);
+                    let num = Number(this.clusterParams['sc3s']['n_clusters']);
+                    if(!Number.isNaN(num)){
+                        Params['sc3s']['n_clusters'] = num
+                    }   
                 }
             }
             return Params;
