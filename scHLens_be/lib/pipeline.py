@@ -718,7 +718,7 @@ def DR(adata):
             PreDR = adata.uns['params']['DR']['UMAP']['PreDR']
             if PreDR:
                 target_dimensions = 40
-                if adata.shape[1] > target_dimensions:
+                if adata.shape[1] > target_dimensions and adata.shape[0] > target_dimensions:
                     sc.pp.pca(adata,n_comps=target_dimensions) 
                 else:
                     adata.obsm['X_pca'] = adata.X
@@ -742,7 +742,7 @@ def DR(adata):
             PreDR = adata.uns['params']['DR']['T-SNE']['PreDR']
             if PreDR:
                 target_dimensions = 40
-                if adata.shape[1] > target_dimensions:
+                if adata.shape[1] > target_dimensions and adata.shape[0] > target_dimensions:
                     sc.pp.pca(adata,n_comps=target_dimensions) 
                 else:
                     adata.obsm['X_pca'] = adata.X
