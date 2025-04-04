@@ -60,6 +60,7 @@
 <script>
 import Vue from "vue";
 import { Form, FormItem, Input, Select, Option, Radio, Tooltip, Card} from "element-ui";
+import {getPipelineParamsErrorT} from "@/utils/objectTemplate";
 
 Vue.component(Form.name, Form);
 Vue.component(FormItem.name, FormItem);
@@ -104,19 +105,103 @@ export default {
              * 注意要把数字字符串转为数字
              */
             let Params = {};
+            let errMessage = getPipelineParamsErrorT()
+
             if(this.SamplingMethod == 'Random'){
+                
                 Params['Random'] = {};
-                if(this.SamplingMethodParams['Random']['sampling_num'] != '')
-                    Params['Random']['sampling_num'] = Number(this.SamplingMethodParams['Random']['sampling_num']);
-                if(this.SamplingMethodParams['Random']['sampling_radio'] != '')
-                    Params['Random']['sampling_radio'] = Number(this.SamplingMethodParams['Random']['sampling_radio']);
+
+                //Number
+                if(this.SamplingMethodParams['Random']['sampling_num'] != ''){
+                    let num = Number(this.SamplingMethodParams['Random']['sampling_num']);
+                    if(isNaN(num)){//Number不合法
+                        errMessage['location'] = 'Downsampling - Random - Number';
+                        errMessage['message'] = '"Number" should be a valid number';
+                        return errMessage;
+                    }
+                    if(num <= 0 || !Number.isInteger(num)){//Number不为正整数
+                        errMessage['location'] = 'Downsampling - Random - Number';
+                        errMessage['message'] = '"Number" should be a positive integer';
+                        return errMessage;
+                    }
+                    Params['Random']['sampling_num'] = num
+                }
+                //sampling_radio
+                if(this.SamplingMethodParams['Random']['sampling_radio'] != ''){
+                    let num = Number(this.SamplingMethodParams['Random']['sampling_radio']);
+                    if(isNaN(num)){//sampling_radio不合法
+                        errMessage['location'] = 'Downsampling - Random - Ratio';
+                        errMessage['message'] = '"Ratio" should be a valid number';
+                        return errMessage;
+                    }
+                    if(num <= 0 || num > 1){//sampling_radio不在(0,1]范围内
+                        errMessage['location'] = 'Downsampling - Random - Ratio';
+                        errMessage['message'] = '"Ratio" should be in (0,1]';
+                        return errMessage;
+                    }
+                    Params['Random']['sampling_radio'] = num
+                }
+                //如果两个都不填，则报错
+                if(!('sampling_num' in Params['Random']) && !('sampling_radio' in Params['Random'])){
+                    errMessage['location'] = 'Downsampling';
+                    errMessage['message'] = 'Please input one of "Number" or "Ratio"';
+                    return errMessage;
+                }
+                //如果两个都填，则报错
+                if('sampling_num' in Params['Random'] && 'sampling_radio' in Params['Random']){
+                    errMessage['location'] = 'Downsampling';
+                    errMessage['message'] = 'You can not input both "Number" and "Ratio" at the same time';
+                    return errMessage;
+                }
+
             }
             if(this.SamplingMethod == 'Stratified'){
                 Params['Stratified'] = {};
-                if(this.SamplingMethodParams['Stratified']['sampling_num'] != '')
-                    Params['Stratified']['sampling_num'] = Number(this.SamplingMethodParams['Stratified']['sampling_num']);
-                if(this.SamplingMethodParams['Stratified']['sampling_radio'] != '')
-                    Params['Stratified']['sampling_radio'] = Number(this.SamplingMethodParams['Stratified']['sampling_radio']);
+
+                //Number
+                if(this.SamplingMethodParams['Stratified']['sampling_num'] != ''){
+                    let num = Number(this.SamplingMethodParams['Stratified']['sampling_num']);
+                    if(isNaN(num)){//Number不合法
+                        errMessage['location'] = 'Downsampling - Stratified - Number';
+                        errMessage['message'] = '"Number" should be a valid number';
+                        return errMessage;
+                    }
+                    if(num <= 0 || !Number.isInteger(num)){//Number不为正整数
+                        errMessage['location'] = 'Downsampling - Stratified - Number';
+                        errMessage['message'] = '"Number" should be a positive integer';
+                        return errMessage;
+                    }
+                    Params['Stratified']['sampling_num'] = num
+                }
+                
+                //sampling_radio
+                if(this.SamplingMethodParams['Stratified']['sampling_radio'] != ''){
+                    let num = Number(this.SamplingMethodParams['Stratified']['sampling_radio']);
+                    if(isNaN(num)){//sampling_radio不合法
+                        errMessage['location'] = 'Downsampling - Stratified - Ratio';
+                        errMessage['message'] = '"Ratio" should be a valid number';
+                        return errMessage;
+                    }
+                    if(num <= 0 || num > 1){//sampling_radio不在(0,1]范围内
+                        errMessage['location'] = 'Downsampling - Stratified - Ratio';
+                        errMessage['message'] = '"Ratio" should be in (0,1]';
+                        return errMessage;
+                    }
+                    Params['Stratified']['sampling_radio'] = num;
+                }
+
+                //如果两个都不填，则报错
+                if(!('sampling_num' in Params['Stratified']) && !('sampling_radio' in Params['Stratified'])){
+                    errMessage['location'] = 'Downsampling';
+                    errMessage['message'] = 'Please input one of "Number" or "Ratio"';
+                    return errMessage;
+                }
+                //如果两个都填，则报错
+                if('sampling_num' in Params['Stratified'] && 'sampling_radio' in Params['Stratified']){
+                    errMessage['location'] = 'Downsampling';
+                    errMessage['message'] = 'You can not input both "Number" and "Ratio" at the same time';
+                    return errMessage;
+                }
             }
             return Params;
         }

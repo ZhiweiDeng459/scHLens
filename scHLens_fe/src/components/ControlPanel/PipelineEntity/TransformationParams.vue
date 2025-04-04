@@ -193,7 +193,7 @@
 <script>
 import Vue from "vue";
 import { Form, FormItem, Input, Tooltip, Checkbox, Card, Switch} from "element-ui";
-
+import {getPipelineParamsErrorT} from "@/utils/objectTemplate";
 Vue.component(Form.name, Form);
 Vue.component(FormItem.name, FormItem);
 Vue.component(Input.name, Input);
@@ -261,32 +261,132 @@ export default {
     methods:{
         getParams(){
             let Params = {}
+            let errMessage = getPipelineParamsErrorT();
+
             //feature selection
             let FSParams = {}
             if(this.feature == 'HighlyVariable'){
                 FSParams['highlyVariableGenes'] = {};
-                if(this.featureParams['HighlyVariable']['topGenes'] != '')
-                    FSParams['highlyVariableGenes']['topGenes'] = Number(this.featureParams['HighlyVariable']['topGenes']);
-                if(this.featureParams['HighlyVariable']['minMean'] != '')
-                    FSParams['highlyVariableGenes']['minMean'] = Number(this.featureParams['HighlyVariable']['minMean']);
-                if(this.featureParams['HighlyVariable']['maxMean'] != '')
-                    FSParams['highlyVariableGenes']['maxMean'] = Number(this.featureParams['HighlyVariable']['maxMean']);
-                if(this.featureParams['HighlyVariable']['minDisp'] != '')
-                    FSParams['highlyVariableGenes']['minDisp'] = Number(this.featureParams['HighlyVariable']['minDisp']);
-                if(this.featureParams['HighlyVariable']['maxDisp'] != '')
-                    FSParams['highlyVariableGenes']['maxDisp'] = Number(this.featureParams['HighlyVariable']['maxDisp']);
+                //top Genes
+                if(this.featureParams['HighlyVariable']['topGenes'] != ''){
+                    let num = Number(this.featureParams['HighlyVariable']['topGenes']);
+                    //判断是否为数字
+                    if(isNaN(num)){
+                        errMessage['location'] = 'Normalization - Gene Selection - HighlyVariable - top Genes';
+                        errMessage['message'] = '"top Genes" should be a valid number';
+                        return errMessage;
+                    }
+                    //判断是否为正整数
+                    if(num <= 0 || !Number.isInteger(num)){
+                        errMessage['location'] = 'Normalization - Gene Selection - HighlyVariable - top Genes';
+                        errMessage['message'] = '"top Genes" should be a positive integer';
+                        return errMessage;
+                    }
+                    FSParams['highlyVariableGenes']['topGenes'] = num
+                }
+                //min Mean
+                if(this.featureParams['HighlyVariable']['minMean'] != ''){
+                    let num = Number(this.featureParams['HighlyVariable']['minMean']);
+                    //判断是否为数字
+                    if(isNaN(num)){
+                        errMessage['location'] = 'Normalization - Gene Selection - HighlyVariable - min Mean';
+                        errMessage['message'] = '"min Mean" should be a valid number';
+                        return errMessage;
+                    }
+                    FSParams['highlyVariableGenes']['minMean'] = num
+                }
+                //max Mean
+                if(this.featureParams['HighlyVariable']['maxMean'] != ''){
+                    let num = Number(this.featureParams['HighlyVariable']['maxMean']);
+                    //判断是否为数字
+                    if(isNaN(num)){
+                        errMessage['location'] = 'Normalization - Gene Selection - HighlyVariable - max Mean';
+                        errMessage['message'] = '"max Mean" should be a valid number';
+                        return errMessage;
+                    }
+                    FSParams['highlyVariableGenes']['maxMean'] = num
+                }
+                //min Disp
+                if(this.featureParams['HighlyVariable']['minDisp'] != ''){
+                    let num = Number(this.featureParams['HighlyVariable']['minDisp']);
+                    //判断是否为数字
+                    if(isNaN(num)){
+                        errMessage['location'] = 'Normalization - Gene Selection - HighlyVariable - min Disp';
+                        errMessage['message'] = '"min Disp" should be a valid number';
+                        return errMessage;
+                    }
+                    FSParams['highlyVariableGenes']['minDisp'] = num
+                }
+                //max Disp
+                if(this.featureParams['HighlyVariable']['maxDisp'] != ''){
+                    let num = Number(this.featureParams['HighlyVariable']['maxDisp']);
+                    //判断是否为数字
+                    if(isNaN(num)){
+                        errMessage['location'] = 'Normalization - Gene Selection - HighlyVariable - max Disp';
+                        errMessage['message'] = '"max Disp" should be a valid number';
+                        return errMessage;
+                    }
+                    FSParams['highlyVariableGenes']['maxDisp'] = num
+                }
+                //判断是否一个参数都没有设置
+                if(FSParams['highlyVariableGenes']['topGenes'] == undefined && FSParams['highlyVariableGenes']['minMean'] == undefined && FSParams['highlyVariableGenes']['maxMean'] == undefined && FSParams['highlyVariableGenes']['minDisp'] == undefined && FSParams['highlyVariableGenes']['maxDisp'] == undefined){
+                    errMessage['location'] = 'Normalization - Gene Selection - HighlyVariable';
+                    errMessage['message'] = 'Please set at least one parameter for "HighlyVariable"';
+                    return errMessage;
+                }
+                
             }
+
             else if(this.feature == 'scry'){
                 FSParams['scry'] = {};
-                if(this.featureParams['scry']['topGenes'] != '')
-                    FSParams['scry']['topGenes'] = Number(this.featureParams['scry']['topGenes']);
+                //top Genes
+                if(this.featureParams['scry']['topGenes'] != ''){
+                    let num = Number(this.featureParams['scry']['topGenes']);
+                    //判断是否为数字
+                    if(isNaN(num)){
+                        errMessage['location'] = 'Normalization - Gene Selection - scry - top Genes';
+                        errMessage['message'] = '"top Genes" should be a valid number';
+                        return errMessage;
+                    }
+                    //判断是否为正整数
+                    if(num <= 0 || !Number.isInteger(num)){
+                        errMessage['location'] = 'Normalization - Gene Selection - scry - top Genes';
+                        errMessage['message'] = '"top Genes" should be a positive integer';
+                        return errMessage;
+                    }
+                    FSParams['scry']['topGenes'] = num
+                }
+                else{//至少需要设置一个参数
+                    errMessage['location'] = 'Normalization - Gene Selection - scry - top Genes';
+                    errMessage['message'] = '"top Genes" should be set';
+                    return errMessage;
+                }
             }
+
             else if(this.feature == 'SCTransform'){
                 FSParams['SCTransform'] = {};
-                if(this.featureParams['SCTransform']['topGenes'] != '')
-                    FSParams['SCTransform']['topGenes'] = Number(this.featureParams['SCTransform']['topGenes']);
-                else{
-                    FSParams['SCTransform']['topGenes'] = 1500
+
+                //top Genes
+                if(this.featureParams['SCTransform']['topGenes'] != ''){
+                    let num = Number(this.featureParams['SCTransform']['topGenes']);
+                    //判断是否为数字
+                    if(isNaN(num)){
+                        errMessage['location'] = 'Normalization - Gene Selection - SCTransform - top Genes';
+                        errMessage['message'] = '"top Genes" should be a valid number';
+                        return errMessage;
+                    }
+                    //判断是否为正整数
+                    if(num <= 0 || !Number.isInteger(num)){
+                        errMessage['location'] = 'Normalization - Gene Selection - SCTransform - top Genes';
+                        errMessage['message'] = '"top Genes" should be a positive integer';
+                        return errMessage;
+                    }
+                    FSParams['SCTransform']['topGenes'] = num
+                }
+                else{//至少需要设置一个参数
+                    errMessage['location'] = 'Normalization - Gene Selection - SCTransform - top Genes';
+                    errMessage['message'] = '"top Genes" should be set';
+                    return errMessage;
                 }
 
             }
