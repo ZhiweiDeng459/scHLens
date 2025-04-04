@@ -87,7 +87,7 @@
 
 <script>
 import Vue from "vue";
-import { Form, FormItem, Input, Select, Option, Radio, Tooltip } from "element-ui";
+import { Form, FormItem, Input, Select, Option, Radio, Tooltip, MessageBox } from "element-ui";
 
 Vue.component(Form.name, Form);
 Vue.component(FormItem.name, FormItem);
@@ -96,6 +96,7 @@ Vue.component(Select.name, Select);
 Vue.component(Option.name, Option);
 Vue.component(Radio.name, Radio);
 Vue.component(Tooltip.name, Tooltip);
+Vue.component(MessageBox.name, MessageBox);
 
 export default {
     name: "ClusterParams",
@@ -153,7 +154,7 @@ export default {
                     }
                     
                 }
-                if(this.clusterParams['leiden']['resolution'] != ''){
+                if(this.clusterParams['leiden']['n_neighbors'] != ''){
                     let num = Number(this.clusterParams['leiden']['n_neighbors']);
                     if(!Number.isNaN(num)){
                         Params['leiden']['n_neighbors'] = num

@@ -255,7 +255,7 @@
 
 <script>
 import Vue from "vue";
-import {DescriptionsItem,Descriptions,Popconfirm, Upload,Form, FormItem, Button, Select, Option, Radio, Tooltip, Dialog, Container, Main, Aside, Header,Footer,Popover,Loading} from "element-ui";
+import {DescriptionsItem,Descriptions,Popconfirm, Upload,Form, FormItem, Button, Select, Option, Radio, Tooltip, Dialog, Container, Main, Aside, Header,Footer,Popover,Loading,MessageBox} from "element-ui";
 
 import QualityControlParams from "@/components/ControlPanel/PipelineEntity/QualityControlParams";
 import TransformationParams from "@/components/ControlPanel/PipelineEntity/TransformationParams";
@@ -293,7 +293,7 @@ Vue.component(Aside.name,Aside);
 Vue.component(Header.name, Header);
 Vue.component(Footer.name, Footer);
 Vue.component(Upload.name,Upload);
-
+Vue.component(MessageBox.name,MessageBox);
 Vue.component(Popconfirm.name,Popconfirm);
 
 Vue.component(Descriptions.name,Descriptions)
@@ -627,12 +627,16 @@ export default {
 
                 //参数合法性检查与报错
                 if('error' in paramsResult){
-                    this.$message({
-                        'message':paramsResult['content'],
-                        'type':'error',
-                        'duration':16000,
-                        'showClose':true,
-                    }) 
+                    MessageBox.alert(
+                            `<strong>Location：</strong>${paramsResult.location}
+                                <br>
+                            <strong>Details：</strong>${paramsResult.message}`,
+                            'Parameter Error',
+                            {
+                                dangerouslyUseHTMLString: true,
+                                type: 'error',
+                            }
+                        );
                     return;
                 }
 
