@@ -28,6 +28,7 @@
 <script>
 import Vue from "vue";
 import { Form, FormItem, Input, Select, Option, Radio, Tooltip, Card} from "element-ui";
+import {getPipelineParamsErrorT} from "@/utils/objectTemplate";
 
 Vue.component(Form.name, Form);
 Vue.component(FormItem.name, FormItem);
@@ -78,13 +79,34 @@ export default {
              * 注意要把数字字符串转为数字
              */
             let Params = {}
+            let errMessage = getPipelineParamsErrorT();
+
             if(this.markerMethod != ''){
                 Params['markerMethod'] = this.markerMethod;
 
             }
             if(this.nGenes != ''){
-                Params['nGenes'] = Number(this.nGenes);
+                let num = Number(this.nGenes);
+                //判断是否为数字
+                if(isNaN(num)){
+                    errMessage['location'] = `DEG Identification - nGenes`;
+                    errMessage['message'] = '"nGenes" should be a valid number';
+                    return errMessage;
+                }
+                //判断是否为正整数
+                if(num <= 0 || !Number.isInteger(num)){
+                    errMessage['location'] = 'DEG Identification - nGenes';
+                    errMessage['message'] = '"nGenes" should be a positive integer';
+                    return errMessage;
+                }
+                Params['nGenes'] = num
             }
+            else{
+                errMessage['location'] = 'DEG Identification - nGenes';
+                errMessage['message'] = '"nGenes" should be set';
+                return errMessage;
+            }
+            
             return Params;
         }
     }

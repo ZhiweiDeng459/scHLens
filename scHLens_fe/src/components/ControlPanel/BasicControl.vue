@@ -621,8 +621,31 @@ export default {
             else{
                 Params['ParentId'] = 'root';
             }
-            //提取各个模块的参数
-            this.pipelineEntityArray.forEach(entity => {
+            // //提取各个模块的参数
+            // this.pipelineEntityArray.forEach(entity => {
+            //     let paramsResult = this.$refs['PipelineEntity' + entity.index][0].getParams();
+
+            //     //参数合法性检查与报错
+            //     if('error' in paramsResult){
+            //         MessageBox.alert(
+            //                 `<strong>Location：</strong>${paramsResult.location}
+            //                     <br>
+            //                 <strong>Details：</strong>${paramsResult.message}`,
+            //                 'Parameter Error',
+            //                 {
+            //                     dangerouslyUseHTMLString: true,
+            //                     type: 'error',
+            //                 }
+            //             );
+            //         return;
+            //     }
+
+
+            //     Params[entity.id] =  paramsResult;    
+            // });
+
+            
+            for(let entity of this.pipelineEntityArray){
                 let paramsResult = this.$refs['PipelineEntity' + entity.index][0].getParams();
 
                 //参数合法性检查与报错
@@ -642,10 +665,9 @@ export default {
 
 
                 Params[entity.id] =  paramsResult;    
-            });
 
-            
-            
+            }
+
 
             //开始计算
             this.$emit("startPipeline",Params); //提交给上一层进行执行相关的工作

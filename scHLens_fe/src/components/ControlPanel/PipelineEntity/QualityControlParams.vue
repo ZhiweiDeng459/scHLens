@@ -100,6 +100,7 @@
 <script>
 import Vue from "vue";
 import { Form, FormItem, Input, Tooltip, Card, Switch} from "element-ui";
+import {getPipelineParamsErrorT} from "@/utils/objectTemplate";
 
 Vue.component(Form.name, Form);
 Vue.component(FormItem.name, FormItem);
@@ -144,27 +145,79 @@ export default {
              * 注意要把数字字符串转为数字
              */
             let Params = {};
+            let errMessage = getPipelineParamsErrorT()
             if(this.opActive.filterCells){
                 Params['filterCells'] = {}
-                if(this.filterCells.minGenes !== '')
-                    Params['filterCells']['min_genes'] = Number(this.filterCells.minGenes);
-                if(this.filterCells.maxGenes !== '')
+
+                //minGenes
+                if(this.filterCells.minGenes !== ''){
+                    let num = Number(this.filterCells.minGenes);
+                    if(isNaN(num)){//num不合法
+                        errMessage['location'] = 'Quality Control - Filter Outlying Cells - min Genes';
+                        errMessage['message'] = '"min Genes" should be a valid number';
+                        return errMessage;                    
+                    }
+                    Params['filterCells']['min_genes'] = num;
+                }
+                //maxGenes
+                if(this.filterCells.maxGenes !== ''){
+                    let num = Number(this.filterCells.maxGenes);
+                    if(isNaN(num)){//num不合法
+                        errMessage['location'] = 'Quality Control - Filter Outlying Cells - max Genes';
+                        errMessage['message'] = '"max Genes" should be a valid number';
+                        return errMessage;                    
+                    }
                     Params['filterCells']['max_genes'] = Number(this.filterCells.maxGenes);
+                }
             }
             if(this.opActive.filterGenes){
                 Params['filterGenes'] = {}
-                if(this.filterGenes.minCells !== '')
-                    Params['filterGenes']['min_cells'] = Number(this.filterGenes.minCells);
-                if(this.filterGenes.maxCells !== '')
+
+                //minCells
+                if(this.filterGenes.minCells !== ''){
+                    let num = Number(this.filterGenes.minCells);
+                    if(isNaN(num)){//num不合法
+                        errMessage['location'] = 'Quality Control - Filter Outlying Genes - min Cells';
+                        errMessage['message'] = '"min Cells" should be a valid number';
+                        return errMessage;                    
+                    }
+                    Params['filterGenes']['min_cells'] = num;
+                }
+                //maxCells
+                if(this.filterGenes.maxCells !== ''){
+                    let num = Number(this.filterGenes.maxCells);
+                    if(isNaN(num)){//num不合法
+                        errMessage['location'] = 'Quality Control - Filter Outlying Genes - max Cells';
+                        errMessage['message'] = '"max Cells" should be a valid number';
+                        return errMessage;                    
+                    }
                     Params['filterGenes']['max_cells'] = Number(this.filterGenes.maxCells);
+                }
             }
             if(this.opActive.qcMetrics){
                 Params['qcMetrics'] = {}
                 Params['qcMetrics']['type'] = this.qcMetrics.type
                 // if(this.qcMetrics.geneCounts !== '')
                 //     Params['qcMetrics']['geneCounts'] = Number(this.qcMetrics.geneCounts);
-                if(this.qcMetrics.pctCounts !== '')
+                if(this.qcMetrics.pctCounts !== ''){
+                    let num = Number(this.qcMetrics.pctCounts);
+                    if(isNaN(num)){//num不合法
+                        errMessage['location'] = 'Quality Control - MT-Gene Control - pct Counts';
+                        errMessage['message'] = '"pct Counts" should be a valid number';
+                        return errMessage;                    
+                    }
+                    if(num < 0 || num > 100){//num超出百分数范围
+                        errMessage['location'] = 'Quality Control - MT-Gene Control - pct Counts';
+                        errMessage['message'] = '"pct Counts" should be between 0% and 100%';
+                        return errMessage;                    
+                    }
                     Params['qcMetrics']['pctCounts'] = Number(this.qcMetrics.pctCounts);
+                }
+                else{
+                    errMessage['location'] = 'Quality Control - MT-Gene Control - pct Counts';
+                    errMessage['message'] = '"pct Counts" should be set';
+                    return errMessage;                    
+                }
 
             }
             return Params;

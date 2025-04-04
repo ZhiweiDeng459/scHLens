@@ -550,18 +550,23 @@ def FS(adata):
             else:
                 if 'minMean' in adata.uns['params']['TS']['FS']['highlyVariableGenes']:
                     HVParams['min_mean'] = adata.uns['params']['TS']['FS']['highlyVariableGenes']['minMean']
+                else:
+                    HVParams['min_mean'] = -np.inf
                 if 'maxMean' in adata.uns['params']['TS']['FS']['highlyVariableGenes']:
                     HVParams['max_mean'] = adata.uns['params']['TS']['FS']['highlyVariableGenes']['maxMean']
+                else:
+                    HVParams['max_mean'] = np.inf
                 if 'minDisp' in adata.uns['params']['TS']['FS']['highlyVariableGenes']:
                     HVParams['min_disp'] = adata.uns['params']['TS']['FS']['highlyVariableGenes']['minDisp']
+                else:
+                    HVParams['min_disp'] = -np.inf
                 if 'maxDisp' in adata.uns['params']['TS']['FS']['highlyVariableGenes']:
-                    HVParams['max_disp'] = adata.uns['params']['TS']['FS']['highlyVariableGenes']['maxDisp'],
+                    HVParams['max_disp'] = adata.uns['params']['TS']['FS']['highlyVariableGenes']['maxDisp']
+                else:
+                    HVParams['max_disp'] = np.inf
             
-            if HVParams: ## 如果有参数，那么进行过滤
-
-
-                sc.pp.highly_variable_genes(adata, **HVParams)
-                adata = adata[:, adata.var.highly_variable]
+            sc.pp.highly_variable_genes(adata, **HVParams)
+            adata = adata[:, adata.var.highly_variable]
         except Exception as e:
             raise pipelineException(
                 location='Feature Selection - HighlyVariable',
