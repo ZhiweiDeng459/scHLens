@@ -559,8 +559,6 @@ def FS(adata):
             
             if HVParams: ## 如果有参数，那么进行过滤
 
-                if 'n_top_genes' in HVParams:
-
 
                 sc.pp.highly_variable_genes(adata, **HVParams)
                 adata = adata[:, adata.var.highly_variable]

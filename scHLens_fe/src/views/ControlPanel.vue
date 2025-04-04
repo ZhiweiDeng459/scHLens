@@ -90,7 +90,7 @@ export default {
         })
     },
     methods: {
-        startPipeline(params) {
+        startPipeline(params) {//已经收集到了参数，开始执行pipeline
 
             console.log('params:',params)
 

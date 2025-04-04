@@ -591,7 +591,7 @@ export default {
         callGlobalPipelineConfig(){
             eventBus.$emit('callPipelineConfig','global');
         },
-        startPipeline() {
+        startPipeline() { //主要是前期的参数整理
             //异常处理
             if(Object.keys(this.dataset).length == 0 && this.mode == 'global'){
                 this.pipelineDialogVisible = false;
@@ -648,7 +648,7 @@ export default {
             
 
             //开始计算
-            this.$emit("startPipeline",Params);
+            this.$emit("startPipeline",Params); //提交给上一层进行执行相关的工作
 
             //关闭pipeline对话框
             this.pipelineDialogVisible = false;
