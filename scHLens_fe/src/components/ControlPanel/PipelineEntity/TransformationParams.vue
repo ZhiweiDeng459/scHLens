@@ -130,9 +130,9 @@
                             </el-tooltip>
                         </div>
                     </el-form-item>
-                    <div>
+                    <div style="padding:5px 5px">
                         <i class="el-icon-warning" style="color:red"></i>
-                        <a style="word-wrap: break-word; overflow-wrap: break-word; white-space: normal;">
+                        <a style="word-break: normal; overflow-wrap: normal;">
                             Since scTransform includes the processes of normalization and gene selection, scHLens will ignore other options in the Normalization module when using scTransform.
                         </a>
                     </div>

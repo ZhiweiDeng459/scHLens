@@ -547,16 +547,23 @@ def FS(adata):
             HVParams = {}   
             if 'topGenes' in adata.uns['params']['TS']['FS']['highlyVariableGenes']:
                 HVParams['n_top_genes'] = adata.uns['params']['TS']['FS']['highlyVariableGenes']['topGenes']
-            if 'minMean' in adata.uns['params']['TS']['FS']['highlyVariableGenes']:
-                HVParams['min_mean'] = adata.uns['params']['TS']['FS']['highlyVariableGenes']['minMean']
-            if 'maxMean' in adata.uns['params']['TS']['FS']['highlyVariableGenes']:
-                HVParams['max_mean'] = adata.uns['params']['TS']['FS']['highlyVariableGenes']['maxMean']
-            if 'minDisp' in adata.uns['params']['TS']['FS']['highlyVariableGenes']:
-                HVParams['min_disp'] = adata.uns['params']['TS']['FS']['highlyVariableGenes']['minDisp']
-            if 'maxDisp' in adata.uns['params']['TS']['FS']['highlyVariableGenes']:
-                HVParams['max_disp'] = adata.uns['params']['TS']['FS']['highlyVariableGenes']['maxDisp'],
-            sc.pp.highly_variable_genes(adata, **HVParams)
-            adata = adata[:, adata.var.highly_variable]
+            else:
+                if 'minMean' in adata.uns['params']['TS']['FS']['highlyVariableGenes']:
+                    HVParams['min_mean'] = adata.uns['params']['TS']['FS']['highlyVariableGenes']['minMean']
+                if 'maxMean' in adata.uns['params']['TS']['FS']['highlyVariableGenes']:
+                    HVParams['max_mean'] = adata.uns['params']['TS']['FS']['highlyVariableGenes']['maxMean']
+                if 'minDisp' in adata.uns['params']['TS']['FS']['highlyVariableGenes']:
+                    HVParams['min_disp'] = adata.uns['params']['TS']['FS']['highlyVariableGenes']['minDisp']
+                if 'maxDisp' in adata.uns['params']['TS']['FS']['highlyVariableGenes']:
+                    HVParams['max_disp'] = adata.uns['params']['TS']['FS']['highlyVariableGenes']['maxDisp'],
+            
+            if HVParams: ## 如果有参数，那么进行过滤
+
+                if 'n_top_genes' in HVParams:
+
+
+                sc.pp.highly_variable_genes(adata, **HVParams)
+                adata = adata[:, adata.var.highly_variable]
         except Exception as e:
             raise pipelineException(
                 location='Feature Selection - HighlyVariable',
