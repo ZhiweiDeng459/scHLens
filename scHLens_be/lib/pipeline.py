@@ -591,6 +591,8 @@ def FS(adata):
                 X = adata.uns['count'].X.A
             else:
                 X = adata.uns['count'].X
+            ## 将ndarray的数据类型转换为float32
+            X = X.astype(np.float32)
             result = SCTransform(X, adata.var.index, adata.obs.index,nTopGenes)
             
 
