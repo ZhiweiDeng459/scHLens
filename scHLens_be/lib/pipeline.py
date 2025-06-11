@@ -516,9 +516,14 @@ def TS2(adata):
     '''
     adata:Anndata
     '''
-    if 'local' not in adata.uns['params']['type']: #TODO 为什么local就不能使用以下的两种变换方式？
+
+    ## 当local pipeline或者使用了scTransform时，跳过该步骤
+    ## TODO 为什么local就不能使用以下的两种变换方式？
+    if 'local' not in adata.uns['params']['type'] and 'SCTransform' not in adata.uns['params']['TS']['FS']: 
         if 'regressOut' in adata.uns['params']['TS']:  
-            try:      
+            try:  
+                adata.var['mt'] = adata.var_names.str.startswith('mt-') | adata.var_names.str.startswith('MT-')
+                sc.pp.calculate_qc_metrics(adata, qc_vars=['mt'], percent_top=None, log1p=False, inplace=True)
                 sc.pp.regress_out(adata, ['total_counts', 'pct_counts_mt']) #TODO 这里是否和qc_metrics有强相关性？
             except Exception as e:
                 raise pipelineException(

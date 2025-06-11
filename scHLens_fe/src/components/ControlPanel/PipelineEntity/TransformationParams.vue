@@ -103,6 +103,12 @@
                         </div>
                     </el-form-item>
                 </el-form>
+                <div style="padding:5px 5px">
+                        <i class="el-icon-warning" style="color:orange"></i>
+                        <a style="word-break: normal; overflow-wrap: normal;">
+                            Executing HighlyVariable requires prior "Logarithmize"; otherwise, an error may occur.
+                        </a>
+                </div>
             </div>
 
             <!--Scry-->
@@ -131,9 +137,15 @@
                         </div>
                     </el-form-item>
                     <div style="padding:5px 5px">
-                        <i class="el-icon-warning" style="color:red"></i>
+                        <i class="el-icon-warning" style="color:orange"></i>
                         <a style="word-break: normal; overflow-wrap: normal;">
                             Since scTransform includes the processes of normalization and gene selection, scHLens will ignore other options in the Normalization module when using scTransform.
+                        </a>
+                    </div>
+                    <div style="padding:5px 5px">
+                        <i class="el-icon-warning" style="color:orange"></i>
+                        <a style="word-break: normal; overflow-wrap: normal;">
+                            scTransform may take a very long time while dealing with large datasets.
                         </a>
                     </div>
                 </el-form>
@@ -162,7 +174,7 @@
                             &nbsp;
                             <el-switch v-model="regressOut"></el-switch>
                         </div>
-                        <el-tooltip content="Take simple linear regression for the data" placement="right">
+                        <el-tooltip content="Take simple linear regression for regressing out 'Total Counts' and 'Mitochondrial cell proportion'" placement="right">
                             <i class="el-icon-question"></i>
                         </el-tooltip>
                     </div>
