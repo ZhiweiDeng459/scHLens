@@ -3,6 +3,7 @@ scHLens_be/job_attachment
 scHLens_be/sample
 scHLens_be/sample_job
 scHLens_be/globalAttachment
+scHLens_be/message
 scHLens_be/.vscode
 scHLens_be/.idea
 scHLens_be/__pycache__
