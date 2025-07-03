@@ -95,6 +95,12 @@
                 </el-popconfirm>
 
             </el-form-item>
+
+            <div style="flex:1 1 0"></div>
+            
+            <el-form-item class="end-list">
+                <el-button type="danger" class="form-buttons" size="mini" @click="ExitJob">Exit Job</el-button>
+            </el-form-item>
         </el-form>
 
         <!--pipeline对话框-->
@@ -593,7 +599,7 @@ export default {
         },
         startPipeline() { //主要是前期的参数整理
             //异常处理
-            if(Object.keys(this.dataset).length == 0 && this.mode == 'global'){
+            if(Object.keys(this.dataset).length == 0 && this.mode == 'global'){//没有数据集的一场处理
                 this.pipelineDialogVisible = false;
                 this.$message({
                     'message':'Please choose a data set',
@@ -718,8 +724,9 @@ export default {
 
 
         },
-
-        
+        ExitJob(){//退出当前Job
+            window.location.reload();
+        },
         /**
          * 
          * 流水线相关
@@ -976,6 +983,9 @@ export default {
 <style scoped lang="less">
 .form {
     padding: 0px 0 0 15px;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
     .form-item {
         display: flex;
         margin-bottom: 0;
@@ -997,6 +1007,23 @@ export default {
             }
         }
     }
+    .end-list {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        /deep/ .el-form-item__content{
+            width: 100%;
+        }
+        .form-buttons {
+            width: 91%;
+            height: 35px;
+            margin: 15px 0 0 0px;
+            /deep/ span{
+                font-size:16px;
+            }
+        }
+    }
+
 }
 
 .upload-require-container{

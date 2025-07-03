@@ -17,16 +17,16 @@
     <p class="body">
       The system's workflow is composed of five steps: <b>Enter a Job</b>,
       <b>Select a Dataset</b>, <b>Start the User-defined Pipeline</b>,
-      <b>Analyze with Interactive Views</b>, <b>Hierarchically Explore</b>. Each
-      step will be explained in detail below.
+      <b>Analyze with Interactive Views</b>, <b>Hierarchically Explore</b>. Each step will be explained in detail in the
+      following sections.
+
+
     </p>
     <p class="body">
-      <b
-        >To better demonstrate the cases in our manuscript, we have integrated
+      <b>Besides, to better demonstrate the cases in our manuscript, we have integrated
         predefined demos into scHLens. For details on how to use them, please
-        refer to "Enter a Job - Create a New Job & Load an Existing Job & Use
-        Samples - Use Samples".</b
-      >
+        refer to "Tutorial -> Enter a Job -> Create a New Job & Load an Existing Job & Use
+        Samples -> Use Samples".</b>
     </p>
   </div>
 </template>

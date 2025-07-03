@@ -9,7 +9,9 @@
     <ol>
       <li class="body">
         <b>Downsampling</b>: Downsample the dataset to speed up the pipeline and reduce
-        memory usage.
+        memory usage. (Node: The "Stratified" method in the Downsampling module of the pipeline requires a dataset with
+        labels. If you want to upload a dataset with labels, you should upload it in h5ad format and set the labels in
+        AnnData.obs['label'].)
       </li>
       <li class="body">
         <b>Quality Control</b>: Filter low-quality cells and genes to ensure
@@ -32,7 +34,8 @@
         assisting analysts in identifying cell types.
       </li>
       <li class="body">
-        <b>Differential Expressed Gene Identification (DEG Identification)</b>: Discover differential expressed genes that characterize
+        <b>Differential Expressed Gene Identification (DEG Identification)</b>: Discover differential expressed genes
+        that characterize
         each cell group.
       </li>
     </ol>
@@ -54,10 +57,8 @@
     <p class="body">
       The dialog will display the added modules and allow users to configure the
       settings for each module (Area B in Figure 1).
-      <b
-        >In these settings, if you do not wish to configure a specific
-        parameter, you should leave its input field blank.</b
-      >
+      <b>In these settings, if you do not wish to configure a specific
+        parameter, you should leave its input field blank.</b>
     </p>
     <p class="body">
       After completing the pipeline configuration, click the green "Run" button
@@ -92,9 +93,9 @@ h1 {
   margin-top: 60px;
 }
 
-h2{
+h2 {
   margin-top: 40px;
-  font-size:29px
+  font-size: 29px
 }
 
 .body {

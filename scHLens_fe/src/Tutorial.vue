@@ -21,6 +21,8 @@
                         <el-menu-item index="/tutorial/enterjob/3" @click="scrollTo('t_CreateLoadJob')">Create a New Job & Load an Existing Job & Use Samples</el-menu-item>
                         <el-menu-item index="/tutorial/enterjob/4" @click="scrollTo('t_ExportImportJob')">Export the Job & Import the Job</el-menu-item>
                         <el-menu-item index="/tutorial/enterjob/5" @click="scrollTo('t_DeleteJob')">Delete Job</el-menu-item>
+                        <el-menu-item index="/tutorial/enterjob/6" @click="scrollTo('t_ExitJob')">Exit Job</el-menu-item>
+
                     </el-submenu>
                     <el-submenu class="menu-item" index="/tutorial/selectDataset">
                         <span class="menu-item-text-1" slot="title">Select a Dataset</span>

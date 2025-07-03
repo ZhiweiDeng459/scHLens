@@ -60,6 +60,10 @@ const routes = [
                         path:'5',
                         component:TenterJob,    
                     },
+                    {
+                        path:'6',
+                        component:TenterJob,    
+                    },
                 ]
             },
             {

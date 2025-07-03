@@ -31,10 +31,12 @@
     </div>
     <p class="body">
       Just shown as Figure 2, The Cell Projection View represents the
-      distribution of cells in 2-dimensional space using a scatter plot. Each
-      dot in the plot represents a cell, and the color of the dot indicates its
-      group from the clustering module in the pipeline. The legend on the right
-      also shows the correspondence between group colors encoding and names.
+      distribution of cells in 2-dimensional space using a scatter plot (The
+      positions of the cells are obtained from the visualization module within
+      the pipeline). Each dot in the plot represents a cell, and the color of
+      the dot indicates its group from the clustering module in the pipeline.
+      The legend on the right also shows the correspondence between group colors
+      encoding and group annotations.
     </p>
     <p class="body">
       Besides, <b>the silhouette score</b>, a computed cluster assessment score,
@@ -42,8 +44,8 @@
     </p>
     <p class="body">
       Selected cells will be highlighted with a black border in this view. For
-      more information about cell selection, refer to the section "Analysis with
-      Views - Interaction - Select Cells"
+      more information about cell selection, refer to the section "Tutorial ->
+      Analysis with Views -> Interaction -> Select Cells"
     </p>
 
     <h2 id="t_GeneProjectionView">Gene Projection View</h2>
@@ -76,20 +78,23 @@
     </ol>
     <p class="body">
       The "Current Gene" component determines the genes to be displayed in this
-      view, which will be then explained in detail in the section "Analysis with
-      Views - Interactions - Switch Current Genes".
+      view, which will be then explained in detail in the section "Tutorial ->
+      Analysis with Views -> Interactions -> Switch Current Genes".
     </p>
 
     <h2 id="t_DiffView">Distribution of Gene Expression View</h2>
     <div class="image-container">
       <img class="image" src="tutorials/img/diff_gene.jpg" />
-      <b class="image-title">Figure 4. The Distribution of Gene Expression View</b>
+      <b class="image-title"
+        >Figure 4. The Distribution of Gene Expression View</b
+      >
     </div>
     <p class="body">
-      The Distribution of Gene Expression View uses a violin plot to indicate the
-      expression of specific gene(s) in each group (as shown in Figure 8), aiming
-      to compare gene expression differences across groups. The violin plot uses
-      kernel density plot to show the distribution of the gene's expression
+      The Distribution of Gene Expression View uses a violin plot to indicate
+      the expression of specific gene(s) in each group (as shown in Figure 8),
+      aiming to compare gene expression differences across groups. These groups
+      are obtained from the clustering module in the pipeline. The violin plot
+      uses kernel density plot to show the distribution of the gene's expression
       across groups.
     </p>
     <p class="body">
@@ -110,13 +115,13 @@
     </ol>
     <p class="body">
       The "Current Gene" component determines the genes to be displayed in this
-      view, which will be then explained in detail in the section "Analysis with
-      Views - Interactions - Switch Current Genes".
+      view, which will be then explained in detail in the section "Tutorial ->
+      Analysis with Views -> Interactions -> Switch Current Genes".
     </p>
     <p class="body">
-      If you have selected some cells ("Analysis with Views - Interaction -
-      Select Cells"), the "Strip" mode will display only the black dots
-      representing the selected cells.
+      If you have selected some cells ("Tutorial -> Analysis with Views ->
+      Interaction -> Select Cells"), the "Strip" mode will display only the
+      black dots representing the selected cells.
     </p>
 
     <h2 id="t_MarkerGeneView">Marker Gene View</h2>
@@ -126,7 +131,8 @@
     </div>
     <p class="body">
       The Marker Gene View uses a dot plot to indicate the marker genes'
-      expression in each group (as shown in Figure 5).
+      expression in each group (as shown in Figure 5). These marker genes are
+      obtained from the DEG Identification module in the pipeline.
     </p>
     <p class="body">
       In the dot plot, the x-axis represents the marker gene list, and the
@@ -152,7 +158,7 @@
       The Controller Bar displays the current cell count and gene count (as
       shown in Figure 6) and includes functionalities such as Switch Current
       Genes, Edit Group Information, and Refreshing Views. These features will
-      be explained in detail in the section "Analysis with Views -
+      be explained in detail in the section "Tutorial -> Analysis with Views ->
       Interactions".
     </p>
     <div class="image-container">
@@ -182,7 +188,7 @@
         <b>Select by Gene Filter</b>: scHLens provides a Gene Filter to assist
         users to select cells. This filter can select cells that meet specific
         gene expression conditions. Shown as Figure 7, Users can click blue
-        "Filter Cells" button to open Gene Filter. Users can type a gene name or
+        "Filter Cells" button in the left side of the system to open Gene Filter. Users can type a gene name or
         part of it in the input box and select a matching gene to add to the
         filter. And then they can drag the slider to set the range of genes as
         conditions. Finally, they can click the blue button "Filter" to select
@@ -226,11 +232,12 @@
 
     <h2 id="t_MergeDuplicateLabels">Merge Duplicate Labels(Annotations)</h2>
     <p class="body">
-      During annotation, different groups may be labeled as the same cell type.
-      In this case, merging groups with identical labels into one group is
-      essential. In the Cell Projection View, you can click the "Merge Duplicate
-      Labels" option in the context menu, and groups with the same labels will
-      be merged into the same group.
+      During annotation(refer to the section "Tutorial -> Analysis with Views ->
+      Interaction -> Annotation "), different groups may be labeled as the same
+      cell type. In this case, merging groups with identical labels into one
+      group is essential. In the Cell Projection View, you can click the "Merge
+      Duplicate Labels" option in the context menu, and groups with the same
+      labels will be merged into the same group.
     </p>
 
     <h2 id="t_Recovery">Recovery</h2>
@@ -245,8 +252,8 @@
     <h2 id="t_SwitchGenes">Switch Current Genes</h2>
     <p class="body">
       Gene Projection View and Distribution of Gene Expression View display
-      information about one or several specific genes.
-      <b>These genes are shown in the Controller Bar and can be modified.</b>
+      information about one or several specific genes (<b>We call them "Current Gene"</b>).
+      These genes are shown in the Controller Bar and can be modified.
     </p>
     <div class="image-container">
       <img class="image" src="tutorials/img/CurrentGenes.png" />
@@ -264,12 +271,12 @@
     </div>
     <p class="body">
       scHLens supports multiple ways to select genes for addition to the current
-      gene list. As shown in Figure 9(A), , users can type a gene name or part
+      gene list. As shown in Figure 9(A), users can type a gene name or part
       of it in the input box in Controller Bar and select a matching gene to add
       to the current gene list. If users want to add multiple genes at once,
       they can click the button highlighted in the red box in Figure 9(A), which
       opens the "Multiple Genes Input" component in Figure 9(B). In this
-      component , users can efficiently add multiple genes by entering them
+      component, users can efficiently add multiple genes by entering them
       separated by semicolons, spaces, or line breaks.
     </p>
 
@@ -307,9 +314,10 @@
     <h2 id="tAnnotation">Annotation</h2>
     <p class="body">
       Cell type annotation is one of the core tasks of scHLens. scHLens supports
-      annotation based on the <b>Group Info dialog</b> (see "Analysis with Views
-      - Interactions - Edit group color & Export group markers"). Users can
-      annotate manually or based on automated recommendations.
+      annotation based on the <b>Group Info dialog</b> (see "Tutorial ->
+      Analysis with Views -> Interactions -> Edit group color & Export group
+      markers"). Users can annotate manually or based on automated
+      recommendations.
     </p>
     <p class="body">
       For <b>manual annotation</b>, users only need to edit the Annotation text
@@ -348,14 +356,21 @@
       <b class="image-title">Figure 11. Annotation</b>
     </div>
     <p class="body">
-      In addition to using the built-in Gene Sets, you can also upload your own Gene Set. As shown in Figure 12, click
-      the blue "+" button and upload a JSON-formatted Gene Set file in the pop-up window. The Gene Set format follows
-      the example of <a href="http://www.csuligroup.com:32768/resource/sampleGeneSets.json" download="Sample.json">Sample.json</a>. </p>
+      In addition to using the built-in Gene Sets, you can also upload your own
+      Gene Set. As shown in Figure 12, click the blue "+" button and upload a
+      JSON-formatted Gene Set file in the pop-up window. The Gene Set format
+      follows the example of
+      <a
+        href="http://www.csuligroup.com:32768/resource/sampleGeneSets.json"
+        download="Sample.json"
+        >Sample.json</a
+      >.
+    </p>
     <div class="image-container">
       <img class="image" src="tutorials/img/uploadGeneSet.png" />
       <b class="image-title">Figure 12. Upload your Gene Set</b>
     </div>
-      <h2 id="t_SaveImages">Save the images</h2>
+    <h2 id="t_SaveImages">Save the images</h2>
     <p class="body">
       Each view, except for the Hierarchy Navigation, can save the view as an
       SVG file. To do this, you need to click the "Save this image" option in

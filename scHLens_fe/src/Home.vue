@@ -44,17 +44,19 @@
     <div class="home-row2">
       <div class="content-box content3">
         <div class="content-box-title">
-          <b class="content-box-title-text">How to use scHLens</b>
+          <b class="content-box-title-text">Getting Started with scHLens</b>
         </div>
         <div class="content-box-content" style="flex-direction: column;">
           <a class="content-box-content-text" style="font-size: 20px;">
-            In scHLens, you can:
-              1. Quickly explore scHLens through three built-in demos.
-              &nbsp;OR&nbsp;
-              2. Create and start your own job.
+            <a>In scHLens, You can:</a>
+            <ul>
+              <li>To learn how to use scHLens, click the "Tutorial" button in the top menu to access the tutorials.</li>
+              <li>To start using scHLens directly, click the "System" button in the top menu to enter the system.</li>
+            </ul>
           </a>
           <a class="content-box-content-text">
-            For more details, please refer to: "Tutorials -> Enter a Job -> Create a New Job & Load an Existing Job & Use Samples"
+            Beside, scHLens have also intergrated the three cases in the manuscript.
+            For more details about how to use the three cases, please refer to: "Tutorials -> Enter a Job -> Create a New Job & Load an Existing Job & Use Samples -> Use Samples"
           </a>
         </div>
       </div>
@@ -149,7 +151,7 @@ export default {
     .content-box-content {
       flex: 1 1 0;
       display: flex;
-      align-items: center;
+      align-items: flex-start;
       justify-content: center;
       padding: 20px 60px;
       .content-box-content-text {

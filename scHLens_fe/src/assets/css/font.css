@@ -6,27 +6,6 @@
 }
 
 @font-face {
-    font-family: 'FranklinGothic';
-    src: url('../fonts/FranklinGothic-Demi.woff.ttf');
-    font-weight: normal;
-    font-style: normal;
-}
-
-@font-face {
-    font-family: 'Cavilant';
-    src: url('../fonts/Cavilant.ttf');
-    font-weight: normal;
-    font-style: normal;
-}
-
-@font-face {
-    font-family: 'Sounso';
-    src: url('../fonts/Sounso.ttf');
-    font-weight: normal;
-    font-style: normal;
-}
-
-@font-face {
     font-family: 'AslinaBold';
     src: url('../fonts/AslinaBold.ttf');
     font-weight: normal;

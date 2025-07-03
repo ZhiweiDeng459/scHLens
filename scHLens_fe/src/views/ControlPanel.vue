@@ -2,7 +2,7 @@
     <div>
         <div class="control-panel-container">
             <div class="main-control-panel">
-                <basic-control @startPipeline="startPipeline"></basic-control>
+                <basic-control style="height:100%" @startPipeline="startPipeline"></basic-control>
             </div>
         </div>
 

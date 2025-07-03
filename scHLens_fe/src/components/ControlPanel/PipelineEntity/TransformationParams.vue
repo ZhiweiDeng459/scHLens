@@ -172,7 +172,7 @@
                         <div>
                             <b>Regress</b>
                             &nbsp;
-                            <el-switch v-model="regressOut"></el-switch>
+                            <el-switch v-model="regressOut" :disabled="mode=='local'"></el-switch>
                         </div>
                         <el-tooltip content="Take simple linear regression for regressing out 'Total Counts' and 'Mitochondrial cell proportion'" placement="right">
                             <i class="el-icon-question"></i>
@@ -190,7 +190,7 @@
                         <div>
                             <b>scale</b>
                             &nbsp;
-                            <el-switch v-model="scale"></el-switch>
+                            <el-switch v-model="scale" :disabled="mode=='local'"></el-switch>
                         </div>
                         <el-tooltip content="scale the expression matrix to unit variance and zero mean" placement="right">
                             <i class="el-icon-question"></i>
@@ -476,6 +476,14 @@ export default {
                 }
             }
         },
+        'mode':{
+            handler(newValue,oldValue){
+                if(newValue == 'local'){
+                    this.regressOut = false;
+                    this.scale = false;
+                }
+            }
+        }
     }
 
 };

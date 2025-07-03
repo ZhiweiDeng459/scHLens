@@ -61,7 +61,7 @@
                         </el-table>
 
                     </div>
-                    <el-button slot="reference" type="text" style="margin-right: 0px;margin-top:10px;"><a style="font-size: 15px;">Use Samples?</a></el-button>
+                    <el-button slot="reference" type="text" style="margin-right: 0px;margin-top:10px;"><b style="font-size: 18px;">>>> Use Samples?</b></el-button>
                 </el-popover>
 
                 <input type="file" ref="JobLoader" @change="handleJobLoaderChangeFile" style="display: none" /> <!--真实的job上传器-->
@@ -197,7 +197,10 @@ export default {
         },
         handleClickJobRow(row,column,event){
             let sampleId = row.id;
-            const loading = Loading.service({ fullscreen: true ,text:'It may take several minutes or even tens of minutes, please wait...'});
+            const loading = Loading.service({ 
+                fullscreen: true, 
+                text: 'It may take several minutes or even tens of minutes, please wait...',
+            });
             loadSampleJob(sampleId).then((res)=>{
                 loading.close()
                 let newJobId = res.data['newJobId']

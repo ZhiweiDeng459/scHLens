@@ -12,8 +12,8 @@
       <b>Annotate groups in the Global Plot</b>, <b>Create Local Plot</b>,
       <b>Find good pattern and Annotate groups in Local Plot</b> and then
       <b>Merge the Local Results</b>. For the process of "Annotate groups in
-      Global Plot" and "Annotate groups in Local Plot", please refer to "Analysis
-      with Views - Interactions - Annotation." We will describe the remaining
+      Global Plot" and "Annotate groups in Local Plot", please refer to "Tutorial -> Analysis with Views ->
+      Interactions -> Annotation." We will describe the remaining
       steps in detail below.
     </p>
     <p class="body">
@@ -26,13 +26,13 @@
       Additionally, cells can be selected from a Local Plot to create subsequent
       Local Plots. This creation process forms a tree-like structure, which is
       represented using Hierarchy Navigation. Detailed explanations can be found
-      in the section "Hierarchical Exploration - Hierarchical Navigation."
+      in the section "Tutorial -> Hierarchical Exploration -> Hierarchical Navigation."
     </p>
 
     <h1 id="t_CrateLocalPlot">Create Local Plot & Find Good Pattern</h1>
     <p class="body">
-      Analysts can select specific cells (as mentioned in "Analysis with Views -
-      Interactions - Select Cells") to start a new pipeline and finally create a
+      Analysts can select specific cells (as mentioned in "Tutorial -> Analysis with Views ->
+      Interactions -> Select Cells") to start a new pipeline and finally create a
       Local Plot.
     </p>
     <p class="body">
@@ -58,7 +58,7 @@
       Plot and Local Plots using a tree structure. As shown in Figure 2, the
       root node represents the Global Plot, while the other nodes represent
       Local Plots. Child nodes are created based on the "Create Local Plot"
-      operation performed on their parent nodes (see "Hierarchical Exploration -
+      operation performed on their parent nodes (see "Tutorial -> Hierarchical Exploration ->
       Create Local Plot & Find Good Pattern" for details). The node
       corresponding to the currently displayed plot in the system interface is
       highlighted in the Hierarchy Navigation, while other undisplayed nodes are
