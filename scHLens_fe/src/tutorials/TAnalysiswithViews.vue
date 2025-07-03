@@ -4,7 +4,7 @@
     <p class="body">
       Upon completion of the pipeline, scHLens generates a variety of
       interactive views that provide a comprehensive profile of the data. Aside
-      from the views, there is also a controller bar to manage these views.
+      from the views, there is also a controller bar to control these views.
     </p>
     <div class="image-container">
       <img class="image" src="tutorials/img/system_layout.png" />
@@ -154,12 +154,12 @@
 
     <h2 id="t_Controller">Controller Bar</h2>
     <p class="body">
-      Area F is the <b>Controller Bar</b>, which facilitates general operations.
-      The Controller Bar displays the current cell count and gene count (as
-      shown in Figure 6) and includes functionalities such as Switch Current
-      Genes, Edit Group Information, and Refreshing Views. These features will
-      be explained in detail in the section "Tutorial -> Analysis with Views ->
-      Interactions".
+      Area F in Figure 1 is the <b>Controller Bar</b>, which facilitates general
+      operations. The Controller Bar displays the current cell count and gene
+      count (as shown in Figure 6) and includes functionalities such as Switch
+      Current Genes, Edit Group Information, and Refreshing Views. These
+      features will be explained in detail in the section "Tutorial -> Analysis
+      with Views -> Interactions".
     </p>
     <div class="image-container">
       <img class="image" src="tutorials/img/count-info.png" />
@@ -188,11 +188,12 @@
         <b>Select by Gene Filter</b>: scHLens provides a Gene Filter to assist
         users to select cells. This filter can select cells that meet specific
         gene expression conditions. Shown as Figure 7, Users can click blue
-        "Filter Cells" button in the left side of the system to open Gene Filter. Users can type a gene name or
-        part of it in the input box and select a matching gene to add to the
-        filter. And then they can drag the slider to set the range of genes as
-        conditions. Finally, they can click the blue button "Filter" to select
-        cells that meet specific gene expression conditions.
+        "Filter Cells" button in the left side of the system to open Gene
+        Filter. Users can type a gene name or part of it in the input box and
+        select a matching gene to add to the filter. And then they can drag the
+        slider to set the range of genes as conditions. Finally, they can click
+        the blue button "Filter" to select cells that meet specific gene
+        expression conditions.
       </li>
       <li class="body">
         <b>Select All</b>: In the context menu of the Cell Projection View, you
@@ -225,19 +226,19 @@
     <p class="body">
       When selecting some important cells, saving them as a single dataset for
       analysis in other scenarios is a good choice. To do this, select the cells
-      and click the "Save as Dataset" option in the context menu. Then, you
-      should name the new dataset in the popup dialog, and the dataset will be
-      exported in h5ad format.
+      and click the "Save as Dataset" option in the context menu in the Cell
+      Projection View. Then, you should name the new dataset in the popup
+      dialog, and the dataset will be exported in h5ad format.
     </p>
 
     <h2 id="t_MergeDuplicateLabels">Merge Duplicate Labels(Annotations)</h2>
     <p class="body">
-      During annotation(refer to the section "Tutorial -> Analysis with Views ->
-      Interaction -> Annotation "), different groups may be labeled as the same
-      cell type. In this case, merging groups with identical labels into one
-      group is essential. In the Cell Projection View, you can click the "Merge
-      Duplicate Labels" option in the context menu, and groups with the same
-      labels will be merged into the same group.
+      During annotation (refer to the section "Tutorial -> Analysis with Views
+      -> Interaction -> Annotation "), different groups may be labeled as the
+      same cell type. In this case, merging groups with identical labels into
+      one group is essential. In the Cell Projection View, you can click the
+      "Merge Duplicate Labels" option in the context menu, and groups with the
+      same labels will be merged into the same group.
     </p>
 
     <h2 id="t_Recovery">Recovery</h2>
@@ -252,8 +253,10 @@
     <h2 id="t_SwitchGenes">Switch Current Genes</h2>
     <p class="body">
       Gene Projection View and Distribution of Gene Expression View display
-      information about one or several specific genes (<b>We call them "Current Gene"</b>).
-      These genes are shown in the Controller Bar and can be modified.
+      information about one or several specific genes (<b
+        >We call them "Current Gene"</b
+      >). These genes are shown in the Controller Bar (Figure 8) and can be
+      changed.
     </p>
     <div class="image-container">
       <img class="image" src="tutorials/img/CurrentGenes.png" />
@@ -271,10 +274,10 @@
     </div>
     <p class="body">
       scHLens supports multiple ways to select genes for addition to the current
-      gene list. As shown in Figure 9(A), users can type a gene name or part
-      of it in the input box in Controller Bar and select a matching gene to add
-      to the current gene list. If users want to add multiple genes at once,
-      they can click the button highlighted in the red box in Figure 9(A), which
+      gene list. As shown in Figure 9(A), users can type a gene name or part of
+      it in the input box in Controller Bar and select a matching gene to add to
+      the current gene list. If users want to add multiple genes at once, they
+      can click the button highlighted in the red box in Figure 9(A), which
       opens the "Multiple Genes Input" component in Figure 9(B). In this
       component, users can efficiently add multiple genes by entering them
       separated by semicolons, spaces, or line breaks.
@@ -284,10 +287,10 @@
     <p class="body">
       As shown in Figure 10, the blue button "Group" in Controller Bar will open
       a dialog with group information(<b>Group Info dialog</b>). These groups
-      are categorized based on the clustering algorithm analysts have selected.
-      The Group Info dialog displays information such as the group's ID, color,
-      size, and annotation(label). The Group Info dialog also supports the
-      following interactions:
+      are generated by the clustering algorithm selected by analysts in the
+      Cluster module of the pipeline. The Group Info dialog displays information
+      such as the group's ID, color, size, and annotation(label). The Group Info
+      dialog also supports the following interactions:
     </p>
     <ol>
       <li class="body">
@@ -327,7 +330,7 @@
     </p>
     <ol>
       <li class="body">
-        Click the text box of the group and then Pop the Recommendation dialog.
+        Click the text box of the group in Group Info dialog and then Pop the Recommendation dialog.
       </li>
       <li class="body">
         Choose the recommendation method and the gene set library
@@ -372,7 +375,7 @@
     </div>
     <h2 id="t_SaveImages">Save the images</h2>
     <p class="body">
-      Each view, except for the Hierarchy Navigation, can save the view as an
+      Each view, except for the Hierarchy Navigation, can be saved as an
       SVG file. To do this, you need to click the "Save this image" option in
       the context menu of these views.
     </p>

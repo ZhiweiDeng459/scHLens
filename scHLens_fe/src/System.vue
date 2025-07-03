@@ -93,6 +93,7 @@
                                 :fetch-suggestions="geneQuerySearch"
                                 @select="handleGeneSelect"
                                 style="width:300px;"
+                                placeholder='Search gene to add to "Current Gene"'
                                 >
                                 <template  slot="prepend">
                                     <!-- <a style="color:white;font-size:15px">Current Gene</a> -->

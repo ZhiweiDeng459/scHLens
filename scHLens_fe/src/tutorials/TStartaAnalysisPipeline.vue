@@ -45,7 +45,7 @@
     </div>
     <p class="body">
       To configure the pipeline, click the blue "Set Pipeline" button in the
-      top-left corner (The red highlighted area in Figure 1) to open the
+      left side of the system (The red highlighted area in Figure 1) to open the
       pipeline dialog.
     </p>
     <p class="body">
