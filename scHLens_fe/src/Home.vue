@@ -58,14 +58,14 @@
             <a style="font-size: 15px;">▶&nbsp;</a> Beside, scHLens have also intergrated the three cases in the manuscript.
             For more details about how to use the three cases, please refer to: "Tutorials -> Enter a Job -> Create a New Job & Load an Existing Job & Use Samples -> Use Samples"
           </a>
-          <!-- <a class="content-box-content-text"><a style="font-size: 15px;">▶&nbsp;&nbsp;</a>There is a demonstration video available for scHLen:</a>
+          <a class="content-box-content-text"><a style="font-size: 15px;">▶&nbsp;&nbsp;</a>There is a demonstration video available for scHLen:</a>
           <video
             controls
             style="margin-top: 20px; width: 60%; height: auto; display: block; margin-left: auto; margin-right: auto;"
-            :src="'http://www.csuligroup.com:32768/resource/test.mp4'"
+            :src="'http://www.csuligroup.com:32768/resource/DemoVideo.mp4'"
           >
             Your browser does not support this video. Please use the latest version of Chrome or Edge.
-          </video> -->
+          </video>
 
         </div>
       </div>
