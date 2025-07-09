@@ -6,6 +6,20 @@ This is the repository for scHLens. scHLens is an interactive analysis platform 
 
 
 
+
+
+## Online version
+
+We provide an online scHLens at http://schlens.csuligroup.com
+
+
+
+## Docker version
+
+We offer a deployable Docker version of scHLens (https://hub.docker.com/r/zhiweideng975/schlens), allowing users to effortlessly deploy and run the software on their own high-performance local servers.
+
+
+
 ## Quick start
 
 This web-server is based on `python 3.7.12`, `R 4.2.2`, `Node.js 16.19.0`. You can launch this web-server using the following steps:
@@ -94,18 +108,6 @@ Then, you can access scHLens via http://localhost:8081 (local) or http://your_ip
 ## Hardware Requirements
 
 We recommend allocating at least 8GB of memory space and 50GB of disk space for scHLens.
-
-
-
-## Online version
-
-We provide an online scHLens at http://schlens.csuligroup.com
-
-
-
-## Docker version
-
-We offer a deployable Docker version of scHLens (https://hub.docker.com/r/zhiweideng975/schlens), allowing users to effortlessly deploy and run the software on their own high-performance local servers.
 
 
 

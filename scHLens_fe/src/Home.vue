@@ -47,17 +47,26 @@
           <b class="content-box-title-text">Getting Started with scHLens</b>
         </div>
         <div class="content-box-content" style="flex-direction: column;">
-          <a class="content-box-content-text" style="font-size: 20px;">
-            <a>In scHLens, You can:</a>
+          <a class="content-box-content-text">
+            <a><a style="font-size: 15px;">▶&nbsp;</a> In scHLens, You can:</a>
             <ul>
               <li>To learn how to use scHLens, click the "Tutorial" button in the top menu to access the tutorials.</li>
               <li>To start using scHLens directly, click the "System" button in the top menu to enter the system.</li>
             </ul>
           </a>
           <a class="content-box-content-text">
-            Beside, scHLens have also intergrated the three cases in the manuscript.
+            <a style="font-size: 15px;">▶&nbsp;</a> Beside, scHLens have also intergrated the three cases in the manuscript.
             For more details about how to use the three cases, please refer to: "Tutorials -> Enter a Job -> Create a New Job & Load an Existing Job & Use Samples -> Use Samples"
           </a>
+          <!-- <a class="content-box-content-text"><a style="font-size: 15px;">▶&nbsp;&nbsp;</a>There is a demonstration video available for scHLen:</a>
+          <video
+            controls
+            style="margin-top: 20px; width: 60%; height: auto; display: block; margin-left: auto; margin-right: auto;"
+            :src="'http://www.csuligroup.com:32768/resource/test.mp4'"
+          >
+            Your browser does not support this video. Please use the latest version of Chrome or Edge.
+          </video> -->
+
         </div>
       </div>
     </div>
@@ -157,6 +166,7 @@ export default {
       .content-box-content-text {
         font-size: 18px;
         line-height: 30px;
+        margin-bottom: 10px;
       }
     }
   }
