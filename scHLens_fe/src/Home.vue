@@ -15,17 +15,18 @@
         <!-- <a href='https://clustrmaps.com/site/1c56d'  title='Visit tracker'>
           <img src='//clustrmaps.com/map_v2.png?cl=ffffff&w=550&t=tt&d=2KYfHIZwB-VTu7d5cWrNgBIQJMtFcIzN8wpfedn98qM&co=2d78ad&ct=ffffff'/>
         </a> -->
-          <img src='//clustrmaps.com/map_v2.png?cl=ffffff&w=550&t=tt&d=2KYfHIZwB-VTu7d5cWrNgBIQJMtFcIzN8wpfedn98qM&co=2d78ad&ct=ffffff'/>
-
-        </div>
+        <img
+          src="//clustrmaps.com/map_v2.png?cl=ffffff&w=550&t=tt&d=2KYfHIZwB-VTu7d5cWrNgBIQJMtFcIzN8wpfedn98qM&co=2d78ad&ct=ffffff"
+        />
+      </div>
       <div class="content-box content2">
         <div class="content-box-title">
           <b class="content-box-title-text">What is scHLens?</b>
         </div>
         <div class="content-box-content">
           <a class="content-box-content-text">
-            <b>scHLens</b> is a web server for hierarchically and interactively exploring cellular
-            heterogeneity. scHLens focused on the cell type
+            <b>scHLens</b> is a web server for hierarchically and interactively
+            exploring cellular heterogeneity. scHLens focused on the cell type
             annotation of scRNA-seq. The main novelty of scHLens includes two
             aspects. Firstly, for each layer, scHLens provided a customized
             pipeline for gene selection, cell visualization, clustering,
@@ -46,27 +47,49 @@
         <div class="content-box-title">
           <b class="content-box-title-text">Getting Started with scHLens</b>
         </div>
-        <div class="content-box-content" style="flex-direction: column;">
+        <div class="content-box-content" style="flex-direction: column">
           <a class="content-box-content-text">
-            <a><a style="font-size: 15px;">▶&nbsp;</a> In scHLens, You can:</a>
+            <a><a style="font-size: 15px">▶&nbsp;</a> In scHLens, You can:</a>
             <ul>
-              <li>To learn how to use scHLens, click the "Tutorial" button in the top menu to access the tutorials.</li>
-              <li>To start using scHLens directly, click the "System" button in the top menu to enter the system.</li>
+              <li>
+                To learn how to use scHLens, click the "Tutorial" button in the
+                top menu to access the tutorials.
+              </li>
+              <li>
+                To start using scHLens directly, click the "System" button in
+                the top menu to enter the system.
+              </li>
             </ul>
           </a>
           <a class="content-box-content-text">
-            <a style="font-size: 15px;">▶&nbsp;</a> Beside, scHLens have also intergrated the three cases in the manuscript.
-            For more details about how to use the three cases, please refer to: "Tutorials -> Enter a Job -> Create a New Job & Load an Existing Job & Use Samples -> Use Samples"
+            <a style="font-size: 15px">▶&nbsp;</a> Beside, scHLens have also
+            intergrated the three cases in the manuscript. For more details
+            about how to use the three cases, please refer to: "Tutorials ->
+            Enter a Job -> Create a New Job & Load an Existing Job & Use Samples
+            -> Use Samples"
           </a>
-          <a class="content-box-content-text"><a style="font-size: 15px;">▶&nbsp;&nbsp;</a>There is a demonstration video available for scHLen:</a>
+          <a class="content-box-content-text"
+            ><a style="font-size: 15px">▶&nbsp;&nbsp;</a>There is a
+            demonstration video available for scHLen (However, this video only briefly 
+            demonstrates the main workflow of the system rather than all
+            functions, in order to avoid making it too lengthy. For more
+            details, please refer to the tutorials.) :</a
+          >
           <video
             controls
-            style="margin-top: 20px; width: 60%; height: auto; display: block; margin-left: auto; margin-right: auto;"
-            :src="'http://www.csuligroup.com:32768/resource/DemoVideo.mp4'"
+            style="
+              margin-top: 20px;
+              width: 60%;
+              height: auto;
+              display: block;
+              margin-left: auto;
+              margin-right: auto;
+            "
+            :src="'http://www.csuligroup.com:32768/resource/Demovideo.mp4'"
           >
-            Your browser does not support this video. Please use the latest version of Chrome or Edge.
+            Your browser does not support this video. Please use the latest
+            version of Chrome or Edge.
           </video>
-
         </div>
       </div>
     </div>
