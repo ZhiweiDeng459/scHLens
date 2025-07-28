@@ -187,7 +187,7 @@
                     :data="enricher.tableData"
                     :max-height="550"
                     v-loading="enricher.loading"
-                    element-loading-text="It may take some time. Please wait..."
+                    element-loading-text="It may take several minutes, please wait..."
                     @row-click="handleEnricherTableRowClick"
                     v-show="curAnnoMethod=='Enricher'"
                     border>
@@ -227,7 +227,7 @@
                     :data="gsea.tableData"
                     :max-height="550"
                     v-loading="gsea.loading"
-                    element-loading-text="It may take some time. Please wait..."
+                    element-loading-text="It may take several minutes, please wait..."
                     v-show="curAnnoMethod=='Gsea'"
                     @row-click="handleGseaTableRowClick"
                     border>

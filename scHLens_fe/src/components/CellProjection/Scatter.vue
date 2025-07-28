@@ -172,7 +172,7 @@ export default {
                     'name':'Restore the Labels',
                     'icon':'icons/restore.svg',
                     'callback':()=>{
-                        const loading = Loading.service({ fullscreen: true });
+                        const loading = Loading.service({ fullscreen: true ,text:'It may take several minutes, please wait...'});
 
                         restoreViewLabels(this.JobId,this.ViewId)
                             .then((response)=>{
@@ -220,7 +220,7 @@ export default {
                     'name':'Restore the Projection',
                     'icon':'icons/restore.svg',
                     'callback':()=>{
-                        const loading = Loading.service({ fullscreen: true });
+                        const loading = Loading.service({ fullscreen: true ,text:'It may take several minutes, please wait...'});
 
                         restoreViewProjections(this.JobId,this.ViewId)
                             .then((response)=>{

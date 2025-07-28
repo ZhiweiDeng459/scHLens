@@ -57,7 +57,7 @@ export default {
                 return;
             }
 
-            const loading = Loading.service({ fullscreen: true });
+            const loading = Loading.service({ fullscreen: true , text:'It may take several minutes, please wait...'});
             let globalViewId = this.mergeRoot
             
             //TODO 这里可能需要注意以下优先级的问题
