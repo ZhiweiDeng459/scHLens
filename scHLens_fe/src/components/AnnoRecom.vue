@@ -187,11 +187,12 @@
                     :data="enricher.tableData"
                     :max-height="550"
                     v-loading="enricher.loading"
+                    element-loading-text="It may take some time. Please wait..."
                     @row-click="handleEnricherTableRowClick"
                     v-show="curAnnoMethod=='Enricher'"
                     border>
                     <b style="font-size:15px" slot="empty">
-                        No appropriate recommended results
+                        {{ emptyText_enricher }}
                     </b>
                     <el-table-column
                         prop="type"
@@ -226,11 +227,12 @@
                     :data="gsea.tableData"
                     :max-height="550"
                     v-loading="gsea.loading"
+                    element-loading-text="It may take some time. Please wait..."
                     v-show="curAnnoMethod=='Gsea'"
                     @row-click="handleGseaTableRowClick"
                     border>
                     <b style="font-size:15px" slot="empty">
-                        No appropriate recommended results
+                        {{ emptyText_gsea }}
                     </b>
                     <el-table-column
                         prop="type"
@@ -383,7 +385,11 @@ export default {
                 'tableData':[], //表格数据
                 'loading':false
             },
-            gsea:null
+            gsea:null,
+
+            //other
+            emptyText_enricher:'',
+            emptyText_gsea:'',
             
         }
     },
@@ -527,12 +533,18 @@ export default {
                         }
                     })
                     this.gsea.loading = false
-
+                    if (this.gsea.tableData.length > 0){
+                        this.emptyText_gsea = ''
+                    }
+                    else{
+                        this.emptyText_gsea = 'No appropriate recommended results.'
+                    }
                 })
                 .catch((err)=>{
                     console.log('err:',err)
                     this.gsea.loading = false
                     this.gsea.tableData = []
+                    this.emptyText_gsea = 'No appropriate recommended results.'
 
                 })
 
@@ -612,13 +624,18 @@ export default {
                         }
                     })
                     this.enricher.loading = false
-
+                    if (this.enricher.tableData.length > 0){
+                        this.emptyText_enricher = ''
+                    }
+                    else{
+                        this.emptyText_enricher = 'No appropriate recommended results.'
+                    }
                 })
                 .catch((err)=>{
                     console.log('err:',err)
                     this.enricher.loading = false
                     this.enricher.tableData = []
-
+                    this.emptyText_enricher = 'No appropriate recommended results.'
                 })
 
         },
