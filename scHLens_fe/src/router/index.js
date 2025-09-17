@@ -83,6 +83,38 @@ const routes = [
             {
                 path:'startaAnalysisPipeline',
                 component:TStartaAnalysisPipeline,
+                children:[
+                    {
+                        path:'1',
+                        component:TStartaAnalysisPipeline,
+                    },
+                    {
+                        path:'2',
+                        component:TStartaAnalysisPipeline,
+                        children:[
+                            {
+                                path:'t_tSNE_perplexity',
+                                component:TStartaAnalysisPipeline,
+                            },
+                            {
+                                path:'t_UMAP_minDist',
+                                component:TStartaAnalysisPipeline,    
+                            },
+                            {
+                                path:'t_UMAP_nNeighbors',
+                                component:TStartaAnalysisPipeline,    
+                            },
+                            {
+                                path:'t_Leiden_nNeighbors',
+                                component:TStartaAnalysisPipeline,    
+                            },
+                            {
+                                path:'t_Leiden_resolution',
+                                component:TStartaAnalysisPipeline,    
+                            },
+                        ]
+                    },
+                ]
             },
             {
                 path:'analysiswithViews',

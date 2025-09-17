@@ -493,7 +493,7 @@ export default {
 
             const a = document.createElement("a")
             a.href = url;
-            a.download = "violin.svg";
+            a.download = "Distribution of Gene Expression View.svg";
             a.click();
             URL.revokeObjectURL(url)
 

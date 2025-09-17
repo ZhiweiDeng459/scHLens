@@ -61,6 +61,8 @@ def initApp():
         os.makedirs('message')
     if not os.path.exists('globalAttachment'):
         os.makedirs('globalAttachment')
+    ## TODO 是否需要初始化resource文件夹 - 因为这部分已经包含到代码中了
+
 
     
 
@@ -246,16 +248,26 @@ def setCustomGeneSetsConfig(JobId,CustomGeneSetsConfig):
     tempFile.close()
     return True
 
+
+
 #
-# 通讯
+# 细胞通讯
 #
+## 获取CellChatDB的信息（不包含实际的内容）
+def getCellChatDBInfo():
+    with open('resource/lr_lib/meta.json','r',encoding = 'utf-8') as f:
+        cellchat_db_info = json.load(f)
+    return cellchat_db_info
 
-## 新建通讯
-def build_new_com():
-    
-    return None
+## 获取指定CellChatDB的信息
+def getCellChatDB(organism,db_name):
+    CellChatDBInfo = getCellChatDBInfo()
+    CellChatDB_index = [item['name'] for item in CellChatDBInfo[organism]].index(db_name)
 
-
+    CellChatDB = {}
+    with open('resource/lr_lib/' + organism + '/' + CellChatDBInfo[organism][CellChatDB_index]['file'],'r',encoding = 'utf-8') as f:
+        CellChatDB = pd.read_csv(f)
+    return CellChatDB 
 
 #
 # 基因推荐
@@ -424,14 +436,18 @@ def translateMouseGeneToHumanGene(gene_list,value_list):## 小鼠基因转换为
     new_gene_list = []
     new_value_list = []
     
+    reverse_map = {} #记录反转关系图谱
+    
     ## direct
     for gene in direct:
         new_gene_list.append(direct[gene])
         new_value_list.append(raw_gene_value_dict[gene])
+        reverse_map[direct[gene]] = gene
     ## multiple
     for gene in multiple:
         new_gene_list.extend(multiple[gene])
         new_value_list.extend([raw_gene_value_dict[gene] for i in range(0,len(multiple[gene]))])
+        reverse_map.update(dict(zip(multiple[gene],[gene for i in range(0,len(multiple[gene]))])))
     ## no index
     for gene in no_index:
         if gene[:2] == 'Gm':
@@ -448,11 +464,12 @@ def translateMouseGeneToHumanGene(gene_list,value_list):## 小鼠基因转换为
             continue
         new_gene_list.append(gene.upper())
         new_value_list.append(raw_gene_value_dict[gene])
+        reverse_map[gene.upper()] = gene
     ## collapse duplicate genes
     collapse_duplicate_mean = pd.Series(new_value_list,index=new_gene_list).groupby(by=new_gene_list,sort=False).mean()
     new_gene_list = collapse_duplicate_mean.index.tolist()
     new_value_list = collapse_duplicate_mean.values.tolist()
-    return new_gene_list,new_value_list
+    return new_gene_list,new_value_list,reverse_map
 
 
 #
@@ -663,6 +680,7 @@ def getResponseFromAdata(adata):
                 'TI':{},
                 'CC':{},
                 "MK": [],
+                'CC':{},
                 'ViewId':ViewId,
                 'ParentId':ParentId,
                 'dendrogram':[],#adata.uns['dendrogram']['linkage'].tolist()},
@@ -693,8 +711,8 @@ def getResponseFromAdata(adata):
                'name':metaData['group_name'][id],
                'color':metaData['group_color'][id],
                'size':cells_label.tolist().count(id),
-               'centerX':np.float(group_X_mean[id]),
-               'centerY':np.float(group_Y_mean[id])} for id in groups_id]
+               'centerX':np.float64(group_X_mean[id]),
+               'centerY':np.float64(group_Y_mean[id])} for id in groups_id]
     
     ## 获取过滤后的group与原有group的匹配布尔矩阵
     raw_groups_id = raw_adata.obs['label'].cat.categories
@@ -777,8 +795,8 @@ def getResponseFromAdata(adata):
 
     ## 细胞通讯数据
     CC = {}
-    # if 'CC' in adata.uns['params']:
-    #     CC = adata.uns['CC']
+    if 'CC' in adata.uns['params']:
+        CC = adata.uns['CC']
 
     # ## 生成颜色数据
 

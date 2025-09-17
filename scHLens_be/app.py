@@ -1,3 +1,26 @@
+# import dask
+# dask.config.set({"scheduler": "threads", "distributed.worker.daemon": False})
+# import sys
+# sys.modules["distributed"] = None
+import sys
+if sys.platform == "win32":
+    import resource
+
+    # 补齐缺失的常量
+    if not hasattr(resource, "RLIMIT_RSS"):
+        resource.RLIMIT_RSS = 5  # 随便给个不会冲突的整数
+    if not hasattr(resource, "RLIMIT_NOFILE"):
+        resource.RLIMIT_NOFILE = 7
+    if not hasattr(resource, "RLIMIT_NPROC"):
+        resource.RLIMIT_NPROC = 6
+    # 你可以按需补充更多 RLIMIT_* 常量
+
+    # 补齐函数
+    if not hasattr(resource, "getrlimit"):
+        resource.getrlimit = lambda *args, **kwargs: (0, 0)
+    if not hasattr(resource, "setrlimit"):
+        resource.setrlimit = lambda *args, **kwargs: None
+                
 from cProfile import label
 import enum
 from unittest import result
@@ -51,7 +74,7 @@ app.json_encoder = NumpyEncoder
 
 @app.route('/scHLens/api/',methods=['POST','GET'])
 def hello_world(): 
-    return 'Hello World!'
+    return 'Hello scHLens!'
 
 
 
@@ -474,6 +497,7 @@ def loadJob():
                                     np.int16, np.int32, np.int64, np.uint8,
                                     np.uint16, np.uint32, np.uint64)):
                     return int(obj)
+                    
                 elif isinstance(obj, (np.float_, np.float16, np.float32,
                                     np.float64)):
                     return float(obj)
@@ -1124,6 +1148,20 @@ def multiGenesSplitFromText():
         
 
 
+'''
+细胞通讯
+'''
+## 查询细胞通讯数据库信息
+@app.route('/scHLens/api/queryCellChatDB', methods=['POST'])
+def queryCellChatDB():
+    reqParams = json.loads(request.get_data())
+
+    cellchat_db_info = getCellChatDBInfo()
+
+    for org in cellchat_db_info.keys():
+        cellchat_db_info[org] = list(map(lambda x:x['name'],cellchat_db_info[org]))
+
+    return jsonify(cellchat_db_info)
 
 
 
@@ -1226,7 +1264,7 @@ def queryGSEA():
 
         
     if organism == 'Mouse':## 鼠基因转换
-        gene_list,value_list = translateMouseGeneToHumanGene(gene_list,value_list)
+        gene_list,value_list,reverse_map = translateMouseGeneToHumanGene(gene_list,value_list)
     rnk = pd.Series(value_list,index=gene_list)
 
     ## run gsea preRank
@@ -1249,6 +1287,16 @@ def queryGSEA():
     if top != 'all':
         gsea_result = gsea_result.head(top)
    
+    ## 如果是小鼠基因，reverse
+    if organism == 'Mouse':
+        def reverse_genes(gene_list):
+            human_genes = gene_list.split(';')
+            mouse_genes = []
+            for gene in human_genes:
+                if gene in reverse_map and reverse_map[gene] not in mouse_genes:
+                    mouse_genes.append(reverse_map[gene])
+            return ';'.join(mouse_genes)
+        gsea_result['Lead_genes'] = gsea_result['Lead_genes'].map(reverse_genes)
 
     return jsonify(gsea_result.to_dict(orient='records'))
 
@@ -1336,10 +1384,7 @@ def queryEnricher():
     gene_list_SortedByExpression = sorted(gene_list,key=index_gene_value,reverse=True)
         
     if organism == 'Mouse':## 鼠基因转换
-        gene_list,value_list = translateMouseGeneToHumanGene(gene_list,value_list)
-
-
-
+        gene_list,value_list,reverse_map = translateMouseGeneToHumanGene(gene_list,value_list)
 
     ## run enrichr
     enrichr_result = gp.enrichr(gene_list,
@@ -1360,6 +1405,16 @@ def queryEnricher():
     if top != 'all':
         enrichr_result = enrichr_result.head(top)
 
+    ## 如果是小鼠基因，reverse
+    if organism == 'Mouse':
+        def reverse_genes(gene_list):
+            human_genes = gene_list.split(';')
+            mouse_genes = []
+            for gene in human_genes:
+                if gene in reverse_map and reverse_map[gene] not in mouse_genes:
+                    mouse_genes.append(reverse_map[gene])
+            return ';'.join(mouse_genes)
+        enrichr_result['Genes'] = enrichr_result['Genes'].map(reverse_genes)
 
     return jsonify(enrichr_result.to_dict(orient='records'))
 

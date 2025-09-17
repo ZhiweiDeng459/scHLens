@@ -49,6 +49,8 @@ export default new Vuex.Store({
             'DotPlot':0,
             'Violin':0,
             'ProjectionTree':0,
+            'CellChatChord':0,
+            'CellChatEdge':0,
         },
         recommendMode:"HighlyVariable",//推荐策略
         pipelineEntityArray:[],//流水线信息
@@ -181,6 +183,8 @@ export default new Vuex.Store({
             //整理前一个curData的相关数据
             state.curGeneName = [state.curData.defaultGene]
         },
+
+        //更新选择数据
         updateChosenData(state, chosenData) {
             state.curData.chosenData = chosenData;
         },
@@ -193,6 +197,13 @@ export default new Vuex.Store({
             if(!state.curGeneName.includes(geneName)){
                 state.curGeneName.unshift(geneName)
             }
+        },
+        addGroupToCurGeneName(state, geneNames) {//添加基因一组
+            geneNames.forEach(geneName=>{
+                if(!state.curGeneName.includes(geneName)){
+                    state.curGeneName.unshift(geneName)
+                }
+            })
         },
         deleteFromCurGeneName(state,geneName){//删除指定基因
             if(state.curGeneName.includes(geneName) && state.curGeneName.length >1){
@@ -317,6 +328,12 @@ export default new Vuex.Store({
          */
         setMessageBoard(state,messageBoard){
             state.messageBoard = messageBoard
+        },
+        /**
+         * AnnoRecomAddiInfoPanel相关（标注额外信息板）
+         */
+        setAnnoRecomAddiInfoPanel(state,AnnoRecomAddiInfoPanel){
+            state.AnnoRecomAddiInfoPanel = AnnoRecomAddiInfoPanel
         },
 
         /**

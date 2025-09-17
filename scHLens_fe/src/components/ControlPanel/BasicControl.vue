@@ -108,6 +108,7 @@
             title="The Pipeline"
             :visible.sync="pipelineDialogVisible"
             :close-on-click-modal="false"
+            :modal-append-to-body="false"
             width="90%"
             top="5vh">
             <div style="display:flex"> 
@@ -144,12 +145,13 @@
                         <SamplingParams v-if="element.id == 'SP'" :ref="'PipelineEntity' + element.index"/>
                         <QualityControlParams v-if="element.id == 'QC'" :ref="'PipelineEntity' + element.index"/>
                         <TransformationParams v-else-if="element.id == 'TS'" :ref="'PipelineEntity' + element.index" :mode="mode"/>
+                        <GeneSelectionParams v-else-if="element.id == 'FS'" :ref="'PipelineEntity' + element.index"/>
                         <DimensionReductionParams v-else-if="element.id == 'DR'" :ref="'PipelineEntity' + element.index"/>
                         <ClusteringParams v-else-if="element.id == 'CL'" :ref="'PipelineEntity' + element.index"/>
                         <MarkerGenesParams v-else-if="element.id == 'MK'" :ref="'PipelineEntity' + element.index"/>
                         <!-- <TrajectoryInferenceParams v-else-if="element.id == 'TI'" :ref="'PipelineEntity' + element.index"/>
-                        <DataIntegrationParams v-else-if="element.id == 'DI'" :ref="'PipelineEntity' + element.index" :ref_dataset="dataset"/>
-                        <CellChatParams v-else-if="element.id == 'CC'" :ref="'PipelineEntity' + element.index"/> -->
+                        <DataIntegrationParams v-else-if="element.id == 'DI'" :ref="'PipelineEntity' + element.index" :ref_dataset="dataset"/> -->
+                        <CellChatParams v-else-if="element.id == 'CC'" :ref="'PipelineEntity' + element.index"/>
                     </el-main>
                 </el-container>
             </div>
@@ -269,6 +271,7 @@ import SamplingParams from "@/components/ControlPanel/PipelineEntity/SamplingPar
 import DimensionReductionParams from "@/components/ControlPanel/PipelineEntity/DimensionReductionParams";
 import ClusteringParams from "@/components/ControlPanel/PipelineEntity/ClusteringParams";
 import MarkerGenesParams from "@/components/ControlPanel/PipelineEntity/MarkerGenesParams";
+import GeneSelectionParams from "@/components/ControlPanel/PipelineEntity/GeneSelectionParams";
 import TrajectoryInferenceParams from "@/components/ControlPanel/PipelineEntity/TrajectoryInferenceParams"
 import DataIntegrationParams from "@/components/ControlPanel/PipelineEntity/DataIntegrationParams"
 import CellChatParams from "@/components/ControlPanel/PipelineEntity/CellChatParams"
@@ -314,9 +317,10 @@ export default {
         DimensionReductionParams,
         TransformationParams,
         MarkerGenesParams,
+        GeneSelectionParams,
         // TrajectoryInferenceParams,
         // DataIntegrationParams,
-        // CellChatParams,
+        CellChatParams,
         GeneFilter,
     },
 
@@ -425,6 +429,11 @@ export default {
                     id:'TS',
                     name:"Normalization", 
                 },
+                {
+                    rank:3,
+                    id:'FS',
+                    name:"Gene Selection", 
+                },
                 // {
                 //     rank:2,
                 //     id:'DI',
@@ -436,17 +445,17 @@ export default {
                 //     name:'Neighbor'
                 // },
                 {
-                    rank:3,
+                    rank:4,
                     id:'DR',
                     name:'Visualization',
                 },
                 {
-                    rank:4,
+                    rank:5,
                     id:'CL',
                     name:'Clustering',
                 },
                 {
-                    rank:5,
+                    rank:6,
                     id:'MK',
                     name:"DEG Identification"
                 },
@@ -455,14 +464,14 @@ export default {
                 //     id:'TI',
                 //     name:"Trajectory Inference"
                 // },
-                // {
-                //     rank:8,
-                //     id:'CC',
-                //     name:"Cell Chat"
-                // }
+                {
+                    rank:7,
+                    id:'CC',
+                    name:"Cell Chat"
+                }
                 ],
             pipelineEntity: [ //保存当前状态下能使用的pipelineEntity
-                {
+            {
                     rank:0,
                     id:'SP',
                     name:"Downsampling"
@@ -477,6 +486,11 @@ export default {
                     id:'TS',
                     name:"Normalization", 
                 },
+                {
+                    rank:3,
+                    id:'FS',
+                    name:"Gene Selection", 
+                },
                 // {
                 //     rank:2,
                 //     id:'DI',
@@ -488,17 +502,17 @@ export default {
                 //     name:'Neighbor'
                 // },
                 {
-                    rank:3,
+                    rank:4,
                     id:'DR',
                     name:'Visualization',
                 },
                 {
-                    rank:4,
+                    rank:5,
                     id:'CL',
                     name:'Clustering',
                 },
                 {
-                    rank:5,
+                    rank:6,
                     id:'MK',
                     name:"DEG Identification"
                 },
@@ -507,10 +521,11 @@ export default {
                 //     id:'TI',
                 //     name:"Trajectory Inference"
                 // },
-                // {
-                //     rank:8,
-                //     id:'CC',
-                //     name:"Cell Chat"}
+                {
+                    rank:7,
+                    id:'CC',
+                    name:"Cell Chat"
+                }
                 ],
     
             /**
@@ -574,7 +589,7 @@ export default {
             this.clearEntity()
             if(newValue == 'local'){
                 // let access = ['TS','NB','DR','CL','TI','MK','CC']
-                let access = ['QC','TS','DR','CL','MK'] //access表示local能包含哪些步骤
+                let access = ['QC','TS','FS','DR','CL','MK','CC'] //access表示local能包含哪些步骤
                 this.pipelineEntity = this.pipelineRawEntity.filter((v)=>{
                     return access.indexOf(v['id']) != -1
                 })
@@ -800,7 +815,7 @@ export default {
             this.clearEntity();
             this.AddAllEntity();
         },
-
+ 
         /**
          * 
          * 文件上传相关

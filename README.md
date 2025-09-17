@@ -34,7 +34,7 @@ git clone https://github.com/ZhiweiDeng459/scHLens.git
 
 **Step2. R prerequisites**
 
-Install `R 4.2.2`, and then run the following commands:
+Install `R 4.4.2`, and then run the following commands:
 
 ```
 cd scHLens

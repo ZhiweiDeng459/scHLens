@@ -463,7 +463,7 @@ export default {
 
             const a = document.createElement("a")
             a.href = url;
-            a.download = "geneDensity.svg";
+            a.download = "Gene Projection View - Density.svg";
             a.click();
             URL.revokeObjectURL(url)
 

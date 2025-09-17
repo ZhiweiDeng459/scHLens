@@ -1,5 +1,5 @@
 <template>
-  <div class="AnnoRecom-container">
+  <div class="AnnoRecom-container" ref="AnnoRecom-container">
     <div class="AnnoRecom-title">
         <b style="font-size:18px;">{{cluster_id}} - Recommendation</b>
     </div>
@@ -189,6 +189,7 @@
                     v-loading="enricher.loading"
                     element-loading-text="It may take several minutes, please wait..."
                     @row-click="handleEnricherTableRowClick"
+                    @row-contextmenu="handleEnricherTableRowRightClick"
                     v-show="curAnnoMethod=='Enricher'"
                     border>
                     <b style="font-size:15px" slot="empty">
@@ -230,6 +231,7 @@
                     element-loading-text="It may take several minutes, please wait..."
                     v-show="curAnnoMethod=='Gsea'"
                     @row-click="handleGseaTableRowClick"
+                    @row-contextmenu="handleGseaTableRowRightClick"
                     border>
                     <b style="font-size:15px" slot="empty">
                         {{ emptyText_gsea }}
@@ -281,12 +283,13 @@
             </el-tab-pane>
         </el-tabs>
 
-        <div>
-
-        </div>
     </div>
     <!--基因集上传面板-->
     <UploadGeneSetsPanel ref="UploadGeneSetsPanel" :updateGeneSets="updateGeneSetsInfo" :gene_sets_info="gene_sets_info"/>
+
+    <!--标注额外信息板-->
+    <AnnoRecomAddiInfoPanel ref="AnnoRecomAddiInfoPanel"/>
+    
 
   </div>
 
@@ -298,10 +301,8 @@ import Vue from 'vue'
 import {Row,Col,Loading,Cascader,Tabs,TabPane} from 'element-ui'
 import {queryGsea,queryEnricher,queryGeneSets} from '@/utils/interface.js'
 import * as d3 from "d3";
-import SelfContextMenu from "@/components/SelfContextMenu"
-
+import AnnoRecomAddiInfoPanel from "@/components/AnnoRecomAddiInfoPanel";
 import UploadGeneSetsPanel from "@/components/UploadGeneSetsPanel";
-
 
 Vue.component(Row.name,Row)
 Vue.component(Col.name,Col)
@@ -315,6 +316,7 @@ export default {
     props:['cluster_id'],
     components:{
         UploadGeneSetsPanel,
+        AnnoRecomAddiInfoPanel,
     },
     computed:{
         curData(){
@@ -329,6 +331,9 @@ export default {
         infoPanel(){
             return this.$store.state.infoPanel
         },
+        // AnnoRecomAddiInfoPanel(){
+        //     return this.$store.state.AnnoRecomAddiInfoPanel
+        // }
     },
     data(){
         return {
@@ -390,6 +395,8 @@ export default {
             //other
             emptyText_enricher:'',
             emptyText_gsea:'',
+            gene_table_title_enricher:'Overlap Genes',
+            gene_table_title_gsea:'Lead Genes',
             
         }
     },
@@ -530,6 +537,7 @@ export default {
                             'NES':row['NES'],
                             'FWER p-val':(row['FWER p-val'] < Number.MIN_VALUE) ? Number.MIN_VALUE : row['FWER p-val'],
                             'FDR q-val':(row['FDR q-val'] < Number.MIN_VALUE) ? Number.MIN_VALUE : row['FDR q-val'],
+                            'Lead Genes':row['Lead_genes'].split(';'),
                         }
                     })
                     this.gsea.loading = false
@@ -616,11 +624,13 @@ export default {
             //发送请求
             await queryEnricher(this.JobId,this.ViewId,organism,gene_set_name,this.cluster_id,logfoldchanges_threshold,p_threshold,top)
                 .then((res)=>{
+                    console.log('enricher:',res.data)
                     this.enricher.tableData = res.data.map(row=>{
                         return {
                             'type':row['Term'],
                             'Combined Score':row['Combined Score'],
                             'Adjusted P-value': row['Adjusted P-value'] < Number.MIN_VALUE ? Number.MIN_VALUE : row['Adjusted P-value'],
+                            'Overlap Genes':row['Genes'].split(';'),
                         }
                     })
                     this.enricher.loading = false
@@ -648,18 +658,30 @@ export default {
          * 回调函数
          */
 
-        handleEnricherTableRowClick(row,column,event){//点击enricher表格的某一行
+        handleEnricherTableRowClick(row,column,event){//左键单击enricher表格的某一行
             this.$emit('RecommendationChosen',{
                 'cluster_id':this.cluster_id,
                 'type':row.type
             })
 
         },
-        handleGseaTableRowClick(row,column,event){//点击gsea表格的某一行
+        handleGseaTableRowClick(row,column,event){//左键单击gsea表格的某一行
             this.$emit('RecommendationChosen',{
                 'cluster_id':this.cluster_id,
                 'type':row.type
             })
+        },
+        handleEnricherTableRowRightClick(row,column,event){//右键单击enricher表格的某一行
+            event.preventDefault();
+            this.$refs['AnnoRecomAddiInfoPanel'].setGeneData(this.gene_table_title_enricher,row['Overlap Genes'])
+            this.$refs['AnnoRecomAddiInfoPanel'].setPos(event.clientY- this.$refs['AnnoRecom-container'].getBoundingClientRect().top,event.clientX + 35 - this.$refs['AnnoRecom-container'].getBoundingClientRect().left)
+            this.$refs['AnnoRecomAddiInfoPanel'].show()
+        },
+        handleGseaTableRowRightClick(row,column,event){//右键单击gsea表格的某一行
+            event.preventDefault();
+            this.$refs['AnnoRecomAddiInfoPanel'].setGeneData(this.gene_table_title_gsea,row['Lead Genes'])
+            this.$refs['AnnoRecomAddiInfoPanel'].setPos(event.clientY- this.$refs['AnnoRecom-container'].getBoundingClientRect().top,event.clientX + 35 - this.$refs['AnnoRecom-container'].getBoundingClientRect().left)
+            this.$refs['AnnoRecomAddiInfoPanel'].show()
         },
         handlePlotTypeTextClick(type){
             this.$emit('RecommendationChosen',{
@@ -682,6 +704,11 @@ export default {
 
         },
         handleTableClick(tab){//当tab切换时触发
+
+            //关闭AnnoRecomAddiInfoPanel
+            this.$refs['AnnoRecomAddiInfoPanel'].hidden()
+
+            //延时
             setTimeout(()=>{  
                 this.reDraw()
             }, 100); // 1000毫秒等于1秒  
@@ -735,7 +762,9 @@ export default {
                     return {
                         'type':v['type'],
                         'value':-Math.log10(v['Adjusted P-value']),
-                        'raw_value':v['Adjusted P-value']
+                        'raw_value':v['Adjusted P-value'],
+                        'gene_title':self.gene_table_title_enricher,
+                        'genes':v['Overlap Genes']
                     }
                 })
             }
@@ -744,7 +773,9 @@ export default {
                     return {
                         'type':v['type'],
                         'value':-Math.log10(v['FDR q-val']),
-                        'raw_value':v['FDR q-val']
+                        'raw_value':v['FDR q-val'],
+                        'gene_title':self.gene_table_title_gsea,
+                        'genes':v['Lead Genes'],
                     }
                 })            
             }
@@ -816,16 +847,22 @@ export default {
                 .attr('width',self.barWidth)
                 .attr('height',d=>(scaleY(minValue)-scaleY(d.value)))
                 .attr('fill','#0173b2')
+                .on('contextmenu',function(e,d){
+                    e.preventDefault();
+                    self.$refs.AnnoRecomAddiInfoPanel.show()
+                    self.$refs.AnnoRecomAddiInfoPanel.setGeneData(d['gene_title'],d['genes'])
+                    self.$refs.AnnoRecomAddiInfoPanel.setPos(e.clientY- self.$refs['AnnoRecom-container'].getBoundingClientRect().top,e.clientX + 35 - self.$refs['AnnoRecom-container'].getBoundingClientRect().left)
+                })
                 .on('mouseover',function(e,d){
 
                     let messageData = {}
                     if(method == 'Enricher'){
-                        messageData['FDR P-value']=d['raw_value']
-                        messageData['-lg FDR P-value']=d['value']
+                        messageData['FDR P-value']=self.HumanFriendlyNum(d['raw_value'])
+                        messageData['-lg FDR P-value']=self.HumanFriendlyNum(d['value'])
                     }
                     else if(method == 'Gsea'){
-                        messageData['FDR q-value']=d['raw_value']
-                        messageData['-lg FDR q-value']=d['value']
+                        messageData['FDR q-value']=self.HumanFriendlyNum(d['raw_value'])
+                        messageData['-lg FDR q-value']=self.HumanFriendlyNum(d['value'])
                     }
 
                     //show info
@@ -837,12 +874,12 @@ export default {
 
                     let messageData = {}
                     if(method == 'Enricher'){
-                        messageData['FDR P-value']=d['raw_value']
-                        messageData['-lg FDR P-value']=d['value']
+                        messageData['FDR P-value']=self.HumanFriendlyNum(d['raw_value'])
+                        messageData['-lg FDR P-value']=self.HumanFriendlyNum(d['value'])
                     }
                     else if(method == 'Gsea'){
-                        messageData['FDR q-value']=d['raw_value']
-                        messageData['-lg FDR q-value']=d['value']
+                        messageData['FDR q-value']=self.HumanFriendlyNum(d['raw_value'])
+                        messageData['-lg FDR q-value']=self.HumanFriendlyNum(d['value'])
                     }
 
                     //show info
@@ -924,6 +961,7 @@ export default {
     display: flex;
     flex-direction: column;
     align-items: stretch;
+    position:relative
     .AnnoRecom-title{
         padding: 5px;
         border-bottom: 3px solid gray;
@@ -998,4 +1036,7 @@ export default {
         cursor: pointer;
     }
 }
+
+
+
 </style>

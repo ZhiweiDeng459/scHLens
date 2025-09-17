@@ -716,6 +716,22 @@ export default {
         },
 
 
+        selectCellsById(CellIds){//根据细胞Id选择细胞
+            let CellIdsSet = new Set(CellIds)
+            d3.select('.scatter-plot').selectAll('.scatter-element')
+                .classed("chosen",function(d){
+                    if(CellIdsSet.has(d.id))
+                        return true
+                    else return d3.select(this).classed("chosen");
+                })
+                .classed("unchosen", function(d){
+                    if(CellIdsSet.has(d.id))
+                        return false
+                    else return d3.select(this).classed("unchosen");
+                })
+            let newChosenNodes = d3.select('.scatter-plot').selectAll('.scatter-element.chosen').data().map(v=>v.id)
+            this.$store.commit(`updateChosenData`, newChosenNodes);
+        },
 
         menuMounted(_this,root,parent) {
         
@@ -743,7 +759,7 @@ export default {
 
             const a = document.createElement("a")
             a.href = url;
-            a.download = "scatter.svg";
+            a.download = "Cell Projection View.svg";
             a.click();
             URL.revokeObjectURL(url)
 
@@ -784,14 +800,16 @@ export default {
     },
     mounted(){
         this.reDraw()
+        //eventbus实现全局范围的节点选择调用
+        eventBus.$on('selectCellsById',(CellIds)=>{
+            this.selectCellsById(CellIds)
+        })
     }
 };
 </script>
 
 <style lang="less" scoped>
 .scatter-container {
-    width: 100%;
-    height: 100%;
     display: inline-block;
     display: flex;
     position: relative;

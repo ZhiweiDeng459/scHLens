@@ -1,0 +1,13 @@
+{
+    "Human":[
+        {"name":"cellchat-human","file":"cellchat_interactions_human.csv","type":"built-in"},
+        {"name":"nichenet-v2-human","file":"nichenet_interactions_human.csv","type":"built-in"}
+
+
+    ],
+    "Mouse":[
+        {"name":"cellchat-mouse","file":"cellchat_interactions_mouse.csv","type":"built-in"},
+        {"name":"nichenet-v2-human","file":"nichenet_interactions_mouse.csv","type":"built-in"}
+
+    ]
+}

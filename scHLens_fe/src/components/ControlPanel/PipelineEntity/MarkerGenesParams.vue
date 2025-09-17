@@ -1,17 +1,15 @@
 <template>
     <div>
         <el-card body-style="padding:10px" style="margin:10px 0px">
+
+            <div slot="header" style="display:flex;justify-content:space-between;align-items:center;">
+                <b>Method</b>
+                <el-select v-model="markerMethod" placeholder="Select..." size="mini" style="width:150px">
+                    <el-option v-for="item in markerOptions" :key="item.value" :label="item.label" :value="item.value"></el-option>
+                </el-select>
+            </div >
+
             <el-form label-width="100px" :label-position="'left'">
-                <el-form-item class="form-item" label="Method">
-                    <div style="display:flex;justify-content:space-between;align-items:center">
-                        <el-select v-model="markerMethod" placeholder="Select..." size="mini" style="width:110px">
-                            <el-option v-for="item in markerOptions" :key="item.value" :label="item.label" :value="item.value"></el-option>
-                        </el-select>
-                        <el-tooltip content="DEG Identification method" placement="right">
-                            <i class="el-icon-question"></i>
-                        </el-tooltip>
-                    </div>
-                </el-form-item>
                 <el-form-item class="form-item" label="nGenes">
                     <div style="display:flex;justify-content:space-between;align-items:center">
                         <el-input v-model="nGenes" size="mini" style="width: 110px;"></el-input>

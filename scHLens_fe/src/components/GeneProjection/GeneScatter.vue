@@ -311,7 +311,7 @@ export default {
 
             const a = document.createElement("a")
             a.href = url;
-            a.download = "geneScatter.svg";
+            a.download = "Gene Projection View - Scatter.svg";
             a.click();
             URL.revokeObjectURL(url)
 

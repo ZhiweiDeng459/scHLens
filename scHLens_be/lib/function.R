@@ -32,6 +32,8 @@ devianceFS <- function(matrix,gene_name,cell_name){
 MySCTransform <- function(matrix,gene_name,cell_name,topGenes){
 
     library(Seurat)
+    library(glmGamPoi)
+    library(sctransform)
 
     rownames(matrix) = cell_name
     colnames(matrix) = gene_name
@@ -98,6 +100,34 @@ Slingshot <- function(rd,cl){
 }
 
 
+# two methods of scCCESS extension
+scCCESS_Kmeans <- function(matrix,geneName,cellName){
+    
+    library(scCCESS)
+    library(reticulate)
+    reticulate::use_condaenv("scHLens", required = TRUE)
+    
+    rownames(matrix) <- cellName
+    colnames(matrix) <- geneName
+    matrix <- t(matrix)
+
+    matrix=prefilter(matrix)
+    res = estimate_k(matrix,
+                    seed = 1, 
+                    cluster_func = function(x,centers) { 
+                    set.seed(42);
+                    kmeans(x, centers)
+                    },
+                    criteria_method = "NMI",
+                    krange = 3:15, ensemble_sizes = 10,
+                    cores = 1
+    )
+
+
+    return(res$ngroups)
+}
+
+
 # A method of cell chat
 # input:
     # matrix: the normlized matrix
@@ -109,10 +139,8 @@ Slingshot <- function(rd,cl){
 
 CellChat <- function(matrix,cellName,geneName,group,DatabaseType){
 
-    library(scater)
     library(Seurat)
-    library(SeuratDisk)
-    library(patchwork)
+    # library(patchwork)
     library(CellChat)
     library(dplyr)
 
@@ -157,8 +185,8 @@ CellChat <- function(matrix,cellName,geneName,group,DatabaseType){
     cellchat<-filterCommunication(cellchat,min.cells=10)
     df.net<-subsetCommunication(cellchat)
 
-    cellchat <- computeCommunProbPathway(cellchat) 
-    df.netp<-subsetCommunication(cellchat,slot.name="netP")
+    # cellchat <- computeCommunProbPathway(cellchat) 
+    # df.netp<-subsetCommunication(cellchat,slot.name="netP")
 
 
 
@@ -166,12 +194,22 @@ CellChat <- function(matrix,cellName,geneName,group,DatabaseType){
     cellchat<-aggregateNet(cellchat)
 
     ## 打包结果
+    ### 通讯的count
     byCount <- list(cellchat@net$count,colnames(cellchat@net$count))
     names(byCount) <- c("data","clusterList")
+    ### 通讯的weight
     byWeight <- list(cellchat@net$weight,colnames(cellchat@net$weight))
     names(byWeight) <- c("data","clusterList")
-    result <- list(byCount,byWeight)
-    names(result) <- c("count","weight") 
+    ### Interaction的信息
+    source <- df.net$source
+    target <- df.net$target
+    ligand <- df.net$ligand
+    receptor <- df.net$receptor
+    prob <- df.net$prob
+    
+    
+    result <- list(byCount,byWeight,source,target,ligand,receptor,prob)
+    names(result) <- c("count","weight","source","target","ligand","receptor","prob")
 
     return(result)
 

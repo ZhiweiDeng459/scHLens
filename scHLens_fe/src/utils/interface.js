@@ -371,6 +371,23 @@ export function multiGenesSplitFromText(JobId,ViewId,multiGeneText) {
     });
 }
 
+
+
+/**
+ * 
+ * 细胞通讯
+ * 
+ */
+
+export function queryCellChatDB(){
+    return axios({
+        method: "post",
+        url: "api/queryCellChatDB",
+        data: {
+        },
+    })
+}
+
 /**
  * 
  * 基因推荐

@@ -84,20 +84,41 @@ def slingshot(rd,cl):
     SlingshotResult['PseudotimeColor'] = list(tempResult.rx2('PseudotimeColor'))
     return SlingshotResult
 
+def scCCESS_Kmeans(X,var_index,obs_index):
+    '''
+    X:adata.X
+    var_index:adata.var.index
+    obs_index:adata.obx.index
+    '''
+    '''
+    return : the recommend clusters num
+    '''
+    
+    anndata2ri.activate()
+
+    r_script = open('./lib/function.R').read()
+    robjects.r(r_script)
+    scCCESS_Kmeans_r = robjects.globalenv['scCCESS_Kmeans']
+    result = scCCESS_Kmeans_r(csc_matrix(X),var_index.to_list(),obs_index.to_list())
+    
+    return result
+
+
 def CellChat(matrix,cellName,geneName,label,DatabaseType):
     '''
     matrix: A matrix of normlized data
     cellName: A list of cell name
     geneName: A list of gene name
     label: A list of cell's annonation
-    DatabaseType: human or mouse
+    organism: human or mouse
+    
     '''
     '''
     return: A dict consist of the net count and net weight
     '''
     anndata2ri.activate()
 
-    r_script = open('./lib/function.R').read()
+    r_script = open('./lib/function.R', encoding="utf-8").read()
     robjects.r(r_script)
     CellChat = robjects.globalenv['CellChat']
     if type(matrix) == np.ndarray:
@@ -112,6 +133,8 @@ def CellChat(matrix,cellName,geneName,label,DatabaseType):
 
     ## pack the result
     CellChatResult = {}
+    
+    ### 通讯基本信息
     types = ['count','weight']
     for t in types:
         clusters = list(tempResult.rx2(t).rx2('clusterList'))
@@ -122,6 +145,11 @@ def CellChat(matrix,cellName,geneName,label,DatabaseType):
             for j in range(0,len(clusters)):
                 dir_[clusters[i]][clusters[j]] = data[i][j]
         CellChatResult[t] = dir_
+    ### Interaction信息
+    types = ["source","target","ligand","receptor","prob"]
+    for t in types:
+        values = list(tempResult.rx2(t))
+        CellChatResult[t] = values
         
     return CellChatResult
 

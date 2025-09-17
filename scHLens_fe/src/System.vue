@@ -156,8 +156,9 @@
                     </div>
             </div>
             <div class="bottom">
+                <view-container style="flex:0 0 600px;margin-right: 5px;" :type="'CellChat'"/>
                 <view-container style="flex:1 1 0;margin-right:5px" :type="'MarkerGene'"/>
-                <ProjectionTree style="flex:0 0 600px;min-width:0px;"/>
+                <ProjectionTree style="flex:0 0 400px;min-width:0px;"/>
             </div>
         </div>
 
@@ -631,6 +632,12 @@ export default {
 
 .el-input.is-readonly .el-input__inner {
     color: black; /* 设置字体颜色为灰色 */
+}
+
+.el-textarea__inner::placeholder {
+  white-space: pre-line;      /* 保留换行符，但允许换行 */
+  word-break: keep-all;       /* 不要把单词拆开 */
+  overflow-wrap: break-word;  /* 单词太长时才强制断行 */
 }
 
 </style>

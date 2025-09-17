@@ -12,7 +12,7 @@
 
 <script>
 import Vue from "vue";
-import { Button ,Image,Notification} from "element-ui";
+import { Button ,Image,Notification,MessageBox} from "element-ui";
 import * as d3 from "d3";
 import curNodeImg from '@/assets/icons/curNode.svg'
 import NodeImg from '@/assets/icons/Node.svg'
@@ -29,6 +29,7 @@ import {requestDeleteView} from "@/utils/interface"
 Vue.component(Button.name, Button);
 Vue.component(Image.name, Image);
 Vue.component(Notification.name,Notification)
+Vue.component(MessageBox.name,MessageBox);
 
 
 
@@ -49,6 +50,11 @@ export default {
                     'icon':'icons/merge.svg',
                     'callback':this.callMergeOptions
                 },
+                {
+                    'name':'Select Cells in this Node',
+                    'icon':'icons/selectWithNode.svg',
+                    'callback':this.selectWithNode
+                }
             ],
             sketchWidth:100,
             sketchHeight:100,
@@ -487,6 +493,35 @@ export default {
         toggleView(ViewId) {
             this.$store.commit("toggleCurData", ViewId);
         },
+        selectWithNode(){
+            //如果选择了多个节点或者没有选择节点的话，报错
+            if(this.chosenViews.length == 0){
+                // this.$message({
+                //     'message':'Please select at least one node to perform this operation',
+                //     'type':'error',
+                //     'showClose':true,
+                // })
+                MessageBox.alert(
+                            `<strong>Details：</strong>Please select at least one node to perform this operation`,
+                            'Error: Select Cells in this Node',
+                            {
+                                dangerouslyUseHTMLString: true,
+                                type: 'error',
+                            }
+                        );
+                return;
+            }
+            //获取选择节点
+            for(let targetViewId of this.chosenViews){
+                let targetData = this.dataList.find(v=>{
+                    return v['ViewId'] == targetViewId
+                });
+                //获取CellIds
+                let CellIds = targetData.cellData.map(v=>v.id)
+                //发送选择请求
+                eventBus.$emit('selectCellsById',CellIds);
+            }
+        }
 
     },
 

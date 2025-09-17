@@ -29,9 +29,11 @@
                         <el-menu-item index="/tutorial/selectDataset/1" @click="scrollTo('t_SelectSample')">Select Sample Dataset</el-menu-item>
                         <el-menu-item index="/tutorial/selectDataset/2" @click="scrollTo('t_AddDataset')">Add your own Dataset</el-menu-item>
                     </el-submenu>
-                    <el-menu-item class="menu-item" index="/tutorial/startaAnalysisPipeline">
+                    <el-submenu class="menu-item" index="/tutorial/startaAnalysisPipeline">
                         <span class="menu-item-text-1" slot="title">Start an Analysis Pipeline</span>
-                    </el-menu-item>
+                        <el-menu-item index="/tutorial/startaAnalysisPipeline/1" @click="scrollTo('t_start_a_pipeline')">How to start a pipeline</el-menu-item>
+                        <el-menu-item index="/tutorial/startaAnalysisPipeline/2" @click="scrollTo('t_set_parameters')">How to set parameters</el-menu-item>
+                    </el-submenu>
                     <el-submenu class="menu-item" index="/tutorial/analysiswithViews">
                         <span class="menu-item-text-1" slot="title">Analysis with Views</span>
                         <el-submenu class="menu-item" index="/tutorial/analysiswithViews/1">
@@ -78,6 +80,7 @@
 
 <script>
 import Vue from 'vue';
+import eventBus from '@/utils/eventBus.js'
 
 
 export default {
@@ -118,13 +121,21 @@ export default {
         },
         handleSubMenuClick(index,indexPath){
             this.$router.push(index)
-
-
             this.$refs['t-scroll'].update();
 
         }
 
-    }
+    },
+    mounted(){
+        eventBus.$on('TutorialJump',(index,id)=>{ //其他组件发来跳转到教程页面的请求
+
+            this.$router.push(index).then(()=>{
+                this.scrollTo(id)
+            }).catch(err=>{});
+            
+            
+        })
+    },
 
 
 };
