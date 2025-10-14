@@ -75,12 +75,6 @@
                         <el-menu-item index="/tutorial/hierarchicalExploration/3" @click="scrollTo('t_DiscoverCorrespondence')">Discover the correspondence of cells across different nodes</el-menu-item>
                         <el-menu-item index="/tutorial/hierarchicalExploration/4" @click="scrollTo('t_Merge')">Merge the Local Results</el-menu-item>
                     </el-submenu>
-                    <el-submenu class="menu-item" index="/tutorial/reproduce">
-                        <span class="menu-item-text-1" slot="title">Case reproduction</span>
-                        <el-menu-item index="/tutorial/reproduce/1" @click="scrollTo('t_re_case1')">Case1: PBMC-3k</el-menu-item>
-                        <el-menu-item index="/tutorial/reproduce/2" @click="scrollTo('t_re_case2')">Case2: Human Pancreas</el-menu-item>
-                        <el-menu-item index="/tutorial/reproduce/3" @click="scrollTo('t_re_case3')">Case3: Human Lung Cancer</el-menu-item>
-                    </el-submenu>
                     <el-menu-item class="menu-item" index="/tutorial/case1">
                         <span class="menu-item-text-1" slot="title">Reproduction: Case1 PBMC-3K</span>
                     </el-menu-item>
