@@ -100,32 +100,32 @@ Slingshot <- function(rd,cl){
 }
 
 
-# two methods of scCCESS extension
-scCCESS_Kmeans <- function(matrix,geneName,cellName){
+# # two methods of scCCESS extension
+# scCCESS_Kmeans <- function(matrix,geneName,cellName){
     
-    library(scCCESS)
-    library(reticulate)
-    reticulate::use_condaenv("scHLens", required = TRUE)
+#     library(scCCESS)
+#     library(reticulate)
+#     reticulate::use_condaenv("scHLens", required = TRUE)
     
-    rownames(matrix) <- cellName
-    colnames(matrix) <- geneName
-    matrix <- t(matrix)
+#     rownames(matrix) <- cellName
+#     colnames(matrix) <- geneName
+#     matrix <- t(matrix)
 
-    matrix=prefilter(matrix)
-    res = estimate_k(matrix,
-                    seed = 1, 
-                    cluster_func = function(x,centers) { 
-                    set.seed(42);
-                    kmeans(x, centers)
-                    },
-                    criteria_method = "NMI",
-                    krange = 3:15, ensemble_sizes = 10,
-                    cores = 1
-    )
+#     matrix=prefilter(matrix)
+#     res = estimate_k(matrix,
+#                     seed = 1, 
+#                     cluster_func = function(x,centers) { 
+#                     set.seed(42);
+#                     kmeans(x, centers)
+#                     },
+#                     criteria_method = "NMI",
+#                     krange = 3:15, ensemble_sizes = 10,
+#                     cores = 1
+#     )
 
 
-    return(res$ngroups)
-}
+#     return(res$ngroups)
+# }
 
 
 # A method of cell chat
@@ -210,6 +210,48 @@ CellChat <- function(matrix,cellName,geneName,group,DatabaseType){
     
     result <- list(byCount,byWeight,source,target,ligand,receptor,prob)
     names(result) <- c("count","weight","source","target","ligand","receptor","prob")
+
+    return(result)
+
+}
+
+
+multik <- function(norm_data,gene_name,cell_name){
+
+    library(MultiK)
+    library(Seurat)
+
+    rownames(norm_data) = cell_name
+    colnames(norm_data) = gene_name
+    norm_data <- t(norm_data)
+
+    seu <- CreateSeuratObject(counts=norm_data) 
+    seu <- SetAssayData(seu, slot = "data", new.data = norm_data)
+
+
+    rep_num = 10
+
+    multik <- MultiK(seu, reps=rep_num)
+
+    ## calc 1-rPCA (x) / runs (y)
+    tog <- as.data.frame(table(multik$k)[table(multik$k) > 1])
+    pacobj <- CalcPAC(x1=0.1, x2=0.9, xvec = tog$Var1, ml = multik$consensus)
+    tog$rpac <- pacobj$rPAC
+    tog$one_minus_rpac  <- 1-tog$rpac
+
+
+    hull_idx <- chull(tog$one_minus_rpac,tog$Freq)
+
+    raw_hull_points <- tog[hull_idx, ]
+
+
+    hull_points <- raw_hull_points[raw_hull_points$Freq > (1 / nrow(tog)) * rep_num * 40,]
+    if(nrow(hull_points)==0){
+        hull_points <- raw_hull_points
+    }
+
+    best_k = hull_points[which.max(hull_points$one_minus_rpac),'Var1']
+
 
     return(result)
 

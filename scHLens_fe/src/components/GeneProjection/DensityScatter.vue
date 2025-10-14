@@ -396,7 +396,7 @@ export default {
             let ScaleX = 2,ScaleY = 10;
             let ScaleWidth=10,ScaleHeigt = legendHeight - 2 * ScaleWidth;
             let ScaleStrokeWidth = 1;
-            let ScaleLabelSize = 10;
+            let ScaleLabelSize = 17;
             legend
                 .append("rect")
                 .attr("fill","url(#densityGradient)")

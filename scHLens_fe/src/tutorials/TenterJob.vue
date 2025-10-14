@@ -26,7 +26,7 @@
     </p>
 
     <h1 id="t_CreateLoadJob">
-      Create a New Job & Load an Existing Job & Use Samples
+      Create a New Job & Load an Existing Job & Use Examples
     </h1>
     <p class="body">
       Entering a job is the starting point of using scHLens. There are three ways to enter a job:
@@ -44,8 +44,8 @@
       state.
     </p>
     <p class="body">
-      <b>Use Samples</b>: scHLens provides three predefined Sample Jobs to illustrate the
-      cases in manuscript. You can click the "Use Samples" button (Area F in Figure 1) to select a sample to load.
+      <b>Use Examples</b>: scHLens provides three predefined Example Jobs to illustrate the
+      cases in manuscript. You can click the "Use Examples" button (Area F in Figure 1) to select a example to load.
     </p>
     <h1 id="t_ExportImportJob">
       Export the Job & Import the Job

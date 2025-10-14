@@ -11,6 +11,7 @@
                 @close="handleSubMenuClick"
                 router>
                 <el-scrollbar ref="t-scroll" class="t-scroll">
+
                     <el-menu-item class="menu-item" index="/tutorial/intro">
                         <span class="menu-item-text-1" slot="title">Introduction</span>
                     </el-menu-item>
@@ -18,7 +19,7 @@
                         <span class="menu-item-text-1" slot="title">Enter a Job</span>
                         <el-menu-item index="/tutorial/enterjob/1" @click="scrollTo('t_WhatisJob')">What is Job?</el-menu-item>
                         <el-menu-item index="/tutorial/enterjob/2" @click="scrollTo('t_WhatisJobID')">What is Job ID?</el-menu-item>
-                        <el-menu-item index="/tutorial/enterjob/3" @click="scrollTo('t_CreateLoadJob')">Create a New Job & Load an Existing Job & Use Samples</el-menu-item>
+                        <el-menu-item index="/tutorial/enterjob/3" @click="scrollTo('t_CreateLoadJob')">Create a New Job & Load an Existing Job & Use Examples</el-menu-item>
                         <el-menu-item index="/tutorial/enterjob/4" @click="scrollTo('t_ExportImportJob')">Export the Job & Import the Job</el-menu-item>
                         <el-menu-item index="/tutorial/enterjob/5" @click="scrollTo('t_DeleteJob')">Delete Job</el-menu-item>
                         <el-menu-item index="/tutorial/enterjob/6" @click="scrollTo('t_ExitJob')">Exit Job</el-menu-item>
@@ -26,7 +27,7 @@
                     </el-submenu>
                     <el-submenu class="menu-item" index="/tutorial/selectDataset">
                         <span class="menu-item-text-1" slot="title">Select a Dataset</span>
-                        <el-menu-item index="/tutorial/selectDataset/1" @click="scrollTo('t_SelectSample')">Select Sample Dataset</el-menu-item>
+                        <el-menu-item index="/tutorial/selectDataset/1" @click="scrollTo('t_SelectSample')">Select Example Dataset</el-menu-item>
                         <el-menu-item index="/tutorial/selectDataset/2" @click="scrollTo('t_AddDataset')">Add your own Dataset</el-menu-item>
                     </el-submenu>
                     <el-submenu class="menu-item" index="/tutorial/startaAnalysisPipeline">
@@ -45,8 +46,9 @@
                             <el-menu-item index="/tutorial/analysiswithViews/1/2" @click="scrollTo('t_GeneProjectionView')">Gene Projection View</el-menu-item>
                             <el-menu-item index="/tutorial/analysiswithViews/1/3" @click="scrollTo('t_DiffView')">Distribution of Gene Expression View</el-menu-item>
                             <el-menu-item index="/tutorial/analysiswithViews/1/4" @click="scrollTo('t_MarkerGeneView')">Marker Gene View</el-menu-item>
-                            <el-menu-item index="/tutorial/analysiswithViews/1/5" @click="scrollTo('t_HierarchyNavigation1')">Hierarchy Navigation</el-menu-item>
-                            <el-menu-item index="/tutorial/analysiswithViews/1/6" @click="scrollTo('t_Controller')">Controller Bar</el-menu-item>
+                            <el-menu-item index="/tutorial/analysiswithViews/1/5" @click="scrollTo('t_CellCommunicationView')">Cell Communication View</el-menu-item>
+                            <el-menu-item index="/tutorial/analysiswithViews/1/6" @click="scrollTo('t_HierarchyNavigation1')">Hierarchy Navigation</el-menu-item>
+                            <el-menu-item index="/tutorial/analysiswithViews/1/7" @click="scrollTo('t_Controller')">Controller Bar</el-menu-item>
                         </el-submenu>
                         <el-submenu class="menu-item" @click="scrollTo('t_Interactions')" index="/tutorial/analysiswithViews/2">
                             <div slot="title" style="width:100%;height: 100%;" @click="scrollTo('t_Interactions')">
@@ -62,7 +64,8 @@
                             <el-menu-item index="/tutorial/analysiswithViews/2/7" @click="scrollTo('t_EditGroup')">Edit group color & Export group markers</el-menu-item>
                             <el-menu-item index="/tutorial/analysiswithViews/2/8" @click="scrollTo('tAnnotation')">Annotation</el-menu-item>
                             <el-menu-item index="/tutorial/analysiswithViews/2/9" @click="scrollTo('t_SaveImages')">Save the images</el-menu-item>
-                            <el-menu-item index="/tutorial/analysiswithViews/2/10" @click="scrollTo('t_Refreshing')">Refreshing Views</el-menu-item>
+                            <el-menu-item index="/tutorial/analysiswithViews/2/10" @click="scrollTo('t_ExportLRTable')">Export the ligand–receptor pairs table</el-menu-item>
+                            <el-menu-item index="/tutorial/analysiswithViews/2/11" @click="scrollTo('t_Refreshing')">Refreshing Views</el-menu-item>
                         </el-submenu>
                     </el-submenu>
                     <el-submenu class="menu-item" index="/tutorial/hierarchicalExploration">
@@ -72,6 +75,21 @@
                         <el-menu-item index="/tutorial/hierarchicalExploration/3" @click="scrollTo('t_DiscoverCorrespondence')">Discover the correspondence of cells across different nodes</el-menu-item>
                         <el-menu-item index="/tutorial/hierarchicalExploration/4" @click="scrollTo('t_Merge')">Merge the Local Results</el-menu-item>
                     </el-submenu>
+                    <el-submenu class="menu-item" index="/tutorial/reproduce">
+                        <span class="menu-item-text-1" slot="title">Case reproduction</span>
+                        <el-menu-item index="/tutorial/reproduce/1" @click="scrollTo('t_re_case1')">Case1: PBMC-3k</el-menu-item>
+                        <el-menu-item index="/tutorial/reproduce/2" @click="scrollTo('t_re_case2')">Case2: Human Pancreas</el-menu-item>
+                        <el-menu-item index="/tutorial/reproduce/3" @click="scrollTo('t_re_case3')">Case3: Human Lung Cancer</el-menu-item>
+                    </el-submenu>
+                    <el-menu-item class="menu-item" index="/tutorial/case1">
+                        <span class="menu-item-text-1" slot="title">Reproduction: Case1 PBMC-3K</span>
+                    </el-menu-item>
+                    <el-menu-item class="menu-item" index="/tutorial/case2">
+                        <span class="menu-item-text-1" slot="title">Reproduction: Case2 Pancreatic cell atlas</span>
+                    </el-menu-item>
+                    <el-menu-item class="menu-item" index="/tutorial/case3">
+                        <span class="menu-item-text-1" slot="title">Reproduction: Case3 Human Lung Cancer</span>
+                    </el-menu-item>
                 </el-scrollbar>
             </el-menu>
             <router-view/>

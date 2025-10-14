@@ -18,20 +18,80 @@ import SelfContextMenu from "@/components/SelfContextMenu"
 
 export default {
     name:'CellChatChordPlot',
-    props:['setInteractionTable'],
+    props:['setInteractionTable','dataMode'],
     components:{
         'SelfContextMenu':SelfContextMenu
     },
 
     data() {
         return {
-            mode:'weight',
             menuItems:[
                 {
                     'name':'Save this Image',
                     'icon':'icons/save_as_image.svg',
                     'callback':()=>{
                         this.saveToFile();
+                    }
+                },
+                {
+                    'name':'Save interaction table',
+                    'icon':'icons/download.svg',
+                    'callback':()=>{
+                        const self = this
+                        let interaction_map = {}
+                        let groupids = self.groups.map(item=>item['id']) 
+                        for(let i = 0;i < groupids.length;i++){
+                            interaction_map[groupids[i]] = {} 
+                            for(let j = 0;j < groupids.length;j++){
+                                interaction_map[groupids[i]][groupids[j]] = []
+                            }
+                        }
+                        for(let i = 0;i < self.CC['source'].length;i++){
+                            let source = self.CC['source'][i]
+                            let target = self.CC['target'][i]
+                            let ligand = self.CC['ligand'][i]
+                            let receptor = self.CC['receptor'][i]
+                            let score = self.CC['prob'][i]
+                            interaction_map[source][target].push({
+                                'source':self.groups.find(v=>v.id==source).name,
+                                'target':self.groups.find(v=>v.id==target).name,
+                                'ligand':ligand,
+                                'receptor':receptor,
+                                'score':score.toPrecision(4)
+                            })
+                        }
+
+                        let table_data = []
+                        for(let i = 0;i < groupids.length;i++){
+                            for(let j = 0;j < groupids.length;j++){
+                                table_data.push(...interaction_map[groupids[i]][groupids[j]])
+                            }
+                        }
+
+                        if(table_data.length==0){
+                            this.$message({
+                                message: 'No interaction data to export!',
+                                type: 'error'
+                            });
+                            return;
+                        }
+
+                        // 1. 将对象数组转换为 CSV 字符串
+                        const headers = Object.keys(table_data[0]).join(",") + "\n";
+                        const rows = table_data.map(obj => Object.values(obj).join(",")).join("\n");
+                        const csvContent = headers + rows;
+
+                        // 2. 创建一个 Blob 对象
+                        const blob = new Blob([csvContent], { type: "text/csv;charset=utf-8;" });
+
+                        // 3. 创建下载链接并触发下载
+                        const link = document.createElement("a");
+                        link.href = URL.createObjectURL(blob);
+                        link.download = "interaction.csv";
+                        document.body.appendChild(link);
+                        link.click();
+                        document.body.removeChild(link);
+
                     }
                 }
             ],
@@ -78,6 +138,9 @@ export default {
                 this.reDraw()
             },
         },
+        dataMode(){
+            this.reDraw()
+        },
     },
     methods:{
         drawPlot(){
@@ -98,9 +161,14 @@ export default {
             const padding = 20;
             const self = this;
             
+            //开始绘图
+            svg.selectAll("*").remove();
+            if(this.CC===undefined || this.CC===null) return;
+            if(Object.keys(this.CC).length===0) return;
+
             
             //整理数据
-            let rawData = this.CC[this.mode];
+            let rawData = this.CC[this.dataMode];
             
             let names =  this.groups.map(item=>item['id'])
             let annos = this.groups.map(item=>item['name'])
@@ -151,9 +219,7 @@ export default {
                 .sortChords(d3.descending)
 
 
-            //开始绘图
-            svg.selectAll("*").remove();
-            
+
 
 
             const chords = chord(matrix);
@@ -233,11 +299,20 @@ export default {
                         .attr("stroke-width",2)
                     //显示信息
                     self.infoPanel.show()
-                    self.infoPanel.setMessageData({
-                        'Source':self.groups[d.source.index].name,
-                        'Target':self.groups[d.target.index].name,
-                        'Strength':matrix[d.source.index][d.target.index].toPrecision(3),
-                    })
+                    if(self.dataMode=='weight'){
+                        self.infoPanel.setMessageData({
+                            'Source':self.groups[d.source.index].name,
+                            'Target':self.groups[d.target.index].name,
+                            'Strength':matrix[d.source.index][d.target.index].toPrecision(3),
+                        })
+                    }
+                    else{ // count
+                        self.infoPanel.setMessageData({
+                            'Source':self.groups[d.source.index].name,
+                            'Target':self.groups[d.target.index].name,
+                            'Count':matrix[d.source.index][d.target.index],
+                        })
+                    }
                     self.infoPanel.setPos(e.clientY - 40,e.clientX + 30)
                 })
                 .on("mousemove",function(e,d){
@@ -246,11 +321,20 @@ export default {
                         .attr("stroke-width",2)
                     //显示信息
                     self.infoPanel.show()
-                    self.infoPanel.setMessageData({
-                        'Source':self.groups[d.source.index].name,
-                        'Target':self.groups[d.target.index].name,
-                        'Strength':matrix[d.source.index][d.target.index].toPrecision(3),
-                    })
+                    if(self.dataMode=='weight'){
+                        self.infoPanel.setMessageData({
+                            'Source':self.groups[d.source.index].name,
+                            'Target':self.groups[d.target.index].name,
+                            'Strength':matrix[d.source.index][d.target.index].toPrecision(3),
+                        })
+                    }
+                    else{ // count
+                        self.infoPanel.setMessageData({
+                            'Source':self.groups[d.source.index].name,
+                            'Target':self.groups[d.target.index].name,
+                            'Count':matrix[d.source.index][d.target.index],
+                        })
+                    }
                     self.infoPanel.setPos(e.clientY - 40,e.clientX + 30)
 
                 })
@@ -284,11 +368,13 @@ export default {
 
             const a = document.createElement("a")
             a.href = url;
-            a.download = "Cell Chat View - ChordPlot.svg";
+            a.download = "Cell Communication View - ChordPlot.svg";
             a.click();
             URL.revokeObjectURL(url)
         },
         reDraw(){
+            
+
             eventBus.$emit('CellChatViewRefreshingStart');
             //重绘所有
             this.drawPlot();

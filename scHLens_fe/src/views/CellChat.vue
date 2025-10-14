@@ -1,22 +1,26 @@
 <template>
         <div class="cell-chat-container">
             <div class="cc-view-header">
-                <a id="cell-chat-title">Cell Chat View</a>
+                <a id="cell-chat-title">Cell Communication View</a>
                 <!-- <el-tooltip content="Display the difference of gene-expression among clusters" placement="top">
                     <i class="el-icon-question"></i>
                 </el-tooltip> -->
             </div>
             <div class="cc-view-container">
                 <div class="cell-chat-view-container">
-                    <CellChatChordPlot v-if="CellChatMode=='Chord'" class="cell-chat-view" :setInteractionTable="setInteractionTable"></CellChatChordPlot>
-                    <CellChatEdgePlot v-if="CellChatMode=='Edge'"  class="cell-chat-view" :setInteractionTable="setInteractionTable"></CellChatEdgePlot>
+                    <CellChatChordPlot v-if="CellChatMode=='Chord'" class="cell-chat-view" :setInteractionTable="setInteractionTable" :dataMode="dataMode"></CellChatChordPlot>
+                    <CellChatEdgePlot v-if="CellChatMode=='Edge'"  class="cell-chat-view" :setInteractionTable="setInteractionTable" :dataMode="dataMode"></CellChatEdgePlot>
                 </div>
                 <div class="interaction-table-container">
                     <InteractionTable style="width:100%;padding-top:40px;" ref="interactionTable"></InteractionTable>
                 </div>
-                <el-radio-group v-model="CellChatMode" size="mini" class="mode-toggle">
+                <el-radio-group v-model="CellChatMode" size="mini" class="CellChatMode-toggle">
                     <el-radio-button label="Chord"></el-radio-button>
                     <el-radio-button label="Edge"></el-radio-button>
+                </el-radio-group>
+                <el-radio-group v-model="dataMode" size="mini" class="dataMode-toggle">
+                    <el-radio-button label="weight">Weight</el-radio-button>
+                    <el-radio-button label="count">Count</el-radio-button>
                 </el-radio-group>
             </div>
 
@@ -40,7 +44,8 @@ export default {
     },
     data(){
         return {
-            CellChatMode:'Chord' //Chord or Edge
+            CellChatMode:'Chord', //Chord or Edge
+            dataMode:'weight', //Weight or Count
         }
     },
     computed: {
@@ -137,12 +142,23 @@ export default {
             align-items: stretch;
             
         }
-        .mode-toggle{
+        .CellChatMode-toggle{
                 position:absolute;
-                right:10px;
+                right:0px;
                 top:10px;
                 /deep/ .el-radio-button__inner {
                     height: 27px;
+                    padding:7px 12px;
+                }
+                z-index:99
+        }
+        .dataMode-toggle{
+                position:absolute;
+                right:130px;
+                top:10px;
+                /deep/ .el-radio-button__inner {
+                    height: 27px;
+                    padding:7px 12px;
                 }
                 z-index:99
         }

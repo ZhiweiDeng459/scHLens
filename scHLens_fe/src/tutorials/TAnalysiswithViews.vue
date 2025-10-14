@@ -12,9 +12,9 @@
     </div>
     <p class="body">
       Figure 1 illustrates the positions of these views and the controller
-      within the system: Areas A-E correspond to <b>Cell Projection View</b>,
+      within the system: Areas A-F correspond to <b>Cell Projection View</b>,
       <b>Gene Projection View</b>, <b>Distribution of Gene Expression View</b>,
-      <b>Marker Gene View</b> and <b>Hierarchy Navigation</b>. Area F is
+      <b>Marker Gene View</b>, <b>Cell Communication View</b> and <b>Hierarchy Navigation</b>. Area G is
       <b>controller bar</b>. The following sections will provide a detailed
       introduction to these components and their associated interactions.
     </p>
@@ -85,13 +85,11 @@
     <h2 id="t_DiffView">Distribution of Gene Expression View</h2>
     <div class="image-container">
       <img class="image" src="tutorials/img/diff_gene.jpg" />
-      <b class="image-title"
-        >Figure 4. The Distribution of Gene Expression View</b
-      >
+      <b class="image-title">Figure 4. The Distribution of Gene Expression View</b>
     </div>
     <p class="body">
       The Distribution of Gene Expression View uses a violin plot to indicate
-      the expression of specific gene(s) in each group (as shown in Figure 8),
+      the expression of specific gene(s) in each group (as shown in Figure 4),
       aiming to compare gene expression differences across groups. These groups
       are obtained from the clustering module in the pipeline. The violin plot
       uses kernel density plot to show the distribution of the gene's expression
@@ -146,6 +144,52 @@
       current genes list.
     </p>
 
+
+    <h2 id="t_CellCommunicationView">Cell Communication View</h2>
+    <div class="image-container">
+      <img class="image" src="tutorials/img/CellCommunication.png" />
+      <b class="image-title">Figure 6. The Cell Communication View</b>
+    </div>
+    <p class="body">
+      The Cell Communication View illustrates interactions among different cell groups, aiming to map cellular interaction
+      networks. (as shown in Figure 6). These groups
+      are obtained from the clustering module in the pipeline.
+    </p>
+    <p class="body">
+      The Cell Communication View supports the visualization of two types of cell communication data: "Weight" and
+      "Count", which can be switched in the yellow box A in Figure 6. "Weight" represents the communication
+      strength between groups, while "Count" indicates the number of ligand–receptor pairs between groups.
+    </p>
+    <p class="body">
+      The plot also offers two visualization modes to assist analysts: "Chord" mode and "Edge"
+      mode. Analysts can switch mode using the switcher located in the top-right
+      corner of the view (Yellow box A in Figure 6).
+    </p>
+    <ol>
+      <li class="body">
+        <b>In "Chord" mode</b>, The visualization is presented as a chord diagram, which is particularly suitable for
+        scenarios involving a small number of groups. Each group is represented by an arc, while intergroup cell
+        communications are depicted as chords. The thickness of each chord reflects the magnitude of the corresponding
+        communication data (either "weight" or "count"), and the arc angle represents the total communication data volume
+        originating from that group.
+      </li>
+      <li class="body">
+        <b>In "Edge" mode</b>, The visualization is presented as a hierarchical edge bundling plot, which is more suitable
+        for complex scenarios involving multiple groups. Each group is represented by a circle, and intergroup cell
+        communications are depicted using directed arrows. The thickness of each arrow reflects the magnitude of the
+        corresponding communication data (either "weight" or "count"), while the radius of the circle represents the
+        number of
+        cells within that group.
+      </li>
+    </ol>
+    <p class="body">
+      The table on the right (yellow box B in Figure 6) lists the ligand–receptor pairs contained in the selected
+      chord (in Chord mode) or directed arrows (in Edge mode). Users can left-click on a chord or directed
+      arrow in the view to display the corresponding ligand–receptor pairs in the table.
+
+    </p>
+
+
     <h2 id="t_HierarchyNavigation1">Hierarchy Navigation</h2>
     <p class="body">
       We will introduce this part in detail in the chapter "Hierarchy
@@ -154,16 +198,16 @@
 
     <h2 id="t_Controller">Controller Bar</h2>
     <p class="body">
-      Area F in Figure 1 is the <b>Controller Bar</b>, which facilitates general
+      Area G in Figure 1 is the <b>Controller Bar</b>, which facilitates general
       operations. The Controller Bar displays the current cell count and gene
-      count (as shown in Figure 6) and includes functionalities such as Switch
+      count (as shown in Figure 7) and includes functionalities such as Switch
       Current Genes, Edit Group Information, and Refreshing Views. These
       features will be explained in detail in the section "Tutorial -> Analysis
       with Views -> Interactions".
     </p>
     <div class="image-container">
       <img class="image" src="tutorials/img/count-info.png" />
-      <b class="image-title">Figure 6. current cells and genes information</b>
+      <b class="image-title">Figure 7. current cells and genes information</b>
     </div>
 
     <h1 id="t_Interactions">Interactions</h1>
@@ -187,7 +231,7 @@
       <li class="body">
         <b>Select by Gene Filter</b>: scHLens provides a Gene Filter to assist
         users to select cells. This filter can select cells that meet specific
-        gene expression conditions. Shown as Figure 7, Users can click blue
+        gene expression conditions. Shown as Figure 8, Users can click blue
         "Filter Cells" button in the left side of the system to open Gene
         Filter. Users can type a gene name or part of it in the input box and
         select a matching gene to add to the filter. And then they can drag the
@@ -212,7 +256,7 @@
     </ol>
     <div class="image-container">
       <img class="image" src="tutorials/img/Filter_cells.png" />
-      <b class="image-title">Figure 7. Cells Filter Tool</b>
+      <b class="image-title">Figure 8. Cells Filter Tool</b>
     </div>
 
     <h2 id="t_DeleteCells">Delete Cells</h2>
@@ -253,39 +297,38 @@
     <h2 id="t_SwitchGenes">Switch Current Genes</h2>
     <p class="body">
       Gene Projection View and Distribution of Gene Expression View display
-      information about one or several specific genes (<b
-        >We call them "Current Gene"</b
-      >). These genes are shown in the Controller Bar (Figure 8) and can be
+      information about one or several specific genes (<b>We call them "Current Gene"</b>). These genes are shown in the
+      Controller Bar (Figure 9) and can be
       changed.
     </p>
     <div class="image-container">
       <img class="image" src="tutorials/img/CurrentGenes.png" />
-      <b class="image-title">Figure 8. Current Genes</b>
+      <b class="image-title">Figure 9. Current Genes</b>
     </div>
     <p class="body">
-      Shown in Figure 8, the "Current Gene" component displays the list of
+      Shown in Figure 9, the "Current Gene" component displays the list of
       currently selected genes. Clicking the cross icon to the right of a gene
       name removes the gene from the list. The red "Reset" button can clear the
       list and resets it to the default gene.
     </p>
     <div class="image-container">
       <img class="image" src="tutorials/img/SelectGenes.png" />
-      <b class="image-title">Figure 9. Select Genes</b>
+      <b class="image-title">Figure 10. Select Genes</b>
     </div>
     <p class="body">
       scHLens supports multiple ways to select genes for addition to the current
-      gene list. As shown in Figure 9(A), users can type a gene name or part of
+      gene list. As shown in Figure 10(A), users can type a gene name or part of
       it in the input box in Controller Bar and select a matching gene to add to
       the current gene list. If users want to add multiple genes at once, they
-      can click the button highlighted in the red box in Figure 9(A), which
-      opens the "Multiple Genes Input" component in Figure 9(B). In this
+      can click the button highlighted in the red box in Figure 10(A), which
+      opens the "Multiple Genes Input" component in Figure 10(B). In this
       component, users can efficiently add multiple genes by entering them
       separated by semicolons, spaces, or line breaks.
     </p>
 
     <h2 id="t_EditGroup">Edit group color & Export group markers</h2>
     <p class="body">
-      As shown in Figure 10, the blue button "Group" in Controller Bar will open
+      As shown in Figure 11, the blue button "Group" in Controller Bar will open
       a dialog with group information(<b>Group Info dialog</b>). These groups
       are generated by the clustering algorithm selected by analysts in the
       Cluster module of the pipeline. The Group Info dialog displays information
@@ -295,11 +338,11 @@
     <ol>
       <li class="body">
         <b>Edit group color</b>: Users can click the group color mark(Such as
-        Area A in Figure 10) to personalize its color.
+        Area A in Figure 11) to personalize its color.
       </li>
       <li class="body">
         <b>Export group markers</b>: Users can click the group's blue download
-        button (such as Area B in Figure 10) to download its marker genes
+        button (such as Area B in Figure 11) to download its marker genes
         generated by the DEG Identification module in the pipeline. The
         downloaded files includes two types: global markers and local markers.
         Global markers refer to the marker genes calculated by placing the
@@ -311,7 +354,7 @@
     </ol>
     <div class="image-container">
       <img class="image" src="tutorials/img/Group_info.png" />
-      <b class="image-title">Figure 10. The Group Info Dialog</b>
+      <b class="image-title">Figure 11. The Group Info Dialog</b>
     </div>
 
     <h2 id="tAnnotation">Annotation</h2>
@@ -326,7 +369,7 @@
       For <b>manual annotation</b>, users only need to edit the Annotation text
       box in <b>Group Info dialog</b>. For
       <b>annotation based on automated recommendations</b>, the process is shown
-      in Figure 11(A):
+      in Figure 12(A):
     </p>
     <ol>
       <li class="body">
@@ -351,33 +394,40 @@
       </li>
     </ol>
     <p class="body">
-      The recommended results are displayed both in tabular form(Figure 11(A))
-      and as a histogram ( Figure 11(B)).
+      The recommended results are displayed both in tabular form(Figure 12(A))
+      and as a histogram ( Figure 12(B)).
     </p>
     <div class="image-container">
       <img class="image" src="tutorials/img/Annotation.jpg" />
-      <b class="image-title">Figure 11. Annotation</b>
+      <b class="image-title">Figure 12. Annotation</b>
     </div>
     <p class="body">
+      Users can also right-click on a cell type in the recommentation table or a bar in the histogram to view the overlapping
+      genes between the markers recommended by Enricher/GSEA for that cell type and the markers of the corresponding
+      group (Figure 12(C)).
+    </p>
+    <p class="body">
       In addition to using the built-in Gene Sets, you can also upload your own
-      Gene Set. As shown in Figure 12, click the blue "+" button and upload a
+      Gene Set. As shown in Figure 13, click the blue "+" button and upload a
       JSON-formatted Gene Set file in the pop-up window. The Gene Set format
       follows the example of
-      <a
-        href="http://www.csuligroup.com:32768/resource/sampleGeneSets.json"
-        download="Sample.json"
-        >Sample.json</a
-      >.
+      <a href="http://www.csuligroup.com:32768/resource/sampleGeneSets.json" download="Example.json">Example.json</a>.
     </p>
     <div class="image-container">
       <img class="image" src="tutorials/img/uploadGeneSet.png" />
-      <b class="image-title">Figure 12. Upload your Gene Set</b>
+      <b class="image-title">Figure 13. Upload your Gene Set</b>
     </div>
     <h2 id="t_SaveImages">Save the images</h2>
     <p class="body">
       Each view, except for the Hierarchy Navigation, can be saved as an
       SVG file. To do this, you need to click the "Save this image" option in
       the context menu of these views.
+    </p>
+    <h2 id="t_ExportLRTable">Export the ligand–receptor pairs table</h2>
+    <p class="body">
+      The ligand–receptor pairs table in the Cell Communication View can be exported as a CSV file. To do so, right-click
+      within the Cell Communication View to open the context menu, and then select the "Save interaction table"
+      option.
     </p>
     <h2 id="t_Refreshing">Refreshing Views</h2>
     <p class="body">

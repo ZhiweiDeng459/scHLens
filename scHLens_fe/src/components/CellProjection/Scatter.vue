@@ -333,21 +333,62 @@ export default {
                             })
                     }
                 },
-                {
+                {//创建子图
                     'name':'Create Local Plot',
                     'icon':'icons/drill.svg',
                     'callback':()=>{
                         eventBus.$emit('callPipelineConfig','local');
                     }
                 },
-                {
+                {//导出标注
+                    'name':'Export Annotations',
+                    'icon':'icons/download.svg',
+                    'callback':()=>{
+                        let exportData = this.curData.cellData.map(v=>{
+                            return {
+                                'CellId':v.id,
+                                'Annotation':this.curData.groups.find(g=>g.id == v.group).name
+                            }
+                        })
+                        const keys = Object.keys(exportData[0]);
+                        const header = keys.join(",");
+
+                        const rows = exportData.map(row => 
+                            keys.map(k => {
+                                // 如果包含逗号、双引号或换行，需要加引号并转义
+                                let value = row[k] == null ? "" : row[k].toString();
+                                if (/[",\n]/.test(value)) {
+                                    value = `"${value.replace(/"/g, '""')}"`;
+                                }
+                                return value;
+                            }).join(",")
+                        );
+                        // 拼接成 CSV 内容
+                        const csvContent = [header, ...rows].join("\n");
+
+                        // 生成 Blob 并触发下载
+                        const blob = new Blob([csvContent], { type: "text/csv;charset=utf-8;" });
+                        const link = document.createElement("a");
+                        if (link.download !== undefined) {
+                            const url = URL.createObjectURL(blob);
+                            link.setAttribute("href", url);
+                            link.setAttribute("download", 'annotation.csv');
+                            link.style.visibility = "hidden";
+                            document.body.appendChild(link);
+                            link.click();
+                            document.body.removeChild(link);
+                        }
+
+                    }
+                },
+                {//导出选中细胞
                     'name':'Export the Chosen Cells',
                     'icon':'icons/save.svg',
                     'callback':()=>{
                         this.$refs['LocalDatasetPanel'].openDialog();//打开对话框
                     }
                 },
-                {
+                {//保存图片
                     'name':'Save this Image',
                     'icon':'icons/save_as_image.svg',
                     'callback':()=>{

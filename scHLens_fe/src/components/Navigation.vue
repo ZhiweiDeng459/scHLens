@@ -281,6 +281,7 @@ export default {
                             duration: 15000
                             });
                         }
+                        console.log('switchData:',self.dataList.find(v=>v.ViewId == ViewId))
                         event.stopPropagation();
                         
                     })

@@ -40,6 +40,10 @@
         <b>Differential Expressed Gene Identification (DEG Identification)</b>:
         Discover differential expressed genes that characterize each cell group.
       </li>
+      <li class="body">
+        <b>Cell Communication</b>:
+        Detect which cell types send and receive signals (ligand - receptor pairs) and Help to map cellular interaction networks.
+      </li>
     </ol>
     <div class="image-container">
       <img class="image" src="tutorials/img/Pipeline.jpg" />

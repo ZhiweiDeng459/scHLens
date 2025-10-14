@@ -24,6 +24,7 @@ from sklearn.preprocessing import MinMaxScaler
 from sklearn.utils import resample
 import shutil
 from sklearn.impute import SimpleImputer  
+from sklearn.metrics.pairwise import pairwise_distances
 
 ## 设置json编码器
 class NumpyEncoder(json.JSONEncoder):
@@ -330,17 +331,18 @@ def createFile(path):
 ##从adata.X计算距离矩阵TD
 def calculateTD(X):
     _X = X
-    if hasattr(_X,'A'):
-        _X = _X.A
-    TD1d = pdist(_X, 'euclidean')
-    TD = squareform(TD1d, force='no', checks=True)
+    # if hasattr(_X,'A'):
+    #     _X = _X.A
+    _X = get_dense_adata_X(_X)
+    TD = pairwise_distances(_X, metric='euclidean', n_jobs=-1)
 
     return TD
 ## 先归一化，再计算距离矩阵TD
 def calculateNormTD(X):
     _X = X
-    if hasattr(_X,'A'):
-        _X = _X.A
+    # if hasattr(_X,'A'):
+    #     _X = _X.A
+    _X = get_dense_adata_X(_X)
     return calculateTD(MinMaxScaler().fit_transform(_X))
 
 ## 先标准化，再计算距离矩阵TD
@@ -348,10 +350,11 @@ def calculateNormTD(X):
 
 ##从adata获取ndarray格式的count矩阵
 def getXfromAdata(adata):
-    if hasattr(adata.X,'A'):
-        return adata.X.A
-    else:
-        return adata.X
+    # if hasattr(adata.X,'A'):
+    #     return adata.X.A
+    # else:
+    #     return adata.X
+    return get_dense_adata_X(adata.X)
 
 
 def arr_to_json(data, group):
@@ -404,6 +407,40 @@ def calculateLocalScores(posArr,groupArr):
         result[group] = float(SSE/len(filterPosArr))
     return result
 
+def get_dense_adata_X(adataX):
+    from scipy import sparse
+    import numpy as np
+    return adataX.toarray() if sparse.issparse(adataX) else np.asarray(adataX)
+    
+def save_matrix_for_R(X, rownames, colnames, save_path):
+    """
+    保存矩阵为 R 可读取的格式 (mtx + tsv)
+
+    参数:
+    X : ndarray 或 csr_matrix
+    rownames : list 或 ndarray (行名)
+    colnames : list 或 ndarray (列名)
+    prefix : 输出文件前缀 (默认 'matrix')
+    """
+    import numpy as np
+    import pandas as pd
+    from scipy.sparse import csr_matrix, issparse
+    from scipy.io import mmwrite
+    import os
+
+
+    os.makedirs(save_path, exist_ok=True)
+    
+    # 转成稀疏矩阵存储（即使是 ndarray 也转一下）
+    if not issparse(X):
+        X = csr_matrix(X)
+    
+    # 保存矩阵
+    mmwrite(f"{save_path}/matrix.mtx", X)
+    
+    # 保存行名和列名
+    np.savetxt(f"{save_path}/rows.tsv", rownames, fmt="%s")
+    np.savetxt(f"{save_path}/cols.tsv", colnames, fmt="%s")
 
 #
 # 功能函数
@@ -589,22 +626,26 @@ def sampleAdataStratified(adata,sampling_num = None,sampling_radio = None):
 
 ## 检测adata的X是否包含nan
 def check_adataX_nan(adata):
-    if hasattr(adata.X,'A'):
-        tempX = adata.X.A
-    else:
-        tempX = adata.X
+    # if hasattr(adata.X,'A'):
+    #     tempX = adata.X.A
+    # else:
+    #     tempX = adata.X
+    tempX = get_dense_adata_X(adata.X)
     return np.isnan(tempX).any()
     
     
 
 ## 清除adata的X中的nan，将其转为0
 def clean_adataX_nan_zero(adata):
-    if hasattr(adata.X,'A'):
-        tempX = adata.X.A
+    # if hasattr(adata.X,'A'):
+    if sparse.issparse(adata.X):
+        # tempX = adata.X.A
+        tempX = get_dense_adata_X(adata.X)
         adata.X = csr_matrix(np.where(np.isnan(tempX), 0, tempX))
     else:
         tempX = adata.X
         adata.X = np.where(np.isnan(tempX), 0, tempX)
+
     return adata
 
 
@@ -732,11 +773,13 @@ def getResponseFromAdata(adata):
         df = None
         queryAdata = readCache(adata.uns['JobId'],adata.uns['ViewId'], 'Query')
         queryAdata.obs['label'] = adata.obs['label']
-        if hasattr(queryAdata.X,'A'):
-            df = pd.DataFrame(queryAdata.X.A,index=queryAdata.obs.index,columns=queryAdata.var.index)
-        else:
-            df = pd.DataFrame(queryAdata.X,index=queryAdata.obs.index,columns=queryAdata.var.index)
+        # if hasattr(queryAdata.X,'A'):
+        #     df = pd.DataFrame(queryAdata.X.A,index=queryAdata.obs.index,columns=queryAdata.var.index)
+        # else:
+        #     df = pd.DataFrame(queryAdata.X,index=queryAdata.obs.index,columns=queryAdata.var.index)
         
+        df = pd.DataFrame(get_dense_adata_X(queryAdata.X),index=queryAdata.obs.index,columns=queryAdata.var.index)
+
         df['__group'] = queryAdata.obs['label']
         dfg = df.groupby('__group')
 
@@ -744,10 +787,11 @@ def getResponseFromAdata(adata):
 
         raw_df = None
  
-        if hasattr(raw.X,'A'):
-            raw_df = pd.DataFrame(raw.X.A,index=raw.obs.index,columns=raw.var.index)
-        else:
-            raw_df = pd.DataFrame(raw.X,index=raw.obs.index,columns=raw.var.index)
+        # if hasattr(raw.X,'A'):
+        #     raw_df = pd.DataFrame(raw.X.A,index=raw.obs.index,columns=raw.var.index)
+        # else:
+        #     raw_df = pd.DataFrame(raw.X,index=raw.obs.index,columns=raw.var.index)
+        raw_df = pd.DataFrame(get_dense_adata_X(raw.X),index=raw.obs.index,columns=raw.var.index)
         raw_df['__group'] = queryAdata.obs['label']
         raw_dfg = raw_df.groupby('__group')
         

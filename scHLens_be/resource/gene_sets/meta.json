@@ -11,7 +11,7 @@
         {"name":"CCLE Proteomics 2020","file":"CCLE_Proteomics_2020.json","type":"built-in"},
         {"name":"CellMarker Augmented 2021","file":"CellMarker_Augmented_2021.json","type":"built-in"},
         {"name":"CellMarker 2024","file":"CellMarker_2024.json","type":"built-in"},
-        {"name":"c8.all.v2023.2.Hs.symbols","file":"c8.all.v2023.2.Hs.symbols.json","type":"built-in"},
+        {"name":"MSigDB Human 2023.02","file":"c8.all.v2023.2.Hs.symbols.json","type":"built-in"},
         {"name":"Descartes Cell Types and_Tissue 2021","file":"Descartes_Cell_Types_and_Tissue_2021.json","type":"built-in"},
         {"name":"ESCAPE","file":"ESCAPE.json","type":"built-in"},
         {"name":"GTEx Tissue Expression Down","file":"GTEx_Tissue_Expression_Down.json","type":"built-in"},

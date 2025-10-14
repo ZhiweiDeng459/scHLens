@@ -358,8 +358,8 @@ export default {
             padding:{
                 top:40,
                 right:30,
-                bottom:50,
-                left:30
+                bottom:150,
+                left:50
             },
             unitWidth:70,//一个unit占用的宽度
             barWidth:40,//unit中，一个bar占用的宽度
@@ -818,8 +818,12 @@ export default {
             bottomAxis_g.attr('transform',`translate(${0},${height - self.padding.bottom})`)
             
             //调整文本大小和倾斜度，并且绑定事件
+            leftAxis_g.selectAll('text')
+                .attr('font-size','20px')
+                .attr('color','black')
             bottomAxis_g.selectAll('text')
-                .attr('font-size','10px')
+                .attr('font-size','20px')
+                .attr('color','black')
                 .style("transform","rotate(30deg)")
                 .style("transform",function(){
                     return `translate(${this.getBoundingClientRect().width * 0.5-15}px,${this.getBoundingClientRect().height * 0.5}px)` + d3.select(this).style('transform')
@@ -906,7 +910,7 @@ export default {
                     }
                     return ''
                 })
-                .attr('font-size','12px')
+                .attr('font-size','20px')
                 .attr('x',5)
                 .attr('y',20)
                 .style('color','#606266')
@@ -996,7 +1000,7 @@ export default {
         }
         .RecomResultPlotContainer{
             width: 100%;
-            height: 400px;
+            height: 500px;
             display: flex;
             flex-direction: column;
             align-items: stretch;

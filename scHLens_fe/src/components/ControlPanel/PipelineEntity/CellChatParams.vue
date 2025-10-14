@@ -20,19 +20,19 @@
             <!--CellChat-->
             <div v-if="CellChatMethod=='CellChat'">
                 <el-form label-width="100px" :label-position="'left'">
-                    <el-form-item class="form-item" label="Library">
+                    <el-form-item class="form-item" label="Organism">
                         <div style="display:flex;justify-content:space-between;align-items:center;">
-                            <!-- <el-select v-model="CellChatParams['CellChat']['DatabaseType']" placeholder="Select..." size="mini" style="width:120px">
-                                <el-option v-for="item in DatabaseTypeOptions" :key="item.value" :label="item.label" :value="item.value"></el-option>
-                            </el-select> -->
-                            <el-cascader
+                            <el-select v-model="CellChatParams['CellChat']['organism']" placeholder="Select..." size="mini" style="width:120px">
+                                <el-option v-for="item in OrganismOptions" :key="item.value" :label="item.label" :value="item.value"></el-option>
+                            </el-select>
+                            <!-- <el-cascader
                                 size="mini"
                                 v-model="CellChatParams.CellChat.curDB"
                                 :options="CellChatDBInfo"
                                 style="width:180px;margin-left: -40px;margin-right:5px;margin-top:7px">
                                 
-                            </el-cascader>
-                            <el-tooltip content="The type of Receptor-ligand library" placement="right" style="margin-top:7px">
+                            </el-cascader> -->
+                            <el-tooltip content="The organism of data" placement="right" style="margin-top:7px">
                                 <i class="el-icon-question"></i>
                             </el-tooltip>
                         </div>
@@ -89,6 +89,16 @@ export default {
         return {
             CellChatDBInfo:[
             ],
+            OrganismOptions:[
+                {
+                    value: "Human",
+                    label: "Human",
+                },
+                {
+                    value: "Mouse",
+                    label: "Mouse",
+                },
+            ],
             CellChatMethod:'CellChat', //CellChat or CellPhoneDB
             CellChatMethodOptions:[
                 {
@@ -99,11 +109,11 @@ export default {
                     value: "CellPhoneDB",
                     label: "CellPhoneDB",
                 },
-            ],
+            ], 
             CellChatParams:{
                 'CellChat':{
                     // 'DatabaseType':'human',
-                    curDB:[],
+                    organism:'Human',
                 },
                 'CellPhoneDB':{
                     curDB:[],
@@ -148,10 +158,8 @@ export default {
 
 
                 //把CellChatDBInfo的第一个值设为初始值 TODO:获取的数据库部分org为空的情况
-                for(let method in this.CellChatParams){
-                    if(this.CellChatDBInfo.length>0){
-                        this.CellChatParams[method]['curDB'] = [this.CellChatDBInfo[0]['value'],this.CellChatDBInfo[0]['children'][0]['value']]
-                    }
+                if(this.CellChatDBInfo.length>0){
+                    this.CellChatParams['CellPhoneDB']['curDB'] = [this.CellChatDBInfo[0]['value'],this.CellChatDBInfo[0]['children'][0]['value']]
                 }
 
             }).catch((err)=>{

@@ -62,6 +62,11 @@ export default {
                     return true
                 }
             }
+            if(this.type == 'CellChat'){
+                if(this.curData.CC === undefined || this.curData.CC === null || Object.keys(this.curData.CC).length == 0){
+                    return true
+                }
+            }
             return false
 
         },

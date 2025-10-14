@@ -14,13 +14,13 @@
       <b class="image-title">Figure 1. Select The Dataset</b>
     </div>
 
-    <h1 id="t_SelectSample">Select Sample Dataset</h1>
+    <h1 id="t_SelectSample">Select Example Dataset</h1>
     <div class="image-container">
       <img class="image" src="tutorials/img/Select_sample_dataset.png" />
-      <b class="image-title">Figure 2. Select Sample Dataset</b>
+      <b class="image-title">Figure 2. Select Example Dataset</b>
     </div>
     <p class="body">
-      scHLens provides three sample datasets for analysis, including "3k-PBMCs",
+      scHLens provides three example datasets for analysis, including "3k-PBMCs",
       "LUAD", "muraro" (as shown in Figure 2).
     </p>
 

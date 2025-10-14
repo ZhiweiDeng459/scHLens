@@ -14,6 +14,10 @@ import TselectDataset from "@/tutorials/TselectDataset.vue"
 import TStartaAnalysisPipeline from "@/tutorials/TStartaAnalysisPipeline.vue"
 import TAnalysiswithViews from "@/tutorials/TAnalysiswithViews.vue"
 import THierarchicalExploration from "@/tutorials/THierarchicalExploration.vue"
+import TReproduce from "@/tutorials/TReproduce.vue"
+import TCase1 from "@/tutorials/TCase1.vue"
+import TCase2 from "@/tutorials/TCase2.vue"
+import TCase3 from "@/tutorials/TCase3.vue"
 
 const routes = [
     {
@@ -148,6 +152,10 @@ const routes = [
                                 path:'6',
                                 component:TAnalysiswithViews,    
                             },
+                            {
+                                path:'7',
+                                component:TAnalysiswithViews,    
+                            },
                         ]
         
                     },
@@ -195,6 +203,10 @@ const routes = [
                                 path:'10',
                                 component:TAnalysiswithViews,    
                             },
+                            {
+                                path:'11',
+                                component:TAnalysiswithViews,    
+                            },
                         ]
   
                     },
@@ -222,6 +234,36 @@ const routes = [
                         component:THierarchicalExploration,    
                     },
                 ]
+            },            
+            {
+                path:'reproduce',
+                component:TReproduce,
+                children:[
+                    {
+                        path:'1',
+                        component:TReproduce,
+                    },
+                    {
+                        path:'2',
+                        component:TReproduce,    
+                    },
+                    {
+                        path:'3',
+                        component:TReproduce,    
+                    },
+                ]
+            },
+            {
+                path:'case1',
+                component:TCase1,
+            },
+
+            {
+                path:'case2',
+                component:TCase2,
+            },            {
+                path:'case3',
+                component:TCase3,
             },
         ],
     },

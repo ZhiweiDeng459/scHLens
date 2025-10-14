@@ -118,7 +118,15 @@
       <img class="image" src="tutorials/img/Correspondence_interface.jpg" />
       <b class="image-title">Figure 4. Explorer Interface</b>
     </div>
-
+    <p class="body">
+      In addition, users can select all cells belonging to a specific child node of the current node. This can be done by
+      left-clicking on a child node in the Hierarchy Navigation, then right-clicking to open the context menu and
+      selecting the "Select Cells in this node" option (Figure 5 red box) to select all cells within that child node.
+    </p>
+    <div class="image-container">
+      <img class="image" src="tutorials/img/Select_cells_child.jpg" />
+      <b class="image-title">Figure 5. Select the cells of child node</b>
+    </div>
     <h1 id="t_Merge">Merge the Local Results</h1>
     <p class="body">
       At the end of Hierarchical Exploration, we typically want to merge the
@@ -126,18 +134,18 @@
       ancestor nodes (usually the Global Plot). In the Hierarchy Navigation, we
       can left-click to select local nodes as merge-data providers for the merge
       and their ancestor nodes as merge-data receivers. The provider is
-      highlighted with a green border (Figure 5(B)), offering annotations and
+      highlighted with a green border (Figure 6(B)), offering annotations and
       good visual patterns; the receiver is highlighted with a blue border
-      (Figure 5(A)), merging the provided data into itself.
+      (Figure 6(A)), merging the provided data into itself.
     </p>
     <div class="image-container">
       <img class="image" src="tutorials/img/merge.jpg" />
-      <b class="image-title">Figure 5. Merge Local Result</b>
+      <b class="image-title">Figure 6. Merge Local Result</b>
     </div>
     <p class="body">
       After selecting the nodes, we use the "Merge" option in the context menu
       of the Hierarchical Navigation and set the merge options in the pop-up
-      dialog (shown in Figure 6). The "Merge with Projection" option determines
+      dialog (shown in 7). The "Merge with Projection" option determines
       whether to include the good visual patterns from the Local Plot into the
       merged data. The "Merge with Labels (Annotations)" option determines
       whether to include the annotations from the Local Plot in the merged data.
@@ -149,7 +157,7 @@
     </p>
     <div class="image-container">
       <img class="image" src="tutorials/img/merge-options.png" />
-      <b class="image-title">Figure 6. Merge Options</b>
+      <b class="image-title">Figure 7. Merge Options</b>
     </div>
   </div>
 </template>

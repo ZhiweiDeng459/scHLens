@@ -61,6 +61,7 @@ locale.setlocale(locale.LC_ALL, 'en_US.UTF-8')
 app = Flask(__name__)
 CORS(app)
 
+
 socketio = SocketIO(app,cors_allowed_origins="*")
 
 
@@ -376,7 +377,10 @@ def mergeViews():
             ## 重做marker
             if 'MK' in globalAdata.uns['params'] and len(globalAdata.obs['label'].cat.categories) > 1:
                 globalAdata = MK(globalAdata)
-
+            ## 重 做cellchat
+            if 'CC' in globalAdata.uns['params'] and len(globalAdata.obs['label'].cat.categories) > 1:
+                globalAdata = CC(globalAdata)
+                
         ## save changes
         saveViewMetaData(JobId,globalViewId,globalMetaData)
         saveCache(globalAdata,JobId,globalViewId,'Last')
@@ -423,6 +427,9 @@ def restoreViewLabels():
     if 'init_raw_marker' in adata.uns:
         adata.uns['raw_marker'] = adata.uns['init_raw_marker']
     
+    ## restore CC
+    if 'CC' in adata.uns['params'] and len(adata.obs['label'].cat.categories) > 1:
+        adata = CC(adata)
 
     ## save
     saveViewMetaData(JobId,ViewId,metaData)
@@ -850,7 +857,7 @@ def saveLocalDataset(): #TODO 没有考虑数据融合的情况 #TODO 修改时�
     path = 'job/' + JobId + '/view/' + ViewId +  '/export/' + 'export' + '.h5ad' #TODO 这里的命名重复问题
     dataset.write(path)
 
-    response = send_file(path,as_attachment=True,attachment_filename='export.h5ad')
+    response = send_file(path,as_attachment=True,download_name='export.h5ad')
 
     return response
 
@@ -922,9 +929,18 @@ def mergeDuplicateLabels():
         if _id not in existIds:
             del metaData['group_color'][_id]
     
+    if 'MK' in adata.uns['params'] and len(adata.obs['label'].cat.categories) > 1:
+        adata = MK(adata)
+    if 'CC' in adata.uns['params'] and len(adata.obs['label'].cat.categories) > 1:
+        adata = CC(adata)
+
     ## save changes
     saveViewMetaData(JobId,ViewId,metaData)
     saveCache(adata,JobId,ViewId,'Last')
+
+
+
+    
 
 
     return 'success'
@@ -983,7 +999,7 @@ def exportGlobalMarkers():
     path = 'job/' + JobId + '/view/' + ViewId +  '/export/' + 'exportGlobalMarkers' + '.xlsx' #TODO 这里的命名重复问题
     df.to_excel(path, index=False)
 
-    response = send_file(path,as_attachment=True,attachment_filename='exportGlobalMarkers.xlsx')
+    response = send_file(path,as_attachment=True,download_name='exportGlobalMarkers.xlsx')
 
     return response
 
@@ -1019,7 +1035,7 @@ def exportLocalMarkers():
     path = 'job/' + JobId + '/view/' + ViewId +  '/export/' + 'exportLocalMarkers' + '.xlsx' #TODO 这里的命名重复问题
     df.to_excel(path, index=False)
 
-    response = send_file(path,as_attachment=True,attachment_filename='exportLocalMarkers.xlsx')
+    response = send_file(path,as_attachment=True,download_name='exportLocalMarkers.xlsx')
 
     return response
 
@@ -1103,10 +1119,11 @@ def requestFilteredCellList():
     #adata = qualityControl(adata,reqParams)
     adata = adata[:, reqParams['geneName']]
     for index, item in enumerate(reqParams['geneRange']):
-        if hasattr(adata.X,'A'):
-            adata_X = adata.X.A
-        else:
-            adata_X = adata.X
+        # if hasattr(adata.X,'A'):
+        #     adata_X = adata.X.A
+        # else:
+        #     adata_X = adata.X
+        adata_X = get_dense_adata_X(adata.X)
         adata = adata[(adata_X[:, index] >= item[0]) & (adata_X[:, index] <= item[1])]
     return jsonify(adata.obs_names.tolist())
 
@@ -1255,10 +1272,11 @@ def queryGSEA():
     globalAdata = readCache(JobId, rootViewId, 'Query')
     def index_gene_value(gene):
         adata = globalAdata[globalAdata.obs['label'] == cluster_id,gene]
-        if hasattr(adata.X,'A'):
-            array = adata.X.A
-        else:
-            array = adata.X
+        # if hasattr(adata.X,'A'):
+        #     array = adata.X.A
+        # else:
+        #     array = adata.X
+        array = get_dense_adata_X(adata.X)
         return np.mean(array)
     gene_list_SortedByExpression = sorted(gene_list,key=index_gene_value,reverse=True)
 
@@ -1376,10 +1394,11 @@ def queryEnricher():
     globalAdata = readCache(JobId, rootViewId, 'Query')
     def index_gene_value(gene):
         adata = globalAdata[globalAdata.obs['label'] == cluster_id,gene]
-        if hasattr(adata.X,'A'):
-            array = adata.X.A
-        else:
-            array = adata.X
+        # if hasattr(adata.X,'A'):
+        #     array = adata.X.A
+        # else:
+        #     array = adata.X
+        array = get_dense_adata_X(adata.X)
         return np.mean(array)
     gene_list_SortedByExpression = sorted(gene_list,key=index_gene_value,reverse=True)
         
@@ -1568,6 +1587,7 @@ def clearCallback():
         if os.path.exists(exportPath):
             os.remove(exportPath)
     return 'ok'
+
 
 if __name__ == '__main__': ##!important vscode的debug不会走该路径执行该函数..
     ## 初始化

@@ -22,7 +22,7 @@ We offer a deployable Docker version of scHLens (https://hub.docker.com/r/zhiwei
 
 ## Quick start
 
-This web-server is based on `python 3.7.12`, `R 4.2.2`, `Node.js 16.19.0`. You can launch this web-server using the following steps:
+This web-server is based on `python 3.7.12`, `R 4.4.2`, `Node.js 16.19.0`. You can launch this web-server using the following steps:
 
 (This web-server can run on both Windows and Linux platforms. we will take Linux platform as an example.)
 

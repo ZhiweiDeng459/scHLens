@@ -17,7 +17,7 @@ import eventBus from "@/utils/eventBus.js"
 
 export default {
     name:'CellChatEdgePlot',
-    props:['setInteractionTable'],
+    props:['setInteractionTable','dataMode'],
     components:{
         'SelfContextMenu':SelfContextMenu
     },
@@ -31,6 +31,67 @@ export default {
                     'icon':'icons/save_as_image.svg',
                     'callback':()=>{
                         this.saveToFile();
+                    }
+                },
+                {
+                    'name':'Save interaction table',
+                    'icon':'icons/download.svg',
+                    'callback':()=>{
+                        const self = this
+                        let interaction_map = {}
+                        let groupids = self.groups.map(item=>item['id']) 
+                        for(let i = 0;i < groupids.length;i++){
+                            interaction_map[groupids[i]] = {} 
+                            for(let j = 0;j < groupids.length;j++){
+                                interaction_map[groupids[i]][groupids[j]] = []
+                            }
+                        }
+                        for(let i = 0;i < self.CC['source'].length;i++){
+                            let source = self.CC['source'][i]
+                            let target = self.CC['target'][i]
+                            let ligand = self.CC['ligand'][i]
+                            let receptor = self.CC['receptor'][i]
+                            let score = self.CC['prob'][i]
+                            interaction_map[source][target].push({
+                                'source':self.groups.find(v=>v.id==source).name,
+                                'target':self.groups.find(v=>v.id==target).name,
+                                'ligand':ligand,
+                                'receptor':receptor,
+                                'score':score.toPrecision(4)
+                            })
+                        }
+
+                        let table_data = []
+                        for(let i = 0;i < groupids.length;i++){
+                            for(let j = 0;j < groupids.length;j++){
+                                table_data.push(...interaction_map[groupids[i]][groupids[j]])
+                            }
+                        }
+
+                        if(table_data.length==0){
+                            this.$message({
+                                message: 'No interaction data to export!',
+                                type: 'error'
+                            });
+                            return;
+                        }
+
+                        // 1. 将对象数组转换为 CSV 字符串
+                        const headers = Object.keys(table_data[0]).join(",") + "\n";
+                        const rows = table_data.map(obj => Object.values(obj).join(",")).join("\n");
+                        const csvContent = headers + rows;
+
+                        // 2. 创建一个 Blob 对象
+                        const blob = new Blob([csvContent], { type: "text/csv;charset=utf-8;" });
+
+                        // 3. 创建下载链接并触发下载
+                        const link = document.createElement("a");
+                        link.href = URL.createObjectURL(blob);
+                        link.download = "interaction.csv";
+                        document.body.appendChild(link);
+                        link.click();
+                        document.body.removeChild(link);
+
                     }
                 }
             ],
@@ -74,7 +135,9 @@ export default {
                 this.reDraw()
             },
         },
-
+        dataMode(){
+            this.reDraw()
+        },
 
     },
     methods:{
@@ -93,6 +156,8 @@ export default {
             const svg = d3.select('#CellChatEdgePlot')
             svg.selectAll('*').remove();
 
+            if(this.CC===undefined || this.CC===null) return;
+            if(Object.keys(this.CC).length===0) return;
             //添加zoom层
             const zoomSVG = svg.append('g')
                                .attr("class", "cellchat-edge-zoomLayer")
@@ -125,7 +190,7 @@ export default {
             
 
             //整理数据
-            let rawData = this.CC[this.mode];
+            let rawData = this.CC[this.dataMode];
             let names =  this.groups.map(item=>item['id'])
             let attachGroupData = this.groups.map((item,i)=>{ //groups的辅助信息
                 return {
@@ -299,11 +364,20 @@ export default {
                         .attr("opacity",1)
                     //显示信息
                     self.infoPanel.show()
-                    self.infoPanel.setMessageData({
-                        'Source':self.groups.find(v=>v.id == d.source).name,
-                        'Target':self.groups.find(v=>v.id == d.target).name,
-                        'Strength':rawData[d.source][d.target].toPrecision(3),
-                    })
+                    if(self.dataMode=='weight'){
+                        self.infoPanel.setMessageData({
+                            'Source':self.groups.find(v=>v.id == d.source).name,
+                            'Target':self.groups.find(v=>v.id == d.target).name,
+                            'Strength':rawData[d.source][d.target].toPrecision(3),
+                        })
+                    }
+                    else{//count
+                        self.infoPanel.setMessageData({
+                            'Source':self.groups.find(v=>v.id == d.source).name,
+                            'Target':self.groups.find(v=>v.id == d.target).name,
+                            'Count':rawData[d.source][d.target],
+                        })
+                    }
                     self.infoPanel.setPos(e.clientY - 40,e.clientX + 30)
                     d3.select(this).raise()//放到最顶层
                 })
@@ -312,11 +386,20 @@ export default {
                         .attr("opacity",1)
                     //显示信息
                     self.infoPanel.show()
-                    self.infoPanel.setMessageData({
-                        'Source':self.groups.find(v=>v.id == d.source).name,
-                        'Target':self.groups.find(v=>v.id == d.target).name,
-                        'Strength':rawData[d.source][d.target].toPrecision(3),
-                    })
+                    if(self.dataMode=='weight'){
+                        self.infoPanel.setMessageData({
+                            'Source':self.groups.find(v=>v.id == d.source).name,
+                            'Target':self.groups.find(v=>v.id == d.target).name,
+                            'Strength':rawData[d.source][d.target].toPrecision(3),
+                        })
+                    }
+                    else{//count
+                        self.infoPanel.setMessageData({
+                            'Source':self.groups.find(v=>v.id == d.source).name,
+                            'Target':self.groups.find(v=>v.id == d.target).name,
+                            'Count':rawData[d.source][d.target],
+                        })
+                    }
                     self.infoPanel.setPos(e.clientY - 40,e.clientX + 30)
 
                 })
@@ -416,14 +499,30 @@ export default {
 
             const a = document.createElement("a")
             a.href = url;
-            a.download = "Cell Chat View - EdgePlot.svg";
+            a.download = "Cell Communication View - EdgePlot.svg";
             a.click();
             URL.revokeObjectURL(url)
+
+            // const svgDOM = this.$refs['CellChatEdgePlot'];
+            // const clone = svgDOM.cloneNode(true); // 克隆整个SVG
+            // const g = clone.querySelector("g");
+
+            // // 移除缩放变换
+            // g.removeAttribute("transform");
+
+            // // 导出克隆版
+            // const svgData = new XMLSerializer().serializeToString(clone);
+            // const blob = new Blob([svgData], { type: "image/svg+xml;charset=utf-8" });
+            // const url = URL.createObjectURL(blob);
+            // const a = document.createElement("a");
+            // a.href = url;
+            // a.download = "Cell Communication View - EdgePlot.svg";
+            // a.click();
+            // URL.revokeObjectURL(url);
 
         },
         reDraw(){
             eventBus.$emit('CellChatViewRefreshingStart');
-
             //重绘所有
             this.drawPlot();
             eventBus.$emit('CellChatViewRefreshingClose');

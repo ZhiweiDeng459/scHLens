@@ -13,7 +13,7 @@ import sc3s
 from lib.RInterface import *
 from lib.corr import DIcorrect
 import openTSNE
-from scipy.sparse import csr_matrix
+from scipy.sparse import csr_matrix,issparse
 from scipy.spatial.distance import pdist, squareform
 import cosg as cosg
 import importlib
@@ -26,6 +26,7 @@ from sklearn.neighbors import NearestNeighbors
 import copy
 from sklearn.cluster import KMeans
 from sklearn.decomposition import PCA
+
 importlib.reload(cosg)
 
 
@@ -43,7 +44,6 @@ class pipelineException(Exception):
 '''
 Pipeline
 '''
-
 
 def globalPipeline(params):
     
@@ -497,10 +497,11 @@ def TS1(adata):
 
     if 'log1p' in adata.uns['params']['TS']:
         ##校验输入数据中是否存在负数
-        if hasattr(adata.X,'A'):
-            matrix = adata.X.A
-        else:
-            matrix = adata.X
+        # if hasattr(adata.X,'A'):
+        #     matrix = adata.X.A
+        # else:
+        #     matrix = adata.X
+        matrix = get_dense_adata_X(adata.X)
         if (matrix < 0).any():#有inf存在
             raise pipelineException(
                 location='Transformation - Log',
@@ -589,10 +590,11 @@ def FS(adata):
     elif 'scry' in adata.uns['params']['FS']:
         try:
             nTopGenes = adata.uns['params']['FS']['scry']['topGenes']
-            if hasattr(adata.uns['count'].X,'A'):
-                adata = adata[:,scry(adata.uns['count'].X.A, adata.var.index, adata.obs.index,nTopGenes)]
-            else:
-                adata = adata[:,scry(adata.uns['count'].X, adata.var.index, adata.obs.index,nTopGenes)]
+            # if hasattr(adata.uns['count'].X,'A'):
+            #     adata = adata[:,scry(adata.uns['count'].X.A, adata.var.index, adata.obs.index,nTopGenes)]
+            # else:
+            #     adata = adata[:,scry(adata.uns['count'].X, adata.var.index, adata.obs.index,nTopGenes)]
+            adata = adata[:,scry(get_dense_adata_X(adata.uns['count'].X), adata.var.index, adata.obs.index,nTopGenes)]
         except Exception as e:
             raise pipelineException(
                 location='Gene Selection - scry',
@@ -601,13 +603,14 @@ def FS(adata):
     elif 'SCTransform' in adata.uns['params']['FS']:
         try:
             nTopGenes = adata.uns['params']['FS']['SCTransform']['topGenes']
-            if hasattr(adata.uns['count'].X,'A'):
-                X = adata.uns['count'].X.A
-            else:
-                X = adata.uns['count'].X
+            # if hasattr(adata.uns['count'].X,'A'):
+            #     X = adata.uns['count'].X.A
+            # else:
+            #     X = adata.uns['count'].X
+            X = get_dense_adata_X(adata.uns['count'].X)
             ## 将ndarray的数据类型转换为float32
             X = X.astype(np.float32)
-            result = SCTransform(X, adata.var.index, adata.obs.index,nTopGenes)
+            result = SCTransform(X, adata.var.index, adata.obs.index,nTopGenes,adata.uns['params']['JobId'])
             
 
             ##基因名词合法性检测 _ -> - 问题
@@ -632,7 +635,8 @@ def FS(adata):
             adata = adata[:,genes]
             cells = result.index.tolist()
             adata = adata[cells,:]
-            if hasattr(adata.uns['count'].X,'A'):
+            # if hasattr(adata.uns['count'].X,'A'):
+            if issparse(adata.uns['count'].X):
                 adata.X = csr_matrix(result.to_numpy())
             else:
                 adata.X = result.to_numpy()
@@ -741,18 +745,20 @@ def DR(adata):
                 UMAP_params['n_neighbors'] = adata.uns['params']['DR']['UMAP']['n_neighbors']
             
             ##是否预降维
-            PreDR = adata.uns['params']['DR']['UMAP']['PreDR']
-            if PreDR:
-                target_dimensions = 40
-                if adata.shape[1] > target_dimensions and adata.shape[0] > target_dimensions:
-                    sc.pp.pca(adata,n_comps=target_dimensions) 
+            if 'PreDR' in adata.uns['params']['DR']['UMAP']:
+                PreDR = adata.uns['params']['DR']['UMAP']['PreDR']
+                if PreDR:
+                    target_dimensions = 40
+                    if adata.shape[1] > target_dimensions and adata.shape[0] > target_dimensions:
+                        sc.pp.pca(adata,n_comps=target_dimensions) 
+                    else:
+                        adata.obsm['X_pca'] = adata.X
+                    TD =  calculateNormTD(adata.obsm['X_pca'])
+                    embedding = umap.UMAP(metric="precomputed",random_state= 0,**UMAP_params).fit_transform(TD)
                 else:
-                    adata.obsm['X_pca'] = adata.X
-                TD =  calculateNormTD(adata.obsm['X_pca'])
-                embedding = umap.UMAP(metric="precomputed",random_state= 0,**UMAP_params).fit_transform(TD)
+                    embedding = umap.UMAP(metric="precomputed",random_state= 0,**UMAP_params).fit_transform(TD)
             else:
                 embedding = umap.UMAP(metric="precomputed",random_state= 0,**UMAP_params).fit_transform(TD)
-                
             adata.obsm['embedding'] = embedding
         except Exception as e:
             raise pipelineException(
@@ -765,15 +771,18 @@ def DR(adata):
             if 'perplexity' in adata.uns['params']['DR']['T-SNE']:
                 tSNE_params['perplexity'] = adata.uns['params']['DR']['T-SNE']['perplexity']
             ##是否预降维
-            PreDR = adata.uns['params']['DR']['T-SNE']['PreDR']
-            if PreDR:
-                target_dimensions = 40
-                if adata.shape[1] > target_dimensions and adata.shape[0] > target_dimensions:
-                    sc.pp.pca(adata,n_comps=target_dimensions) 
+            if 'PreDR' in adata.uns['params']['DR']['T-SNE']:
+                PreDR = adata.uns['params']['DR']['T-SNE']['PreDR']
+                if PreDR:
+                    target_dimensions = 40
+                    if adata.shape[1] > target_dimensions and adata.shape[0] > target_dimensions:
+                        sc.pp.pca(adata,n_comps=target_dimensions) 
+                    else:
+                        adata.obsm['X_pca'] = adata.X
+                    TD =  calculateNormTD(adata.obsm['X_pca'])
+                    embedding = openTSNE.TSNE(metric="precomputed",random_state= 0,initialization='random',**tSNE_params).fit(TD)
                 else:
-                    adata.obsm['X_pca'] = adata.X
-                TD =  calculateNormTD(adata.obsm['X_pca'])
-                embedding = openTSNE.TSNE(metric="precomputed",random_state= 0,initialization='random',**tSNE_params).fit(TD)
+                    embedding = openTSNE.TSNE(metric="precomputed",random_state= 0,initialization='random',**tSNE_params).fit(TD)
             else:
                 embedding = openTSNE.TSNE(metric="precomputed",random_state= 0,initialization='random',**tSNE_params).fit(TD)
             embedding = np.array(embedding)
@@ -863,18 +872,20 @@ def CL(adata):
     #             message=str(e))
     #     adata.obs['label'] = adata.obs['louvain']
     elif 'kmeans' in adata.uns['params']['CL']:
-        
-        ## 估计聚类数
-        if 'auto_number' in adata.uns['params']['CL']['kmeans']:
-            if adata.uns['params']['CL']['kmeans']['auto_number']:
-                if hasattr(adata.X,'A'):
-                    X = adata.X.A
-                else:
-                    X = adata.X
-                ## 将ndarray的数据类型转换为float32
-                X = X.astype(np.float32)
-                recom_cluster_num = scCCESS_Kmeans(X, adata.var.index, adata.obs.index)
-        
+        try:
+            ## 估计聚类数
+            if 'auto_number' in adata.uns['params']['CL']['kmeans']:
+                if adata.uns['params']['CL']['kmeans']['auto_number']:
+                    X = get_dense_adata_X(adata.X)
+                    ## 将ndarray的数据类型转换为float32
+                    X = X.astype(np.float32)
+                    recom_cluster_num = multik(X, adata.var.index, adata.obs.index,adata.uns['params']['JobId'])
+        except Exception as e:
+            raise pipelineException(
+                location='Clustering - k-means - Auto Number',
+                advice=':The error may be due to: 1. The dataset currently has too few genes or cells; 2. The current dataset contains invalid data;',
+                message=str(e))
+
         try: # 预降维
             target_dimensions = 40
             if adata.shape[1] > target_dimensions and adata.shape[0] > target_dimensions:
@@ -890,6 +901,9 @@ def CL(adata):
             kmeans_params = {}
             if 'n_clusters' in adata.uns['params']['CL']['kmeans']:
                 kmeans_params['n_clusters'] = adata.uns['params']['CL']['kmeans']['n_clusters']
+            if 'auto_number' in adata.uns['params']['CL']['kmeans']:
+                if adata.uns['params']['CL']['kmeans']['auto_number']:
+                    kmeans_params['n_clusters'] = int(recom_cluster_num)
             kmeans_params['random_state'] = 0           
             result = KMeans(**kmeans_params).fit(adata.obsm['X_pca']).labels_
             encoded_result = []
@@ -907,6 +921,20 @@ def CL(adata):
         adata.obs['label'] = labels
 
     elif 'sc3s' in adata.uns['params']['CL']:
+        try:
+            ## 估计聚类数
+            if 'auto_number' in adata.uns['params']['CL']['sc3s']:
+                if adata.uns['params']['CL']['sc3s']['auto_number']:
+                    X = get_dense_adata_X(adata.X)
+                    ## 将ndarray的数据类型转换为float32
+                    X = X.astype(np.float32)
+                    recom_cluster_num = multik(X, adata.var.index, adata.obs.index,adata.uns['params']['JobId'])
+        except Exception as e:
+            raise pipelineException(
+                location='Clustering - sc3s - Auto Number',
+                advice=':The error may be due to: 1. The dataset currently has too few genes or cells; 2. The current dataset contains invalid data;',
+                message=str(e))
+            
         try: # 预降维
             target_dimensions = 40
             if adata.shape[1] > target_dimensions and adata.shape[0] > target_dimensions:
@@ -920,15 +948,20 @@ def CL(adata):
                 message=str(e))
         try: # 聚类
             sc3s_params = {}
+            
             if 'n_clusters' in adata.uns['params']['CL']['sc3s']:
-                sc3s_params['n_clusters'] = adata.uns['params']['CL']['sc3s']['n_clusters']
+                final_cluster_num = adata.uns['params']['CL']['sc3s']['n_clusters']
+            if 'auto_number' in adata.uns['params']['CL']['sc3s']:
+                if adata.uns['params']['CL']['sc3s']['auto_number']:
+                    final_cluster_num = int(recom_cluster_num)
+            sc3s_params['n_clusters'] = final_cluster_num
             sc3s.tl.consensus(adata, **sc3s_params)
         except Exception as e:
             raise pipelineException(
                 location='Clustering - sc3s',
                 advice=':The error may be due to: 1. The dataset currently has too few cells; 2. The current dataset contains invalid data;',
                 message=str(e))
-        adata.obs['label'] = adata.obs['sc3s_' + str(adata.uns['params']['CL']['sc3s']['n_clusters'])]
+        adata.obs['label'] = adata.obs['sc3s_' + str(final_cluster_num)]
         try: ##尾部处理
             adata.uns.pop('sc3s_trials')
         except:
@@ -1076,70 +1109,84 @@ def CC(adata):
     cc_data = readCache(adata.uns['JobId'],adata.uns['ViewId'],'Query')
     ## run
     if 'CellChat' in adata.uns['params']['CC']:
-        if hasattr(cc_data.X,'A'):
-            cc_data_X = cc_data.X.A
-        else:
-            cc_data_X = cc_data.X
-        result = CellChat(cc_data_X,cc_data.obs.index.tolist(),cc_data.var.index.tolist(),adata.obs['label'].tolist(),'Human')
-        adata.uns['CC'] = result #count weight prob
-        
+        try:
+            # if hasattr(cc_data.X,'A'):
+            #     cc_data_X = cc_data.X.A
+            # else:
+            #     cc_data_X = cc_data.X
+            cc_data_X = get_dense_adata_X(cc_data.X)
+            # result = CellChat(cc_data_X,cc_data.obs.index.tolist(),cc_data.var.index.tolist(),adata.obs['label'].tolist(),adata.uns['params']['CC']['CellChat']['organism'])
+            result = CellChat(cc_data_X,cc_data.var.index,cc_data.obs.index,adata.obs['label'].tolist(),adata.uns['params']['CC']['CellChat']['organism'],adata.uns['params']['JobId'])
+            adata.uns['CC'] = result
+        except Exception as e:
+            raise pipelineException(
+                location='Cell Chat - Cell Chat',
+                advice=':The error may be due to: 1. Clustering is not performed or Too few clusters; 2. Inproper dataset',
+                message=str(e))
+            
+                    
     elif 'CellPhoneDB' in adata.uns['params']['CC']:
-        # read lib
-        CellChatDB = getCellChatDB(adata.uns['params']['CC']['CellPhoneDB']['curDB'][0],adata.uns['params']['CC']['CellPhoneDB'] ['curDB'][1])
-        CellChatDB = CellChatDB.rename(columns={"ligand": "source", "receptor": "target"})
-        
-        # import dask
-        # dask.config.set({"scheduler": "threads", "distributed.worker.daemon": False})
-        # import sys
-        # sys.modules["distributed"] = None
+        try:
+            # read lib
+            CellChatDB = getCellChatDB(adata.uns['params']['CC']['CellPhoneDB']['curDB'][0],adata.uns['params']['CC']['CellPhoneDB']['curDB'][1])
+            CellChatDB = CellChatDB.rename(columns={"ligand": "source", "receptor": "target"})
+            
+            # import dask
+            # dask.config.set({"scheduler": "threads", "distributed.worker.daemon": False})
+            # import sys
+            # sys.modules["distributed"] = None
 
-        ligrec_res = sq.gr.ligrec(
-            adata,
-            "label",
-            interactions=CellChatDB,
-            use_raw=False,
-            copy=True
-        )
-        ligrec_res_mean = ligrec_res['means']
+            ligrec_res = sq.gr.ligrec(
+                adata,
+                "label",
+                interactions=CellChatDB,
+                use_raw=False,
+                copy=True
+            )
+            ligrec_res_mean = ligrec_res['means']
 
-        cp_res = ligrec_res_mean.stack(level=['cluster_1', 'cluster_2']).reset_index()
-        cp_res.columns = ['source', 'target', 'sender', 'receiver', 'value']
-        cp_res = cp_res[cp_res['value'] != 0]
+            cp_res = ligrec_res_mean.stack(level=['cluster_1', 'cluster_2']).reset_index()
+            cp_res.columns = ['source', 'target', 'sender', 'receiver', 'value']
+            cp_res = cp_res[cp_res['value'] != 0]
 
 
-        ## 聚合
-        source = []
-        target = []
-        ligand = []
-        receptor = []
-        prob = []
-        score = []
-        count_map = {}
-        weight_map = {}
-        for c_i in adata.obs['label']:
-            count_map[c_i] = {}
-            weight_map[c_i] = {}
-            for c_j in adata.obs['label']:
-                count_map[c_i][c_j] = 0
-                weight_map[c_i][c_j] = 0
-        for idx,row in cp_res.iterrows():
-            source.append(row['sender'])
-            target.append(row['receiver'])
-            ligand.append(row['source'])
-            receptor.append(row['target'])
-            prob.append(row['value'])
-            count_map[row['sender']][row['receiver']] += 1
-            weight_map[row['sender']][row['receiver']] += row['value']
-        adata.uns['CC'] = {
-            'count':count_map,
-            'weight':weight_map,
-            'source':source,
-            'target':target,
-            'ligand':ligand,
-            'receptor':receptor,
-            'prob':prob
-        }
-        
+            ## 聚合
+            source = []
+            target = []
+            ligand = []
+            receptor = []
+            prob = []
+            score = []
+            count_map = {}
+            weight_map = {}
+            for c_i in adata.obs['label']:
+                count_map[c_i] = {}
+                weight_map[c_i] = {}
+                for c_j in adata.obs['label']:
+                    count_map[c_i][c_j] = 0
+                    weight_map[c_i][c_j] = 0
+            for idx,row in cp_res.iterrows():
+                source.append(row['sender'])
+                target.append(row['receiver'])
+                ligand.append(row['source'])
+                receptor.append(row['target'])
+                prob.append(row['value'])
+                count_map[row['sender']][row['receiver']] += 1
+                weight_map[row['sender']][row['receiver']] += row['value']
+            adata.uns['CC'] = {
+                'count':count_map,
+                'weight':weight_map,
+                'source':source,
+                'target':target,
+                'ligand':ligand,
+                'receptor':receptor,
+                'prob':prob
+            }
+        except Exception as e:
+            raise pipelineException(
+                location='Cell Chat - CellPhoneDB',
+                advice=':The error may be due to: 1. Clustering is not performed or Too few clusters; 2. Inproper dataset',
+                message=str(e))
     
     return adata
 

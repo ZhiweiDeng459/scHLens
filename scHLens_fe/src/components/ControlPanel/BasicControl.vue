@@ -467,7 +467,7 @@ export default {
                 {
                     rank:7,
                     id:'CC',
-                    name:"Cell Chat"
+                    name:"Cell Communication"
                 }
                 ],
             pipelineEntity: [ //保存当前状态下能使用的pipelineEntity
@@ -524,7 +524,7 @@ export default {
                 {
                     rank:7,
                     id:'CC',
-                    name:"Cell Chat"
+                    name:"Cell Communication"
                 }
                 ],
     

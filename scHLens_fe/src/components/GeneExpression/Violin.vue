@@ -162,7 +162,7 @@ export default {
 
             //辅助计算标签宽度
             const tempG = svg.append('g')
-            const tempText = tempG.selectAll('*').data(this.groups.map(v=>v.name)).join('text').text(d=>d).attr('font-size','16px')
+            const tempText = tempG.selectAll('*').data(this.groups.map(v=>v.name)).join('text').text(d=>d).attr('font-size','20px')
             //根据最大的文本尺寸调整大小
             let maxGroupTextSize = 0;
             tempText.each(function(){
@@ -310,8 +310,8 @@ export default {
             })
             legend.append("g").classed('yAxis',true).call(this.yAxis);
             //调整文本大小
-            legend.select('.xAxis').selectAll('.tick').selectAll('text').attr('font-size','16px')
-            legend.select('.yAxis').selectAll('.tick').selectAll('text').attr('font-size','16px')
+            legend.select('.xAxis').selectAll('.tick').selectAll('text').attr('font-size','20px')
+            legend.select('.yAxis').selectAll('.tick').selectAll('text').attr('font-size','20px')
 
 
         },

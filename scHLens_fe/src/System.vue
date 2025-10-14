@@ -449,8 +449,8 @@ export default {
             }
         }).on('disconnect',data=>{//断开连接后恢复加载页面
 
-            this.server_connect_info_show = false;
-            this.server_connect_text = 'Connection lost. Reconnecting to the server...';
+            // this.server_connect_info_show = false;
+            // this.server_connect_text = 'Connection lost. Reconnecting to the server...';
         })
 
     },
