@@ -28,6 +28,29 @@
         refer to "Tutorial -> Enter a Job -> Create a New Job & Load an Existing Job & Use
         Examples -> Use Examples".</b>
     </p>
+
+    <p class="body">
+      There is a
+            demonstration video available for scHLen (However, this video only briefly 
+            demonstrates the main workflow of the system rather than all
+            functions, in order to avoid making it too lengthy. For more
+            details, please refer to the tutorials.) :
+    </p>
+    <video
+      controls
+      style="
+        margin-top: 20px;
+        width: 60%;
+        height: auto;
+        display: block;
+        margin-left: auto;
+        margin-right: auto;
+      "
+      :src="'http://www.csuligroup.com:32768/resource/Demovideo.mp4'"
+    >
+      Your browser does not support this video. Please use the latest
+      version of Chrome or Edge.
+    </video>
   </div>
 </template>
 
