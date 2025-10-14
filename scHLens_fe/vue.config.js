@@ -3,6 +3,7 @@ module.exports = {
     devServer: {
         host: "0.0.0.0",
         port: "8081",
+        filenameHashing: true,
         // https: true,
         proxy: {
             "/api": { //普通api
