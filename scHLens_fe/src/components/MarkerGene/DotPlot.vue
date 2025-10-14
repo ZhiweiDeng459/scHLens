@@ -432,7 +432,7 @@ export default {
 
             const a = document.createElement("a")
             a.href = url;
-            a.download = "dotplot.svg";
+            a.download = "Marker Gene View.svg";
             a.click();
             URL.revokeObjectURL(url)
         },

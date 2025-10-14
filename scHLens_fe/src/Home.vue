@@ -62,11 +62,8 @@
             </ul>
           </a>
           <a class="content-box-content-text">
-            <a style="font-size: 15px">▶&nbsp;</a> Beside, scHLens have also
-            intergrated the three cases in the manuscript. For more details
-            about how to use the three cases, please refer to: "Tutorials ->
-            Enter a Job -> Create a New Job & Load an Existing Job & Use Samples
-            -> Use Samples"
+            <a style="font-size: 15px;">▶&nbsp;</a> Beside, scHLens have also intergrated the three cases in the manuscript.
+            For more details about how to use the three cases, please refer to: "Tutorials -> Enter a Job -> Create a New Job & Load an Existing Job & Use Examples -> Use Examples"
           </a>
           <a class="content-box-content-text"
             ><a style="font-size: 15px">▶&nbsp;&nbsp;</a>There is a

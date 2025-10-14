@@ -41,6 +41,9 @@ export default {
     },
 
     methods: {
+        selectCellsByIdInScatter(CellIds){
+            this.$refs.scatter.selectCellsById(CellIds);
+        }
     },
 
     mounted(){

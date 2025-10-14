@@ -24,6 +24,7 @@ from sklearn.preprocessing import MinMaxScaler
 from sklearn.utils import resample
 import shutil
 from sklearn.impute import SimpleImputer  
+from sklearn.metrics.pairwise import pairwise_distances
 
 ## 设置json编码器
 class NumpyEncoder(json.JSONEncoder):
@@ -61,6 +62,8 @@ def initApp():
         os.makedirs('message')
     if not os.path.exists('globalAttachment'):
         os.makedirs('globalAttachment')
+    ## TODO 是否需要初始化resource文件夹 - 因为这部分已经包含到代码中了
+
 
     
 
@@ -246,16 +249,26 @@ def setCustomGeneSetsConfig(JobId,CustomGeneSetsConfig):
     tempFile.close()
     return True
 
+
+
 #
-# 通讯
+# 细胞通讯
 #
+## 获取CellChatDB的信息（不包含实际的内容）
+def getCellChatDBInfo():
+    with open('resource/lr_lib/meta.json','r',encoding = 'utf-8') as f:
+        cellchat_db_info = json.load(f)
+    return cellchat_db_info
 
-## 新建通讯
-def build_new_com():
-    
-    return None
+## 获取指定CellChatDB的信息
+def getCellChatDB(organism,db_name):
+    CellChatDBInfo = getCellChatDBInfo()
+    CellChatDB_index = [item['name'] for item in CellChatDBInfo[organism]].index(db_name)
 
-
+    CellChatDB = {}
+    with open('resource/lr_lib/' + organism + '/' + CellChatDBInfo[organism][CellChatDB_index]['file'],'r',encoding = 'utf-8') as f:
+        CellChatDB = pd.read_csv(f)
+    return CellChatDB 
 
 #
 # 基因推荐
@@ -318,17 +331,18 @@ def createFile(path):
 ##从adata.X计算距离矩阵TD
 def calculateTD(X):
     _X = X
-    if hasattr(_X,'A'):
-        _X = _X.A
-    TD1d = pdist(_X, 'euclidean')
-    TD = squareform(TD1d, force='no', checks=True)
+    # if hasattr(_X,'A'):
+    #     _X = _X.A
+    _X = get_dense_adata_X(_X)
+    TD = pairwise_distances(_X, metric='euclidean', n_jobs=-1)
 
     return TD
 ## 先归一化，再计算距离矩阵TD
 def calculateNormTD(X):
     _X = X
-    if hasattr(_X,'A'):
-        _X = _X.A
+    # if hasattr(_X,'A'):
+    #     _X = _X.A
+    _X = get_dense_adata_X(_X)
     return calculateTD(MinMaxScaler().fit_transform(_X))
 
 ## 先标准化，再计算距离矩阵TD
@@ -336,10 +350,11 @@ def calculateNormTD(X):
 
 ##从adata获取ndarray格式的count矩阵
 def getXfromAdata(adata):
-    if hasattr(adata.X,'A'):
-        return adata.X.A
-    else:
-        return adata.X
+    # if hasattr(adata.X,'A'):
+    #     return adata.X.A
+    # else:
+    #     return adata.X
+    return get_dense_adata_X(adata.X)
 
 
 def arr_to_json(data, group):
@@ -392,6 +407,40 @@ def calculateLocalScores(posArr,groupArr):
         result[group] = float(SSE/len(filterPosArr))
     return result
 
+def get_dense_adata_X(adataX):
+    from scipy import sparse
+    import numpy as np
+    return adataX.toarray() if sparse.issparse(adataX) else np.asarray(adataX)
+    
+def save_matrix_for_R(X, rownames, colnames, save_path):
+    """
+    保存矩阵为 R 可读取的格式 (mtx + tsv)
+
+    参数:
+    X : ndarray 或 csr_matrix
+    rownames : list 或 ndarray (行名)
+    colnames : list 或 ndarray (列名)
+    prefix : 输出文件前缀 (默认 'matrix')
+    """
+    import numpy as np
+    import pandas as pd
+    from scipy.sparse import csr_matrix, issparse
+    from scipy.io import mmwrite
+    import os
+
+
+    os.makedirs(save_path, exist_ok=True)
+    
+    # 转成稀疏矩阵存储（即使是 ndarray 也转一下）
+    if not issparse(X):
+        X = csr_matrix(X)
+    
+    # 保存矩阵
+    mmwrite(f"{save_path}/matrix.mtx", X)
+    
+    # 保存行名和列名
+    np.savetxt(f"{save_path}/rows.tsv", rownames, fmt="%s")
+    np.savetxt(f"{save_path}/cols.tsv", colnames, fmt="%s")
 
 #
 # 功能函数
@@ -424,14 +473,18 @@ def translateMouseGeneToHumanGene(gene_list,value_list):## 小鼠基因转换为
     new_gene_list = []
     new_value_list = []
     
+    reverse_map = {} #记录反转关系图谱
+    
     ## direct
     for gene in direct:
         new_gene_list.append(direct[gene])
         new_value_list.append(raw_gene_value_dict[gene])
+        reverse_map[direct[gene]] = gene
     ## multiple
     for gene in multiple:
         new_gene_list.extend(multiple[gene])
         new_value_list.extend([raw_gene_value_dict[gene] for i in range(0,len(multiple[gene]))])
+        reverse_map.update(dict(zip(multiple[gene],[gene for i in range(0,len(multiple[gene]))])))
     ## no index
     for gene in no_index:
         if gene[:2] == 'Gm':
@@ -448,11 +501,12 @@ def translateMouseGeneToHumanGene(gene_list,value_list):## 小鼠基因转换为
             continue
         new_gene_list.append(gene.upper())
         new_value_list.append(raw_gene_value_dict[gene])
+        reverse_map[gene.upper()] = gene
     ## collapse duplicate genes
     collapse_duplicate_mean = pd.Series(new_value_list,index=new_gene_list).groupby(by=new_gene_list,sort=False).mean()
     new_gene_list = collapse_duplicate_mean.index.tolist()
     new_value_list = collapse_duplicate_mean.values.tolist()
-    return new_gene_list,new_value_list
+    return new_gene_list,new_value_list,reverse_map
 
 
 #
@@ -572,22 +626,26 @@ def sampleAdataStratified(adata,sampling_num = None,sampling_radio = None):
 
 ## 检测adata的X是否包含nan
 def check_adataX_nan(adata):
-    if hasattr(adata.X,'A'):
-        tempX = adata.X.A
-    else:
-        tempX = adata.X
+    # if hasattr(adata.X,'A'):
+    #     tempX = adata.X.A
+    # else:
+    #     tempX = adata.X
+    tempX = get_dense_adata_X(adata.X)
     return np.isnan(tempX).any()
     
     
 
 ## 清除adata的X中的nan，将其转为0
 def clean_adataX_nan_zero(adata):
-    if hasattr(adata.X,'A'):
-        tempX = adata.X.A
+    # if hasattr(adata.X,'A'):
+    if sparse.issparse(adata.X):
+        # tempX = adata.X.A
+        tempX = get_dense_adata_X(adata.X)
         adata.X = csr_matrix(np.where(np.isnan(tempX), 0, tempX))
     else:
         tempX = adata.X
         adata.X = np.where(np.isnan(tempX), 0, tempX)
+
     return adata
 
 
@@ -663,6 +721,7 @@ def getResponseFromAdata(adata):
                 'TI':{},
                 'CC':{},
                 "MK": [],
+                'CC':{},
                 'ViewId':ViewId,
                 'ParentId':ParentId,
                 'dendrogram':[],#adata.uns['dendrogram']['linkage'].tolist()},
@@ -693,8 +752,8 @@ def getResponseFromAdata(adata):
                'name':metaData['group_name'][id],
                'color':metaData['group_color'][id],
                'size':cells_label.tolist().count(id),
-               'centerX':np.float(group_X_mean[id]),
-               'centerY':np.float(group_Y_mean[id])} for id in groups_id]
+               'centerX':np.float64(group_X_mean[id]),
+               'centerY':np.float64(group_Y_mean[id])} for id in groups_id]
     
     ## 获取过滤后的group与原有group的匹配布尔矩阵
     raw_groups_id = raw_adata.obs['label'].cat.categories
@@ -714,11 +773,13 @@ def getResponseFromAdata(adata):
         df = None
         queryAdata = readCache(adata.uns['JobId'],adata.uns['ViewId'], 'Query')
         queryAdata.obs['label'] = adata.obs['label']
-        if hasattr(queryAdata.X,'A'):
-            df = pd.DataFrame(queryAdata.X.A,index=queryAdata.obs.index,columns=queryAdata.var.index)
-        else:
-            df = pd.DataFrame(queryAdata.X,index=queryAdata.obs.index,columns=queryAdata.var.index)
+        # if hasattr(queryAdata.X,'A'):
+        #     df = pd.DataFrame(queryAdata.X.A,index=queryAdata.obs.index,columns=queryAdata.var.index)
+        # else:
+        #     df = pd.DataFrame(queryAdata.X,index=queryAdata.obs.index,columns=queryAdata.var.index)
         
+        df = pd.DataFrame(get_dense_adata_X(queryAdata.X),index=queryAdata.obs.index,columns=queryAdata.var.index)
+
         df['__group'] = queryAdata.obs['label']
         dfg = df.groupby('__group')
 
@@ -726,10 +787,11 @@ def getResponseFromAdata(adata):
 
         raw_df = None
  
-        if hasattr(raw.X,'A'):
-            raw_df = pd.DataFrame(raw.X.A,index=raw.obs.index,columns=raw.var.index)
-        else:
-            raw_df = pd.DataFrame(raw.X,index=raw.obs.index,columns=raw.var.index)
+        # if hasattr(raw.X,'A'):
+        #     raw_df = pd.DataFrame(raw.X.A,index=raw.obs.index,columns=raw.var.index)
+        # else:
+        #     raw_df = pd.DataFrame(raw.X,index=raw.obs.index,columns=raw.var.index)
+        raw_df = pd.DataFrame(get_dense_adata_X(raw.X),index=raw.obs.index,columns=raw.var.index)
         raw_df['__group'] = queryAdata.obs['label']
         raw_dfg = raw_df.groupby('__group')
         
@@ -777,8 +839,8 @@ def getResponseFromAdata(adata):
 
     ## 细胞通讯数据
     CC = {}
-    # if 'CC' in adata.uns['params']:
-    #     CC = adata.uns['CC']
+    if 'CC' in adata.uns['params']:
+        CC = adata.uns['CC']
 
     # ## 生成颜色数据
 

@@ -61,7 +61,7 @@
                         </el-table>
 
                     </div>
-                    <el-button slot="reference" type="text" style="margin-right: 0px;margin-top:10px;"><b style="font-size: 18px;">>>> Use Samples?</b></el-button>
+                    <el-button slot="reference" type="text" style="margin-right: 0px;margin-top:10px;"><b style="font-size: 18px;">>>> Use Examples?</b></el-button>
                 </el-popover>
 
                 <input type="file" ref="JobLoader" @change="handleJobLoaderChangeFile" style="display: none" /> <!--真实的job上传器-->

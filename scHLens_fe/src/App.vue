@@ -35,6 +35,8 @@
 
         <!--固定大信息板-->
         <MessageBoard ref="MessageBoard"/>
+        
+
     </div>
 </template>
 
@@ -43,9 +45,10 @@ import Vue from "vue";
 import {Step,Steps,Message,Menu, MenuItem, Submenu,Notification} from "element-ui";
 import InfoPanel from "./components/InfoPanel.vue";
 import MessageBoard from "./components/MessageBoard.vue";
+import AnnoRecomAddiInfoPanel from "@/components/AnnoRecomAddiInfoPanel";
 import {InstanceClose} from '@/utils/interface';
 import axios from "axios";
-
+import Tutorial from "@/Tutorial";
 Vue.component(Menu.name,Menu)
 Vue.component(MenuItem.name,MenuItem)
 Vue.component(Submenu.name,Submenu)
@@ -56,7 +59,7 @@ export default {
     name: "App",
     components: {
         InfoPanel,
-        MessageBoard
+        MessageBoard,
     },
     computed: {
         curData() {
@@ -101,8 +104,17 @@ export default {
         this.$store.commit("setInfoPanel", this.$refs['InfoPanel']);
         //set MessageBoard
         this.$store.commit("setMessageBoard", this.$refs['MessageBoard']);
+        // //set AnnoRecomAddiInfoPanel
+        // this.$store.commit("setAnnoRecomAddiInfoPanel", this.$refs['AnnoRecomAddiInfoPanel']);
 
 
+        //预渲染Tutorial
+        const initialRoute = this.$router.currentRoute.fullPath;
+            // 临时切换到 /tutorial
+            this.$router.push("/tutorial").then(() => {
+            // 预加载完成后再切回初始路由
+            this.$router.push(initialRoute);
+        });
 
         
     }

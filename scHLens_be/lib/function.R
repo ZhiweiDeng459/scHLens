@@ -32,6 +32,8 @@ devianceFS <- function(matrix,gene_name,cell_name){
 MySCTransform <- function(matrix,gene_name,cell_name,topGenes){
 
     library(Seurat)
+    library(glmGamPoi)
+    library(sctransform)
 
     rownames(matrix) = cell_name
     colnames(matrix) = gene_name
@@ -98,6 +100,34 @@ Slingshot <- function(rd,cl){
 }
 
 
+# # two methods of scCCESS extension
+# scCCESS_Kmeans <- function(matrix,geneName,cellName){
+    
+#     library(scCCESS)
+#     library(reticulate)
+#     reticulate::use_condaenv("scHLens", required = TRUE)
+    
+#     rownames(matrix) <- cellName
+#     colnames(matrix) <- geneName
+#     matrix <- t(matrix)
+
+#     matrix=prefilter(matrix)
+#     res = estimate_k(matrix,
+#                     seed = 1, 
+#                     cluster_func = function(x,centers) { 
+#                     set.seed(42);
+#                     kmeans(x, centers)
+#                     },
+#                     criteria_method = "NMI",
+#                     krange = 3:15, ensemble_sizes = 10,
+#                     cores = 1
+#     )
+
+
+#     return(res$ngroups)
+# }
+
+
 # A method of cell chat
 # input:
     # matrix: the normlized matrix
@@ -109,10 +139,8 @@ Slingshot <- function(rd,cl){
 
 CellChat <- function(matrix,cellName,geneName,group,DatabaseType){
 
-    library(scater)
     library(Seurat)
-    library(SeuratDisk)
-    library(patchwork)
+    # library(patchwork)
     library(CellChat)
     library(dplyr)
 
@@ -157,8 +185,8 @@ CellChat <- function(matrix,cellName,geneName,group,DatabaseType){
     cellchat<-filterCommunication(cellchat,min.cells=10)
     df.net<-subsetCommunication(cellchat)
 
-    cellchat <- computeCommunProbPathway(cellchat) 
-    df.netp<-subsetCommunication(cellchat,slot.name="netP")
+    # cellchat <- computeCommunProbPathway(cellchat) 
+    # df.netp<-subsetCommunication(cellchat,slot.name="netP")
 
 
 
@@ -166,12 +194,64 @@ CellChat <- function(matrix,cellName,geneName,group,DatabaseType){
     cellchat<-aggregateNet(cellchat)
 
     ## 打包结果
+    ### 通讯的count
     byCount <- list(cellchat@net$count,colnames(cellchat@net$count))
     names(byCount) <- c("data","clusterList")
+    ### 通讯的weight
     byWeight <- list(cellchat@net$weight,colnames(cellchat@net$weight))
     names(byWeight) <- c("data","clusterList")
-    result <- list(byCount,byWeight)
-    names(result) <- c("count","weight") 
+    ### Interaction的信息
+    source <- df.net$source
+    target <- df.net$target
+    ligand <- df.net$ligand
+    receptor <- df.net$receptor
+    prob <- df.net$prob
+    
+    
+    result <- list(byCount,byWeight,source,target,ligand,receptor,prob)
+    names(result) <- c("count","weight","source","target","ligand","receptor","prob")
+
+    return(result)
+
+}
+
+
+multik <- function(norm_data,gene_name,cell_name){
+
+    library(MultiK)
+    library(Seurat)
+
+    rownames(norm_data) = cell_name
+    colnames(norm_data) = gene_name
+    norm_data <- t(norm_data)
+
+    seu <- CreateSeuratObject(counts=norm_data) 
+    seu <- SetAssayData(seu, slot = "data", new.data = norm_data)
+
+
+    rep_num = 10
+
+    multik <- MultiK(seu, reps=rep_num)
+
+    ## calc 1-rPCA (x) / runs (y)
+    tog <- as.data.frame(table(multik$k)[table(multik$k) > 1])
+    pacobj <- CalcPAC(x1=0.1, x2=0.9, xvec = tog$Var1, ml = multik$consensus)
+    tog$rpac <- pacobj$rPAC
+    tog$one_minus_rpac  <- 1-tog$rpac
+
+
+    hull_idx <- chull(tog$one_minus_rpac,tog$Freq)
+
+    raw_hull_points <- tog[hull_idx, ]
+
+
+    hull_points <- raw_hull_points[raw_hull_points$Freq > (1 / nrow(tog)) * rep_num * 40,]
+    if(nrow(hull_points)==0){
+        hull_points <- raw_hull_points
+    }
+
+    best_k = hull_points[which.max(hull_points$one_minus_rpac),'Var1']
+
 
     return(result)
 

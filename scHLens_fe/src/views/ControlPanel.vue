@@ -120,8 +120,13 @@ export default {
                 return;
             }
 
+            console.time('single_pipeline')
+
             runPipeline(params)
                 .then((pipeline_response) => {
+
+                    
+
                     fetchViewData(pipeline_response.data.JobId,pipeline_response.data.ViewId)
                         .then((fetch_response)=>{
                             console.log(fetch_response.data)
@@ -132,6 +137,7 @@ export default {
                                 'showClose':true,
                             })
                             this.$refs['PipelineLoading'].setVisible(false)
+                            console.timeEnd('single_pipeline')
                         })
                         .catch((fetch_err)=>{
                             console.log(fetch_err)
@@ -147,10 +153,11 @@ export default {
                             );
 
                             this.$refs['PipelineLoading'].setVisible(false)
-
+                            console.timeEnd('single_pipeline')
                         })
                 })
                 .catch((pipeline_err) => {
+                    console.timeEnd('single_pipeline')
                     //提示结果
                     let err_data = pipeline_err.response.data;
                     if(err_data.type == 'pipelineException'){

@@ -371,6 +371,23 @@ export function multiGenesSplitFromText(JobId,ViewId,multiGeneText) {
     });
 }
 
+
+
+/**
+ * 
+ * 细胞通讯
+ * 
+ */
+
+export function queryCellChatDB(){
+    return axios({
+        method: "post",
+        url: "api/queryCellChatDB",
+        data: {
+        },
+    })
+}
+
 /**
  * 
  * 基因推荐
@@ -434,7 +451,7 @@ export function testConnection(){
     return io(window.location.origin,{
         path:window.location.pathname + 'socket.io',
         reconnection: true, // 默认为true
-        reconnectionDelay: 1000, // 重新连接的延迟（毫秒）
+        reconnectionDelay: 100, // 重新连接的延迟（毫秒）
         auth:{
             'type':'Test',
         }
@@ -446,7 +463,7 @@ export function createNewSocket(JobId){
     return io(window.location.origin,{
         path:window.location.pathname + 'socket.io',
         reconnection: true, // 默认为true
-        reconnectionDelay: 1000, // 重新连接的延迟（毫秒）
+        reconnectionDelay: 100, // 重新连接的延迟（毫秒）
         auth:{
             'type':'Main',
             'JobId':JobId,

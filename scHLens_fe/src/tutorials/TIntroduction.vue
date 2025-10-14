@@ -26,7 +26,7 @@
       <b>Besides, to better demonstrate the cases in our manuscript, we have integrated
         predefined demos into scHLens. For details on how to use them, please
         refer to "Tutorial -> Enter a Job -> Create a New Job & Load an Existing Job & Use
-        Samples -> Use Samples".</b>
+        Examples -> Use Examples".</b>
     </p>
 
     <p class="body">
