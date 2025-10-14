@@ -19,21 +19,18 @@
         only introduces minor variations and does not affect the overall
         conclusions.</b>
     </p>
-    <h1 id="t_re_case1">
-      Case1: clustering and annotating the PBMC-3K dataset
+    <h1 id="t_re_case3">
+      Case3: scHLens hierarchically identifies detailed cell subtypes from the large-scale human lung cancer dataset.
     </h1>
     <p class="body">
-      The target dataset for this case is PBMC-3K, which consists of peripheral
-      blood mononuclear cells (PBMCs) from a healthy donor. It represents a
-      diverse set of immune cell types, including T cells, B cells, natural
-      killer (NK) cells, and monocytes.
+      The target dataset for this case is Human Lung Cancer dataset, containing 256,379 cells with 32,805 genes. The
+      original annotation of this dataset contains 9 types, including Airway Epithelium, B cells, CD45+, Endothelial,
+      Epithelial, Fibroblasts, Granulocytes, Myeloid, and T cells.
     </p>
     <p class="body">
-      <b>Step 1.</b>
-      Select the PBMC-3K (sample) dataset and then Set the global pipeline as Table 1 and then obtain the unannotated plot
-      (Shown
-      as Figure 1-1).
-    </p>
+      We list the essential pipeline parameters for each plot as follows. We list the essential pipeline parameters for
+      each plot as follows. Users can reproduce the results step by step following the descriptions in the manuscript.
+      <!--Global Plot 1 Parameter-->
     <div class="table-container">
       <table>
         <tr>
@@ -43,40 +40,93 @@
           <th>Value</th>
         </tr>
         <tr>
-          <td>Quality Control</td>
-          <td>Filter Outlying Cells</td>
-          <td>min Genes</td>
-          <td>200</td>
+          <td>Normalization</td>
+          <td>CPM Normalize</td>
+          <td>-</td>
+          <td>Yes</td>
         </tr>
         <tr>
-          <td>Quality Control</td>
-          <td>Filter Outlying Cells</td>
-          <td>max Genes</td>
-          <td>2500</td>
+          <td>Normalization</td>
+          <td>Logarithmize</td>
+          <td>-</td>
+          <td>Yes</td>
         </tr>
         <tr>
-          <td>Quality Control</td>
-          <td>Filter Outlying Genes</td>
-          <td>min Cells</td>
-          <td>3</td>
+          <td>Normalization</td>
+          <td>Regress</td>
+          <td>-</td>
+          <td>No</td>
         </tr>
         <tr>
-          <td>Quality Control</td>
-          <td>Filter Outlying Genes</td>
-          <td>max Cells</td>
-          <td></td>
+          <td>Normalization</td>
+          <td>Scale</td>
+          <td>-</td>
+          <td>No</td>
         </tr>
         <tr>
-          <td>Quality Control</td>
-          <td>MT-Gene Control</td>
+          <td>Gene Selection</td>
+          <td>HighlyVariable</td>
+          <td>top Genes</td>
+          <td>3000</td>
+        </tr>
+        <tr>
+          <td>Visualization</td>
+          <td>UMAP</td>
+          <td>pre-DR</td>
+          <td>No</td>
+        </tr>
+        <tr>
+          <td>Visualization</td>
+          <td>UMAP</td>
+          <td>min Dist</td>
+          <td>0.6</td>
+        </tr>
+        <tr>
+          <td>Visualization</td>
+          <td>UMAP</td>
+          <td>nNeighbors</td>
+          <td>10</td>
+        </tr>
+        <tr>
+          <td>Clustering</td>
+          <td>leiden</td>
+          <td>nNeighbors</td>
+          <td>15</td>
+        </tr>
+        <tr>
+          <td>Clustering</td>
+          <td>leiden</td>
+          <td>resolution</td>
+          <td>0.015</td>
+        </tr>
+        <tr>
+          <td>DEG Identification</td>
+          <td>wilcoxon-test</td>
+          <td>nGenes</td>
+          <td>50</td>
+        </tr>
+        <tr>
+          <td>Cell Communication</td>
+          <td>CellChat</td>
           <td>Organism</td>
           <td>Human</td>
         </tr>
+      </table>
+      <figcaption style="margin-top: 6px; font-weight: bold">
+        Table 3-1: The pipeline parameter of Global Plot &#9312; in Case 3
+      </figcaption>
+    </div>
+
+
+
+    <!--Local Plot 2 Parameter-->
+    <div class="table-container">
+      <table>
         <tr>
-          <td>Quality Control</td>
-          <td>MT-Gene Control</td>
-          <td>pct Counts</td>
-          <td>5</td>
+          <th>Module</th>
+          <th>Method</th>
+          <th>Parameter</th>
+          <th>Value</th>
         </tr>
         <tr>
           <td>Normalization</td>
@@ -118,7 +168,7 @@
           <td>Visualization</td>
           <td>UMAP</td>
           <td>min Dist</td>
-          <td>0.5</td>
+          <td>0.1</td>
         </tr>
         <tr>
           <td>Visualization</td>
@@ -136,13 +186,13 @@
           <td>Clustering</td>
           <td>leiden</td>
           <td>resolution</td>
-          <td>0.5</td>
+          <td>0.05</td>
         </tr>
         <tr>
           <td>DEG Identification</td>
-          <td>t-test</td>
+          <td>wilcoxon-test</td>
           <td>nGenes</td>
-          <td>100</td>
+          <td>50</td>
         </tr>
         <tr>
           <td>Cell Communication</td>
@@ -152,56 +202,13 @@
         </tr>
       </table>
       <figcaption style="margin-top: 6px; font-weight: bold">
-        Table 1
+        Table 3-2: The pipeline parameter of Local Plot &#9313; in Case 3
       </figcaption>
     </div>
-    <div class="image-container">
-      <img class="image" src="tutorials/img/repo-Figure1-1.jpg" />
-      <b class="image-title">Figure 1-1</b>
-    </div>
-    <p class="body">
-      <b>Step 2.</b>
-      After executing the above pipeline, we obtained a plot consisting of eight
-      groups (Figure 1-1). We then opened the Group Panel, selected Human -
-      Azimuth 2023 as the gene set database and Enrichr as the annotation
-      recommendation method to annotate each group. During the annotation
-      process, we applied different logfoldchange thresholds to filter marker
-      genes for each group: c_0: 1, c_1: 4, c_2: 4, c_3: 2.3, c_4: 3, c_5: 4,
-      c_6: 3, and c_7: 5. Thie cell type recommendation results are shown in Figure 1-2.
-    </p>
-    <div class="image-container">
-      <img class="image" src="tutorials/img/repo-Figure1-2.jpg" />
-      <b class="image-title">Figure 1-2</b>
-    </div>
-    <p class="body">
-      <b>Step 3.</b>
-      The final cell type was selected as the most significant recommended type or the parent type of the top
-      recommended types. The final annotation, shown in Figure 1-3 of the manuscript, is similar to the
-      original annotation presented in Figure 1-1.
-    </p>
-    <div class="image-container">
-      <img class="image" src="tutorials/img/repo-Figure1-3.jpg" />
-      <b class="image-title">Figure 1-3</b>
-    </div>
 
-    <h1 id="t_re_case2">
-      Case2: scHLens identifies endocrine subtypes and rare cell types in the
-      human pancreatic dataset
-    </h1>
-    <p class="body">
-      The target dataset for this case is Human Pancreatic dataset, which is
-      representative dataset of human pancreatic cell atlas, obtained from an
-      automated platform that utilizes FACS and CEL-Seq2. It was originally
-      annotated as nine major cell types, including five kinds of Endocrine
-      cells (Alpha cells, Beta cells, Delta cells, Epsilon cells and Gamma
-      cells), two kinds of Exocrine cells (Ductal cells and Acinar cells),
-      Mesenchymal cells and Endothelial cells.
-    </p>
-    <p class="body">
-      <b>Step 1.</b>Select the Human Pancreatic dataset (sample) and then Set the global pipeline as Table 2-1 and then
-      obtain the unannotated Global Plot &#9312; (Shown
-      as Figure 2-1).
-    </p>
+
+
+    <!--Local Plot 3 Parameter-->
     <div class="table-container">
       <table>
         <tr>
@@ -229,88 +236,54 @@
           <td>No</td>
         </tr>
         <tr>
-          <td>Normalization</td>
-          <td>Scale</td>
-          <td>-</td>
-          <td>No</td>
-        </tr>
-        <tr>
           <td>Gene Selection</td>
           <td>HighlyVariable</td>
           <td>top Genes</td>
-          <td>1500</td>
+          <td>1000</td>
         </tr>
         <tr>
           <td>Visualization</td>
-          <td>T-SNE</td>
+          <td>UMAP</td>
           <td>pre-DR</td>
           <td>No</td>
         </tr>
         <tr>
           <td>Visualization</td>
-          <td>T-SNE</td>
-          <td>perplexity</td>
-          <td>30</td>
+          <td>UMAP</td>
+          <td>min Dist</td>
+          <td>0.1</td>
+        </tr>
+        <tr>
+          <td>Visualization</td>
+          <td>UMAP</td>
+          <td>nNeighbors</td>
+          <td>10</td>
         </tr>
         <tr>
           <td>Clustering</td>
           <td>leiden</td>
           <td>nNeighbors</td>
-          <td>15</td>
+          <td>10</td>
         </tr>
         <tr>
           <td>Clustering</td>
           <td>leiden</td>
           <td>resolution</td>
-          <td>0.03</td>
+          <td>0.15</td>
         </tr>
         <tr>
           <td>DEG Identification</td>
           <td>wilcoxon-test</td>
           <td>nGenes</td>
-          <td>50</td>
-        </tr>
-        <tr>
-          <td>Cell Communication</td>
-          <td>CellChat</td>
-          <td>Organism</td>
-          <td>Human</td>
+          <td>100</td>
         </tr>
       </table>
       <figcaption style="margin-top: 6px; font-weight: bold">
-        Table 2-1
+        Table 3-3: The pipeline parameter of Local Plot &#9314; in Case 3
       </figcaption>
     </div>
-    <div class="image-container">
-      <img class="image" src="tutorials/img/repo-Figure2-1.jpg" />
-      <b class="image-title">Figure 2-1</b>
-    </div>
-    <p class="body">
-      <b>Step 2.</b>The unannotated Global Plot &#9312; consists six
-      groups (Shown as Figure 2-1). We selected Human - PanglaoDB Augmented 2021 as the gene set
-      database and Enrichr as the annotation recommendation method to annotate
-      each group. During the annotation process, we applied different
-      logfoldchange thresholds to filter marker genes for each group: c_0: 3,
-      c_1: 2, c_2: 5, c_3: 4, c_4: 2, c_5: 2. According to the recommendations
-      from the Annotation module, c_2 - c_5 were accurately
-      identified: Acinar cells, Ductal cells, Mesenchymal cells, and Endothelial
-      cells. The clusters c_0 and c_1 exhibit relatively clear several blocks,
-      and therefore, they were selected for more detailed clustering (Figure 2-2).
-    </p>
-    <div class="image-container">
-      <img class="image" src="tutorials/img/repo-Figure2-2.jpg" />
-      <b class="image-title">Figure 2-2</b>
-    </div>
-    <p class="body">
-      <b>Step 3.</b>First, we selected c_0 and created a local pipeline as shown in parameter
-      Table 2-2, resulting in Local Plot &#9313;. In Local Plot &#9313;, there are three
-      groups, and we again used Human - PanglaoDB Augmented 2021 as the gene set
-      database and Enrichr as the annotation recommendation method to annotate
-      each group. We applied different logfoldchange thresholds to filter marker genes for each group: c_0: 1,
-      c_1: 1, c_2: 3. The cell type recommendations are shown as Figure 2-3 (B). The final cell type was selected as the
-      most significant recommended type or the parent type of the top recommended types. Therefore, we can annotate it as
-      Figure 2-3 (A).
-    </p>
+
+    <!--Local Plot 4 Parameter-->
     <div class="table-container">
       <table>
         <tr>
@@ -351,15 +324,21 @@
         </tr>
         <tr>
           <td>Visualization</td>
-          <td>T-SNE</td>
+          <td>UMAP</td>
           <td>pre-DR</td>
           <td>No</td>
         </tr>
         <tr>
           <td>Visualization</td>
-          <td>T-SNE</td>
-          <td>perplexity</td>
-          <td>30</td>
+          <td>UMAP</td>
+          <td>min Dist</td>
+          <td>0.6</td>
+        </tr>
+        <tr>
+          <td>Visualization</td>
+          <td>UMAP</td>
+          <td>nNeighbors</td>
+          <td>10</td>
         </tr>
         <tr>
           <td>Clustering</td>
@@ -371,7 +350,7 @@
           <td>Clustering</td>
           <td>leiden</td>
           <td>resolution</td>
-          <td>0.03</td>
+          <td>0.05</td>
         </tr>
         <tr>
           <td>DEG Identification</td>
@@ -387,34 +366,346 @@
         </tr>
       </table>
       <figcaption style="margin-top: 6px; font-weight: bold">
-        Table 2-2
+        Table 3-4: The pipeline parameter of Local Plot &#9315; in Case 3
       </figcaption>
     </div>
-    <div class="image-container">
-      <img class="image" src="tutorials/img/repo-Figure2-3.jpg" />
-      <b class="image-title">Figure 2-3</b>
-    </div>
-    <p class="body">
-      <b>Step 3.</b> To further validate our annotation results, we examined the expression patterns of marker genes
-      corresponding to the annotated cell types. By entering the marker genes into the gene search box and adding them to
-      the "Current Gene" list, we visualized their expression in the Gene Projection View. As shown in Figure 2-3 (C), the
-      marker genes of Alpha Cells (GCG, TTR, MAFB, FAP, GLS) were highly expressed in cluster c_0, confirming the
-      correctness of the annotation. Similarly, the annotations of c_1 and c_2 as Gamma Cells and Myeloid Cells,
-      respectively, were also accurate. The annotation in the the original publication of c_2 was Ductal Cell; however,
-      the marker genes of
-      Ductal Cells were not highly expressed in c_2, indicating a misannotation.
-    </p>
 
-    <p class="body">
-      <b>Step 4.</b>Returning to Global Plot &#9312;, we selected c_1 and created a local pipeline as shown in Table 2-3, resulting
-      in Local Plot &#9314;.In Local Plot &#9314;, there are two
-      groups, and we again used Human - PanglaoDB Augmented 2021 as the gene set
-      database and Enrichr as the annotation recommendation method to annotate
-      each group. We applied same logfoldchange thresholds to filter marker genes for each group: c_0: 2,
-      c_1: 2. The final cell type was selected as the
-      most significant recommended type or the parent type of the top recommended types. Therefore, we can annotate it as
-      Figure 2-4.
-    </p>
+    <!--Local Plot 5 Parameter-->
+    <div class="table-container">
+      <table>
+        <tr>
+          <th>Module</th>
+          <th>Method</th>
+          <th>Parameter</th>
+          <th>Value</th>
+        </tr>
+        <tr>
+          <td>Quality Control</td>
+          <td>Filter Outlying Cells</td>
+          <td>min Genes</td>
+          <td>200</td>
+        </tr>
+        <tr>
+          <td>Quality Control</td>
+          <td>Filter Outlying Cells</td>
+          <td>max Genes</td>
+          <td></td>
+        </tr>
+        <tr>
+          <td>Quality Control</td>
+          <td>Filter Outlying Genes</td>
+          <td>min Cells</td>
+          <td>3</td>
+        </tr>
+        <tr>
+          <td>Quality Control</td>
+          <td>Filter Outlying Genes</td>
+          <td>max Cells</td>
+          <td></td>
+        </tr>
+        <tr>
+          <td>Normalization</td>
+          <td>CPM Normalize</td>
+          <td>-</td>
+          <td>Yes</td>
+        </tr>
+        <tr>
+          <td>Normalization</td>
+          <td>Logarithmize</td>
+          <td>-</td>
+          <td>Yes</td>
+        </tr>
+        <tr>
+          <td>Normalization</td>
+          <td>Regress</td>
+          <td>-</td>
+          <td>No</td>
+        </tr>
+        <tr>
+          <td>Normalization</td>
+          <td>Scale</td>
+          <td>-</td>
+          <td>Yes</td>
+        </tr>
+        <tr>
+          <td>Gene Selection</td>
+          <td>HighlyVariable</td>
+          <td>top Genes</td>
+          <td>2000</td>
+        </tr>
+        <tr>
+          <td>Visualization</td>
+          <td>UMAP</td>
+          <td>pre-DR</td>
+          <td>No</td>
+        </tr>
+        <tr>
+          <td>Visualization</td>
+          <td>UMAP</td>
+          <td>min Dist</td>
+          <td>0.5</td>
+        </tr>
+        <tr>
+          <td>Visualization</td>
+          <td>UMAP</td>
+          <td>nNeighbors</td>
+          <td>15</td>
+        </tr>
+        <tr>
+          <td>Clustering</td>
+          <td>leiden</td>
+          <td>nNeighbors</td>
+          <td>10</td>
+        </tr>
+        <tr>
+          <td>Clustering</td>
+          <td>leiden</td>
+          <td>resolution</td>
+          <td>0.1</td>
+        </tr>
+        <tr>
+          <td>DEG Identification</td>
+          <td>t-test</td>
+          <td>nGenes</td>
+          <td>50</td>
+        </tr>
+        <tr>
+          <td>Cell Communication</td>
+          <td>CellChat</td>
+          <td>Organism</td>
+          <td>Human</td>
+        </tr>
+      </table>
+      <figcaption style="margin-top: 6px; font-weight: bold">
+        Table 3-5: The pipeline parameter of Local Plot &#9316; in Case 3
+      </figcaption>
+    </div>
+
+
+    <!--Local Plot 6 Parameter-->
+    <div class="table-container">
+      <table>
+        <tr>
+          <th>Module</th>
+          <th>Method</th>
+          <th>Parameter</th>
+          <th>Value</th>
+        </tr>
+        <tr>
+          <td>Quality Control</td>
+          <td>Filter Outlying Cells</td>
+          <td>min Genes</td>
+          <td>200</td>
+        </tr>
+        <tr>
+          <td>Quality Control</td>
+          <td>Filter Outlying Cells</td>
+          <td>max Genes</td>
+          <td></td>
+        </tr>
+        <tr>
+          <td>Quality Control</td>
+          <td>Filter Outlying Genes</td>
+          <td>min Cells</td>
+          <td>3</td>
+        </tr>
+        <tr>
+          <td>Quality Control</td>
+          <td>Filter Outlying Genes</td>
+          <td>max Cells</td>
+          <td></td>
+        </tr>
+        <tr>
+          <td>Normalization</td>
+          <td>CPM Normalize</td>
+          <td>-</td>
+          <td>Yes</td>
+        </tr>
+        <tr>
+          <td>Normalization</td>
+          <td>Logarithmize</td>
+          <td>-</td>
+          <td>Yes</td>
+        </tr>
+        <tr>
+          <td>Normalization</td>
+          <td>Regress</td>
+          <td>-</td>
+          <td>No</td>
+        </tr>
+        <tr>
+          <td>Normalization</td>
+          <td>Scale</td>
+          <td>-</td>
+          <td>Yes</td>
+        </tr>
+        <tr>
+          <td>Gene Selection</td>
+          <td>scry</td>
+          <td>top Genes</td>
+          <td>1000</td>
+        </tr>
+        <tr>
+          <td>Visualization</td>
+          <td>UMAP</td>
+          <td>pre-DR</td>
+          <td>No</td>
+        </tr>
+        <tr>
+          <td>Visualization</td>
+          <td>UMAP</td>
+          <td>min Dist</td>
+          <td>0.5</td>
+        </tr>
+        <tr>
+          <td>Visualization</td>
+          <td>UMAP</td>
+          <td>nNeighbors</td>
+          <td>15</td>
+        </tr>
+        <tr>
+          <td>Clustering</td>
+          <td>leiden</td>
+          <td>nNeighbors</td>
+          <td>10</td>
+        </tr>
+        <tr>
+          <td>Clustering</td>
+          <td>leiden</td>
+          <td>resolution</td>
+          <td>0.1</td>
+        </tr>
+        <tr>
+          <td>DEG Identification</td>
+          <td>t-test</td>
+          <td>nGenes</td>
+          <td>50</td>
+        </tr>
+        <tr>
+          <td>Cell Communication</td>
+          <td>CellChat</td>
+          <td>Organism</td>
+          <td>Human</td>
+        </tr>
+      </table>
+      <figcaption style="margin-top: 6px; font-weight: bold">
+        Table 3-6: The pipeline parameter of Local Plot &#9317; in Case 3
+      </figcaption>
+    </div>
+
+
+    <!--Local Plot 7 Parameter-->
+    <div class="table-container">
+      <table>
+        <tr>
+          <th>Module</th>
+          <th>Method</th>
+          <th>Parameter</th>
+          <th>Value</th>
+        </tr>
+        <tr>
+          <td>Quality Control</td>
+          <td>Filter Outlying Cells</td>
+          <td>min Genes</td>
+          <td>200</td>
+        </tr>
+        <tr>
+          <td>Quality Control</td>
+          <td>Filter Outlying Cells</td>
+          <td>max Genes</td>
+          <td></td>
+        </tr>
+        <tr>
+          <td>Quality Control</td>
+          <td>Filter Outlying Genes</td>
+          <td>min Cells</td>
+          <td>3</td>
+        </tr>
+        <tr>
+          <td>Quality Control</td>
+          <td>Filter Outlying Genes</td>
+          <td>max Cells</td>
+          <td></td>
+        </tr>
+        <tr>
+          <td>Normalization</td>
+          <td>CPM Normalize</td>
+          <td>-</td>
+          <td>Yes</td>
+        </tr>
+        <tr>
+          <td>Normalization</td>
+          <td>Logarithmize</td>
+          <td>-</td>
+          <td>Yes</td>
+        </tr>
+        <tr>
+          <td>Normalization</td>
+          <td>Regress</td>
+          <td>-</td>
+          <td>No</td>
+        </tr>
+        <tr>
+          <td>Normalization</td>
+          <td>Scale</td>
+          <td>-</td>
+          <td>Yes</td>
+        </tr>
+        <tr>
+          <td>Gene Selection</td>
+          <td>scry</td>
+          <td>top Genes</td>
+          <td>500</td>
+        </tr>
+        <tr>
+          <td>Visualization</td>
+          <td>UMAP</td>
+          <td>pre-DR</td>
+          <td>No</td>
+        </tr>
+        <tr>
+          <td>Visualization</td>
+          <td>UMAP</td>
+          <td>min Dist</td>
+          <td>0.5</td>
+        </tr>
+        <tr>
+          <td>Visualization</td>
+          <td>UMAP</td>
+          <td>nNeighbors</td>
+          <td>10</td>
+        </tr>
+        <tr>
+          <td>Clustering</td>
+          <td>leiden</td>
+          <td>nNeighbors</td>
+          <td>10</td>
+        </tr>
+        <tr>
+          <td>Clustering</td>
+          <td>leiden</td>
+          <td>resolution</td>
+          <td>0.1</td>
+        </tr>
+        <tr>
+          <td>DEG Identification</td>
+          <td>t-test</td>
+          <td>nGenes</td>
+          <td>50</td>
+        </tr>
+        <tr>
+          <td>Cell Communication</td>
+          <td>CellChat</td>
+          <td>Organism</td>
+          <td>Human</td>
+        </tr>
+      </table>
+      <figcaption style="margin-top: 6px; font-weight: bold">
+        Table 3-7: The pipeline parameter of Local Plot &#9318; in Case 3
+      </figcaption>
+    </div>
+
+    <!--Local Plot 8 Parameter-->
 
     <div class="table-container">
       <table>
@@ -452,19 +743,25 @@
           <td>Gene Selection</td>
           <td>scry</td>
           <td>top Genes</td>
-          <td>500</td>
+          <td>300</td>
         </tr>
         <tr>
           <td>Visualization</td>
-          <td>T-SNE</td>
+          <td>UMAP</td>
           <td>pre-DR</td>
           <td>No</td>
         </tr>
         <tr>
           <td>Visualization</td>
-          <td>T-SNE</td>
-          <td>perplexity</td>
-          <td>30</td>
+          <td>UMAP</td>
+          <td>min Dist</td>
+          <td>0.6</td>
+        </tr>
+        <tr>
+          <td>Visualization</td>
+          <td>UMAP</td>
+          <td>nNeighbors</td>
+          <td>10</td>
         </tr>
         <tr>
           <td>Clustering</td>
@@ -480,7 +777,7 @@
         </tr>
         <tr>
           <td>DEG Identification</td>
-          <td>t-test</td>
+          <td>wilcoxon-test</td>
           <td>nGenes</td>
           <td>50</td>
         </tr>
@@ -492,13 +789,8 @@
         </tr>
       </table>
       <figcaption style="margin-top: 6px; font-weight: bold">
-        Table 2-3
+        Table 3-8: The pipeline parameter of Local Plot &#9319; in Case 3
       </figcaption>
-
-      <div class="image-container">
-        <img class="image" src="tutorials/img/repo-Figure2-4.jpg" />
-        <b class="image-title">Figure 2-4</b>
-      </div>
     </div>
 
 
@@ -551,6 +843,7 @@ h1 {
   flex-direction: column;
   align-items: center;
   font-size: 20px;
+  margin-bottom: 30px;
 
   table {
     border-collapse: collapse;
@@ -586,4 +879,5 @@ h1 {
     font-size: 25px;
     margin: 15px 0px;
   }
-}</style>
+}
+</style>
