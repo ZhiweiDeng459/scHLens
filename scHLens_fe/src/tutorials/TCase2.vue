@@ -11,13 +11,15 @@
     </p>
     <p class="body">
       We will next describe the analysis process for each case in detail,
-      allowing users to reproduce our results in manuscript. <b>However, some
-        methods in our pipeline involve stochastic processes, so the generated
-        visualizations may not be exactly identical to those shown in the
-        manuscript figures (for example, the relative positions of groups in the
-        Cell Projection View). We have tested and confirmed that such randomness
-        only introduces minor variations and does not affect the overall
-        conclusions.</b>
+      allowing users to reproduce our results in manuscript.
+      <b
+        >However, some methods in our pipeline involve stochastic processes, so
+        the generated visualizations may not be exactly identical to those shown
+        in the manuscript figures (for example, the relative positions of groups
+        in the Cell Projection View). We have tested and confirmed that such
+        randomness only introduces minor variations and does not affect the
+        overall conclusions.</b
+      >
     </p>
     <h1 id="t_re_case2">
       Case2: scHLens identifies endocrine subtypes and rare cell types in the
@@ -33,9 +35,9 @@
       Mesenchymal cells and Endothelial cells.
     </p>
     <p class="body">
-      <b>Step 1.</b>Select the Human Pancreatic dataset (sample) and then Set the global pipeline as Table 2-1 and then
-      obtain the unannotated Global Plot &#9312; (Shown
-      as Figure 2-1).
+      <b>Step 1.</b>Select the Human Pancreatic dataset (sample) and then Set
+      the global pipeline as Table 2-1 and then obtain the unannotated Global
+      Plot &#9312; (Shown as Figure 2-1).
     </p>
     <div class="table-container">
       <table>
@@ -121,30 +123,32 @@
       <b class="image-title">Figure 2-1</b>
     </div>
     <p class="body">
-      <b>Step 2.</b>The unannotated Global Plot &#9312; consists six
-      groups (Shown as Figure 2-1). We selected Human - PanglaoDB Augmented 2021 as the gene set
-      database and Enrichr as the annotation recommendation method to annotate
-      each group. During the annotation process, we applied different
+      <b>Step 2.</b>The unannotated Global Plot &#9312; consists six groups
+      (Shown as Figure 2-1). We selected Human - PanglaoDB Augmented 2021 as the
+      gene set database and Enrichr as the annotation recommendation method to
+      annotate each group. During the annotation process, we applied different
       logfoldchange thresholds to filter marker genes for each group: c_0: 3,
       c_1: 2, c_2: 5, c_3: 4, c_4: 2, c_5: 2. According to the recommendations
-      from the Annotation module, c_2 - c_5 were accurately
-      identified: Acinar cells, Ductal cells, Mesenchymal cells, and Endothelial
-      cells. The clusters c_0 and c_1 exhibit relatively clear several blocks,
-      and therefore, they were selected for more detailed clustering (Figure 2-2).
+      from the Annotation module, c_2 - c_5 were accurately identified: Acinar
+      cells, Ductal cells, Mesenchymal cells, and Endothelial cells. The
+      clusters c_0 and c_1 exhibit relatively clear several blocks, and
+      therefore, they were selected for more detailed clustering (Figure 2-2).
     </p>
     <div class="image-container">
       <img class="image" src="tutorials/img/repo-Figure2-2.jpg" />
       <b class="image-title">Figure 2-2</b>
     </div>
     <p class="body">
-      <b>Step 3.</b>First, we selected c_0 and created a local pipeline as shown in parameter
-      Table 2-2, resulting in Local Plot &#9313;. In Local Plot &#9313;, there are three
-      groups, and we again used Human - PanglaoDB Augmented 2021 as the gene set
-      database and Enrichr as the annotation recommendation method to annotate
-      each group. We applied different logfoldchange thresholds to filter marker genes for each group: c_0: 1,
-      c_1: 1, c_2: 3. The cell type recommendations are shown as Figure 2-3 (B). The final cell type was selected as the
-      most significant recommended type or the parent type of the top recommended types. Therefore, we can annotate it as
-      Figure 2-3 (A).
+      <b>Step 3.</b>First, we selected c_0 and created a local pipeline as shown
+      in parameter Table 2-2, resulting in Local Plot &#9313;. In Local Plot
+      &#9313;, there are three groups, and we again used Human - PanglaoDB
+      Augmented 2021 as the gene set database and Enrichr as the annotation
+      recommendation method to annotate each group. We applied different
+      logfoldchange thresholds to filter marker genes for each group: c_0: 1,
+      c_1: 1, c_2: 3. The cell type recommendations are shown as Figure 2-3 (B).
+      The final cell type was selected as the most significant recommended type
+      or the parent type of the top recommended types. Therefore, we can
+      annotate it as Figure 2-3 (A).
     </p>
     <div class="table-container">
       <table>
@@ -222,7 +226,7 @@
         </tr>
       </table>
       <figcaption style="margin-top: 6px; font-weight: bold">
-        Table 2-2:  The pipeline parameter of Local Plot &#9313; in Case 2
+        Table 2-2: The pipeline parameter of Local Plot &#9313; in Case 2
       </figcaption>
     </div>
     <div class="image-container">
@@ -230,25 +234,29 @@
       <b class="image-title">Figure 2-3</b>
     </div>
     <p class="body">
-      <b>Step 3.</b> To further validate our annotation results, we examined the expression patterns of marker genes
-      corresponding to the annotated cell types. By entering the marker genes into the gene search box and adding them to
-      the "Current Gene" list, we visualized their expression in the Gene Projection View. As shown in Figure 2-3 (C), the
-      marker genes of Alpha Cells (GCG, TTR, MAFB, FAP, GLS) were highly expressed in cluster c_0, confirming the
-      correctness of the annotation. Similarly, the annotations of c_1 and c_2 as Gamma Cells and Myeloid Cells,
-      respectively, were also accurate. The annotation in the the original publication of c_2 was Ductal Cell; however,
-      the marker genes of
-      Ductal Cells were not highly expressed in c_2, indicating a misannotation.
+      <b>Step 3.</b> To further validate our annotation results, we examined the
+      expression patterns of marker genes corresponding to the annotated cell
+      types. By entering the marker genes into the gene search box and adding
+      them to the "Current Gene" list, we visualized their expression in the
+      Gene Projection View. As shown in Figure 2-3 (C), the marker genes of
+      Alpha Cells (GCG, TTR, MAFB, FAP, GLS) were highly expressed in cluster
+      c_0, confirming the correctness of the annotation. Similarly, the
+      annotations of c_1 and c_2 as Gamma Cells and Myeloid Cells, respectively,
+      were also accurate. The annotation in the the original publication of c_2
+      was Ductal Cell; however, the marker genes of Ductal Cells were not highly
+      expressed in c_2, indicating a misannotation.
     </p>
 
     <p class="body">
-      <b>Step 4.</b>Returning to Global Plot &#9312;, we selected c_1 and created a local pipeline as shown in Table 2-3, resulting
-      in Local Plot &#9314;.In Local Plot &#9314;, there are two
-      groups, and we again used Human - PanglaoDB Augmented 2021 as the gene set
-      database and Enrichr as the annotation recommendation method to annotate
-      each group. We applied same logfoldchange thresholds to filter marker genes for each group: c_0: 2,
-      c_1: 2. The final cell type was selected as the
-      most significant recommended type or the parent type of the top recommended types. Therefore, we can annotate it as
-      Figure 2-4.
+      <b>Step 4.</b>Returning to Global Plot &#9312;, we selected c_1 and
+      created a local pipeline as shown in Table 2-3, resulting in Local Plot
+      &#9314;.In Local Plot &#9314;, there are two groups, and we again used
+      Human - PanglaoDB Augmented 2021 as the gene set database and Enrichr as
+      the annotation recommendation method to annotate each group. We applied
+      same logfoldchange thresholds to filter marker genes for each group: c_0:
+      2, c_1: 2. The final cell type was selected as the most significant
+      recommended type or the parent type of the top recommended types.
+      Therefore, we can annotate it as Figure 2-4.
     </p>
 
     <div class="table-container">
@@ -337,7 +345,10 @@
     </div>
 
     <p class="body">
-      We list the essential pipeline parameters for remaining plots:
+      <b>Step 5.</b> We then select Beta cells in Local Plot &#9314; (Figure
+      2-4) and created a local pipeline as shown in Table 2-4, resulting in
+      Local Plot &#9315;(Figure 2-5). In Local Plot &#9315;, there are three
+      subgroups are shown as Figure 2-5.
     </p>
 
     <div class="table-container">
@@ -419,8 +430,58 @@
         Table 2-4: The parameter of pipeline in Case &#9316; in Case 2
       </figcaption>
     </div>
+    <div class="image-container">
+      <img class="image" src="tutorials/img/repo-Figure2-5.jpg" />
+      <b class="image-title">Figure 2-5</b>
+    </div>
+    <p class="body">
+      <b>Step 6.</b> In Local Plot &#9315;(Figure 2-5), We check the expression
+      of marker genes of these three beta distinct subpopulations with the Gene
+      Projection View (density mode) and the Distribution of Gene Expression
+      View (Figure 2-6). Sub-cluster c_0 shows the high expression of CHGA and
+      VGF. Sub-cluster c_1 exhibits an upregulation of some of the signature
+      genes for PP cells, such as PPY and SST, suggesting that these Beta cells
+      share similar biological characteristics with canonical PP cells.
+      Sub-cluster c_2 is characterized by high expression of SRXN1 and ferritin
+      subunits, FTH1. We then annotate these three sub-clusters as Beta
+      subtype0, Beta subtype1, and Beta subtype2.
+    </p>
+    <div class="image-container">
+      <img class="image" src="tutorials/img/repo-Figure2-6.jpg" />
+      <b class="image-title">Figure 2-6</b>
+    </div>
 
+    <p class="body">
+      <b>Step 7.</b> We then merge the Local Plot Local Plot &#9315; to Local
+      Plot &#9314; The merge option includes "Merge with Projection" , "Merge
+      with Labels(Annotations)", "Merge Labels(Annotations) with the same name"
+      , and "Merge small Labels(Annotations)". The merged result are shown as
+      Figure 2-7. Similarly, we merge Local Plot &#9314; and Local Plot &#9313;
+      to Global Plot &#9312;. The merged results are shown as Figure 2-8.
+    </p>
 
+    <div class="image-container">
+      <img class="image" src="tutorials/img/repo-Figure2-7.jpg" />
+      <b class="image-title">Figure 2-7</b>
+    </div>
+
+    <div class="image-container">
+      <img class="image" src="tutorials/img/repo-Figure2-8.jpg" />
+      <b class="image-title">Figure 2-8</b>
+    </div>
+
+    <p class="body">
+      <b>Step 8</b> After merged operations, we check the cell communication
+      result in the Cell Communication View of the Global Plot &#9312;. The
+      result are shown as Figure 2-9. User can also click the arrow to check the
+      ligand-receptor pairs between two cell types, such as Ducatl cells to
+      Myleloid cells and Beta_0 to Endothelial cells.
+    </p>
+
+    <div class="image-container">
+      <img class="image" src="tutorials/img/repo-Figure2-9.jpg" />
+      <b class="image-title">Figure 2-9</b>
+    </div>
   </div>
 </template>
 
@@ -505,4 +566,5 @@ h1 {
     font-size: 25px;
     margin: 15px 0px;
   }
-}</style>
+}
+</style>
