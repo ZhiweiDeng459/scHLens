@@ -288,10 +288,11 @@ export default {
                 .selectAll("path")
                 .data(chords)
                 .join("path")
-                .style("mix-blend-mode", "multiply")
+                // .style("mix-blend-mode", this.groups.length > 15 ? "multiply" : null)
                 .attr("fill", d => this.groups[d.target.index]['color'])
                 .attr("d", ribbon)
                 .classed('cell-chat-chord-arrow',true)
+                .attr("id",`chord-arrow-${d=>d.source.index}-to-${d=>d.target.index}`)
                 .on("mouseover",function(e,d){
                     //突出显示
                     d3.select(this)

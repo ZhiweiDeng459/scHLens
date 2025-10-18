@@ -102,12 +102,12 @@
                             Since scTransform includes the processes of normalization and gene selection, scHLens will ignore other options in the Normalization module when using scTransform.
                         </a>
                     </div>
-                    <div style="padding:5px 5px">
+                    <!-- <div style="padding:5px 5px">
                         <i class="el-icon-warning" style="color:orange"></i>
                         <a style="word-break: normal; overflow-wrap: normal;">
                             scTransform may take a very long time while dealing with large datasets.
                         </a>
-                    </div>
+                    </div> -->
                 </el-form>
             </div>   
 

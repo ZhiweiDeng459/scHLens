@@ -22,7 +22,7 @@ We offer a deployable Docker version of scHLens (https://hub.docker.com/r/zhiwei
 
 ## Quick start
 
-This web-server is based on `python 3.7.12`, `R 4.4.2`, `Node.js 16.19.0`. You can launch this web-server using the following steps:
+This web-server is based on `python 3.10.18`, `R 4.4.2`, `Node.js 16.19.0`. You can launch this web-server using the following steps:
 
 (This web-server can run on both Windows and Linux platforms. we will take Linux platform as an example.)
 
@@ -48,7 +48,7 @@ It is recommended to use Anaconda3 for managing the environment:
 
 ```
 cd scHLens
-conda create --name scHLens python=3.7.13
+conda create --name scHLens python=3.10.18
 conda activate scHLens
 pip install -r ./scHLens_be/requirements.txt
 ```

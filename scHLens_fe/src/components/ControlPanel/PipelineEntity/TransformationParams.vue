@@ -1,7 +1,7 @@
 <template>
     <div>
 
-        
+
         <!--normalize-->
         <el-card body-style="padding:10px" style="margin:10px 0px">
             <el-form :label-position="'left'">
@@ -12,7 +12,9 @@
                             &nbsp;
                             <el-switch v-model="normalize"></el-switch>
                         </div>
-                        <el-tooltip content="Normalize each cell by total counts over all genes to let every cell has the same total count(10^6)" placement="right">
+                        <el-tooltip
+                            content="Normalize each cell by total counts over all genes to let every cell has the same total count(10^6)"
+                            placement="right">
                             <i class="el-icon-question"></i>
                         </el-tooltip>
                     </div>
@@ -47,9 +49,11 @@
                         <div>
                             <b>Regress</b>
                             &nbsp;
-                            <el-switch v-model="regressOut" :disabled="mode=='local'"></el-switch>
+                            <el-switch v-model="regressOut" :disabled="mode == 'local'"></el-switch>
                         </div>
-                        <el-tooltip content="Take simple linear regression for regressing out 'Total Counts' and 'Mitochondrial cell proportion'" placement="right">
+                        <el-tooltip
+                            content="Take simple linear regression for regressing out 'Total Counts' and 'Mitochondrial cell proportion'"
+                            placement="right">
                             <i class="el-icon-question"></i>
                         </el-tooltip>
                     </div>
@@ -65,7 +69,7 @@
                         <div>
                             <b>Scale</b>
                             &nbsp;
-                            <el-switch v-model="scale" :disabled="mode=='local'"></el-switch>
+                            <el-switch v-model="scale" :disabled="mode == 'local'"></el-switch>
                         </div>
                         <el-tooltip content="scale the expression matrix to unit variance and zero mean" placement="right">
                             <i class="el-icon-question"></i>
@@ -74,12 +78,22 @@
                 </el-form-item>
             </el-form>
         </el-card>
+
+        <div style="padding:5px 5px">
+            <i class="el-icon-warning" style="color:orange"></i>
+            <a style="word-break: normal; overflow-wrap: normal;">
+                scTransform performs both normalization and gene selection. To use scTransform, please select "scTransform"
+                as the method in the Gene Selection module. When scTransform is used, scHLens will ignore all other options
+                in the Normalization module.
+            </a>
+        </div>
+
     </div>
 </template>
 
 <script>
 import Vue from "vue";
-import { Form, FormItem, Input, Tooltip, Checkbox, Card, Switch} from "element-ui";
+import { Form, FormItem, Input, Tooltip, Checkbox, Card, Switch } from "element-ui";
 Vue.component(Form.name, Form);
 Vue.component(FormItem.name, FormItem);
 Vue.component(Input.name, Input);
@@ -90,50 +104,50 @@ Vue.component(Switch.name, Switch);
 
 export default {
     name: "TransformationParam",
-    props:['mode'],
+    props: ['mode'],
     data() {
         return {
-            log1p:true,
+            log1p: true,
             normalize: true,
             regressOut: false,
             scale: false,
         };
     },
-    methods:{
-        getParams(){
+    methods: {
+        getParams() {
             let Params = {}
 
             //log
-            if(this.log1p){
+            if (this.log1p) {
                 Params['log1p'] = true;
             }
             //norm
-            if(this.normalize){
+            if (this.normalize) {
                 Params['normalize'] = true;
             }
             //regress
-            if(this.regressOut){
+            if (this.regressOut) {
                 Params['regressOut'] = true;
             }
             //scale
-            if(this.scale){
+            if (this.scale) {
                 Params['scale'] = true;
             }
 
-            
+
 
             return Params;
         }
 
     },
 
-    watch:{
+    watch: {
         /**
          * 监听HighlyVariable的参数变化，使得两类参数不能同时取
          */
-        'mode':{
-            handler(newValue,oldValue){
-                if(newValue == 'local'){
+        'mode': {
+            handler(newValue, oldValue) {
+                if (newValue == 'local') {
                     this.regressOut = false;
                     this.scale = false;
                 }
@@ -145,7 +159,6 @@ export default {
 </script>
 
 <style scoped lang="less">
-.form-item{
-    margin:0px;
-}
-</style>
+.form-item {
+    margin: 0px;
+}</style>

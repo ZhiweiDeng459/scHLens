@@ -258,6 +258,8 @@ export default {
                 })
                 .attr('fill',d=>d.color)
 
+            const group_text = zoomSVG.append('g')
+
 
             //定义箭头
             zoomSVG.append('defs')
@@ -460,28 +462,92 @@ export default {
         
             
             //绘制文本
-            const group_text = zoomSVG.append('g')
+            // group_text.selectAll('text')
+            //     .data(this.groups)
+            //     .join('text')
+            //     .attr('x',function(d,i){
+            //         return attachGroupData[i].x;
+            //     })
+            //     .attr('y',function(d,i){
+            //         if(attachGroupData[i].y < centerY)
+            //             return attachGroupData[i].y - attachGroupData[i].r - 10;
+            //         else{
+            //             return attachGroupData[i].y + attachGroupData[i].r + 10;
+            //         }
+                    
+            //     })
+            //     .attr('text-anchor','middle')
+            //     .attr('dominant-baseline','middle')
+            //     .attr('font-size','14px')
+            //     .style('font-family','YaHei')
+            //     .style('font-weight','bold')
+            //     .text(d=>d.name)
             group_text.selectAll('text')
                 .data(this.groups)
                 .join('text')
-                .attr('x',function(d,i){
-                    return attachGroupData[i].x;
-                })
-                .attr('y',function(d,i){
-                    if(attachGroupData[i].y < centerY)
-                        return attachGroupData[i].y - attachGroupData[i].r - 10;
-                    else{
-                        return attachGroupData[i].y + attachGroupData[i].r + 10;
-                    }
-                    
-                })
-                .attr('text-anchor','middle')
-                .attr('dominant-baseline','middle')
-                .attr('font-size','14px')
-                .style('font-family','YaHei')
-                .style('font-weight','bold')
-                .text(d=>d.name)
+                .attr('x', function(d, i) {
+                    const data = attachGroupData[i];
+                    // Calculate the vector from center (centerX, centerY) to the circle center (data.x, data.y)
+                    const dx = data.x - centerX;
+                    const dy = data.y - centerY;
+                    const dist = Math.sqrt(dx * dx + dy * dy);
 
+                    // Normalize the vector and scale it by the circle's radius (data.r)
+                    // This calculates the x-coordinate of the point on the circle's edge
+                    // along the line from the center.
+                    // We add a small buffer (e.g., 5) to move the text slightly outside.
+                    const buffer = 5;
+                    return data.x + (dx / dist) * (data.r + buffer);
+                })
+                .attr('y', function(d, i) {
+                    const data = attachGroupData[i];
+                    // Calculate the vector from center (centerX, centerY) to the circle center (data.x, data.y)
+                    const dx = data.x - centerX;
+                    const dy = data.y - centerY;
+                    const dist = Math.sqrt(dx * dx + dy * dy);
+
+                    // Normalize the vector and scale it by the circle's radius (data.r)
+                    // This calculates the y-coordinate of the point on the circle's edge
+                    // along the line from the center.
+                    const buffer = 5;
+                    return data.y + (dy / dist) * (data.r + buffer);
+                })
+                .attr('text-anchor', 'start') // Anchor the text to the *start* of the label
+                .attr('dominant-baseline', 'middle') // Keep it vertically centered on the line
+                .attr('font-size', '14px')
+                .style('font-family', 'YaHei')
+                .style('font-weight', 'bold')
+                .attr('transform', function(d, i) {
+                    const data = attachGroupData[i];
+                    const x = data.x;
+                    const y = data.y;
+
+                    // Calculate the angle (in degrees) from the center (centerX, centerY) to the circle center (x, y)
+                    // atan2(dy, dx) returns radians in the range [-pi, pi]
+                    let angle = Math.atan2(y - centerY, x - centerX) * (180 / Math.PI);
+
+                    // Adjust the angle:
+                    // The angle calculated is for the line from the center (centerX, centerY) to the circle center (x, y).
+                    // We want the text to read *outward*.
+                    // If the angle is in the left hemisphere (90 to 270 degrees), we flip the text 180 degrees
+                    // and change the text-anchor to 'end' so it reads correctly.
+
+                    if (angle > 90 || angle < -90) {
+                        angle += 180; // Flip the text for the left side
+                        // For the flipped text, we'll want to adjust the text-anchor:
+                        d3.select(this).attr('text-anchor', 'end');
+                    } else {
+                        // Ensure text-anchor is 'start' for the right side
+                        d3.select(this).attr('text-anchor', 'start');
+                    }
+
+                    // Apply the rotation transform around the new (x, y) position of the text
+                    const textX = d3.select(this).attr('x');
+                    const textY = d3.select(this).attr('y');
+
+                    return `rotate(${angle}, ${textX}, ${textY})`;
+                })
+                .text(d => d.name);
 
         },
         saveToFile(){

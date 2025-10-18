@@ -190,7 +190,7 @@ export default {
         },
         getSampleJobInfo(){
             fetchSampleJobInfo().then((res)=>{
-                this.SampleJobInfo = res.data
+                this.SampleJobInfo = res.data.slice().reverse();
             }).then((err)=>{
                 console.log(err)
             })

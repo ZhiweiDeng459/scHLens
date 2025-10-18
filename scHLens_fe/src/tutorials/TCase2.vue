@@ -35,7 +35,7 @@
       Mesenchymal cells and Endothelial cells.
     </p>
     <p class="body">
-      <b>Step 1.</b>Select the Human Pancreatic dataset (sample) and then Set
+      <b>Step 1.</b>Select the Human Pancreatic dataset (sample), Set
       the global pipeline as Table 2-1 and then obtain the unannotated Global
       Plot &#9312; (Shown as Figure 2-1).
     </p>
