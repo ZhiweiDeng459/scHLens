@@ -166,8 +166,8 @@
       The final cell type was selected as the most significant recommended type
       or the parent type of the top recommended types. Therefore, we can
       annotate it as Figure 3-4. As shown in Figure 3-5, we utilized 2d-density plots to exhibit the marker genes for T
-      cells and NK cells The higher expression of CD3 in T cells and FCGR3A in NK cells, along with the lower
-      expression of CD3 in NK cells, supported these annotations.
+      cells and NK cells The higher expression of <em>CD3</em> in T cells and <em>FCGR3A</em> in NK cells, along with the lower
+      expression of <em>CD3</em> in NK cells, supported these annotations.
     </p>
 
     <!--Local Plot 2 Parameter-->
@@ -284,8 +284,8 @@
       logfoldchange thresholds to filter marker genes for each group: c_0: 2,
       c_1: 2, c_2: 4. The cell type recommendations are shown as Figure 3-6.
       In Local Plot &#9314;. These sub-clusers were annotated as T
-      cells, B cells, and B cells (Figure 3-7). The expression of markers (CD3 for T cells;
-      CD19, CD79A, CD79B for B cells) in Figure 3-8 validated the reliability of our annotations
+      cells, B cells, and B cells (Figure 3-7). The expression of markers (<em>CD3</em> for T cells;
+      <em>CD19</em>, <em>CD79A</em>, <em>CD79B</em> for B cells) in Figure 3-8 validated the reliability of our annotations
     </p>
 
     <!--Local Plot 3 Parameter-->
@@ -493,16 +493,16 @@
 
 
     <p class="body">
-      <b>Step 6.</b> Returning to the Global Plot &#9312;, according to the high expression of EPCAM, we select all
+      <b>Step 6.</b> Returning to the Global Plot &#9312;, according to the high expression of <em>EPCAM</em>, we select all
       epithelial cells (Figure 3-11) to create Local Plot &#9316; (the pipeline parameters are listed in Table 3–5).
       The Global Plot &#9316; was identified as nine sub-clussters. We used Human - PanglaoDB
       Augmented 2021 as the gene set database and Enrichr as the annotation
       recommendation method. We applied logfoldchange thresholds to filter marker genes: c_5: 4,
       c_7: 4, c_8: 4. The cell type recommendations are shown as Figure 3-12. Therefore, c_5, c_7, c_8 were annotated as
       Goblet cells, Ciliated Cells, and Ciliated Cells (Figure 3-13). The remaining cells exhibited high expression of
-      SFTPB (Figure 3-13), allowing them
-      to be broadly classified as alveolar cells. The expression of markers (KRT7, MUC5AC, MUC5B for
-      Goblet cells; FOXJ1, CCDC17, TUBB4B for Ciliated cells and SFTPB for Alveolar cells) in Figure 3-14 validated the
+      <em>SFTPB</em> (Figure 3-13), allowing them
+      to be broadly classified as alveolar cells. The expression of markers (<em>KRT7, MUC5AC, MUC5B</em> for
+      Goblet cells; <em>FOXJ1, CCDC17, TUBB4B</em> for Ciliated cells and <em>SFTPB</em> for Alveolar cells) in Figure 3-14 validated the
       reliability of our annotations.
     </p>
 
@@ -649,12 +649,12 @@
       databases and Enrichr as the annotation
       recommendation method. We applied logfoldchange thresholds to filter marker genes: c_5: 4,
       c_7: 4, c_8: 4. The cell type recommendations are shown as Figure 3-15, 3-16. The expression of markers (
-      SFTPC, SFTPB, SFTPA1, SFTPD for Pulmonary Alveolar Type II Cells and AGER, CAV1, PDPN, CLIC5
+      <em>SFTPC, SFTPB, SFTPA1, SFTPD</em> for Pulmonary Alveolar Type II Cells and <em>AGER, CAV1, PDPN, CLIC5</em>
       for Pulmonary Alveolar Type I Cells) in Figure 3-15, 3-16 validated the
       reliability of our annotations. Besides, the expression patterns of clusters c_1 and c_6 have not been reported in
-      previous studies. Cluster c_1 exhibited dual positive SMIM22+ and SFTPB+ (Figure 3-17), while cluster c_6 displayed
+      previous studies. Cluster c_1 exhibited dual positive <em>SMIM22+</em> and <em>SFTPB+</em> (Figure 3-17), while cluster c_6 displayed
       club cell
-      related genes SCGB3A1- and SCGB3A2+ (Figure 3-17). Therefore, we empirically named these two epithelial cell
+      related genes <em>SCGB3A1-</em> and <em>SCGB3A2+</em> (Figure 3-17). Therefore, we empirically named these two epithelial cell
       subtypes based on
       their marker genes. The annotation results are shown in Figure 3-18.
     </p>
@@ -807,8 +807,8 @@
 
       Accorrding to the high expression of BASCs markers (Figure 3-20), c_0 and c_2 can be annotated as BASCs.
 
-      Similarly, c_1 can be annotated as GNB2L1+ AT II cells. c_3 can be annotated as HLA-DRB5+SFTPB+ ECs amd c_4 can be
-      annotated as RACK+SFTPB-ECs (unreported epithelial cell types).
+      Similarly, c_1 can be annotated as <em>GNB2L1+</em> AT II cells. c_3 can be annotated as <em>HLA-DRB5+SFTPB+</em> ECs amd c_4 can be
+      annotated as <em>RACK+SFTPB-ECs</em> (unreported epithelial cell types).
       
       The annotation results are shown as Figure 3-21.
 

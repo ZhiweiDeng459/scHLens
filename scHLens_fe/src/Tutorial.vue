@@ -75,6 +75,9 @@
                         <el-menu-item index="/tutorial/hierarchicalExploration/3" @click="scrollTo('t_DiscoverCorrespondence')">Discover the correspondence of cells across different nodes</el-menu-item>
                         <el-menu-item index="/tutorial/hierarchicalExploration/4" @click="scrollTo('t_Merge')">Merge the Local Results</el-menu-item>
                     </el-submenu>
+                    <el-menu-item class="menu-item" index="/tutorial/help">
+                        <span class="menu-item-text-1" slot="title">Help</span>
+                    </el-menu-item>
                     <el-menu-item class="menu-item" index="/tutorial/case1">
                         <span class="menu-item-text-1" slot="title">Reproduction: Case1 PBMC-3K</span>
                     </el-menu-item>

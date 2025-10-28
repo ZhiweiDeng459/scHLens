@@ -210,7 +210,7 @@
           <td>Clustering</td>
           <td>leiden</td>
           <td>resolution</td>
-          <td>0.03</td>
+          <td>0.05</td>
         </tr>
         <tr>
           <td>DEG Identification</td>
@@ -239,7 +239,7 @@
       types. By entering the marker genes into the gene search box and adding
       them to the "Current Gene" list, we visualized their expression in the
       Gene Projection View. As shown in Figure 2-3 (C), the marker genes of
-      Alpha Cells (GCG, TTR, MAFB, FAP, GLS) were highly expressed in cluster
+      Alpha Cells (<em>GCG, TTR, MAFB, FAP, GLS</em>) were highly expressed in cluster
       c_0, confirming the correctness of the annotation. Similarly, the
       annotations of c_1 and c_2 as Gamma Cells and Myeloid Cells, respectively,
       were also accurate. The annotation in the the original publication of c_2
@@ -335,7 +335,7 @@
         </tr>
       </table>
       <figcaption style="margin-top: 6px; font-weight: bold">
-        Table 2-3 The pipeline parameter of Local Plot &#9315; in Case 2
+        Table 2-3 The pipeline parameter of Local Plot &#9314; in Case 2
       </figcaption>
 
       <div class="image-container">
@@ -387,7 +387,7 @@
           <td>Gene Selection</td>
           <td>scry</td>
           <td>top Genes</td>
-          <td>80</td>
+          <td>100</td>
         </tr>
         <tr>
           <td>Visualization</td>
@@ -411,7 +411,7 @@
           <td>Clustering</td>
           <td>leiden</td>
           <td>resolution</td>
-          <td>0.15</td>
+          <td>0.2</td>
         </tr>
         <tr>
           <td>DEG Identification</td>
@@ -427,7 +427,7 @@
         </tr>
       </table>
       <figcaption style="margin-top: 6px; font-weight: bold">
-        Table 2-4: The parameter of pipeline in Case &#9316; in Case 2
+        Table 2-4: The parameter of pipeline in Case &#9315; in Case 2
       </figcaption>
     </div>
     <div class="image-container">
@@ -438,12 +438,12 @@
       <b>Step 6.</b> In Local Plot &#9315;(Figure 2-5), We check the expression
       of marker genes of these three beta distinct subpopulations with the Gene
       Projection View (density mode) and the Distribution of Gene Expression
-      View (Figure 2-6). Sub-cluster c_0 shows the high expression of CHGA and
-      VGF. Sub-cluster c_1 exhibits an upregulation of some of the signature
-      genes for PP cells, such as PPY and SST, suggesting that these Beta cells
+      View (Figure 2-6). Sub-cluster c_0 shows the high expression of <em>CHGA</em> and
+      <em>VGF</em>. Sub-cluster c_1 exhibits an upregulation of some of the signature
+      genes for PP cells, such as <em>PPY and SST</em>, suggesting that these Beta cells
       share similar biological characteristics with canonical PP cells.
-      Sub-cluster c_2 is characterized by high expression of SRXN1 and ferritin
-      subunits, FTH1. We then annotate these three sub-clusters as Beta
+      Sub-cluster c_2 is characterized by high expression of <em>SRXN1 and ferritin
+      subunits, FTH1</em>. We then annotate these three sub-clusters as Beta
       subtype0, Beta subtype1, and Beta subtype2.
     </p>
     <div class="image-container">

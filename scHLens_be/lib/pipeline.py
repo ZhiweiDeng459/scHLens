@@ -732,7 +732,7 @@ def DR(adata):
     except Exception as e:
         raise pipelineException(
             location='Visualization - calculate Distance Matrix',
-            advice=':The error may be due to: 1. The dataset is too large, and there is insufficient memory to compute the distance matrix; 2. The current dataset contains invalid data."',
+            advice=':The error may be due to: 1. The dataset is too large, and there is insufficient memory to compute the distance matrix; 2. The current dataset contains invalid data. 3.Too few cells or genes remain after quality control and gene selection."',
             message=str(e))
 
     ## 执行降维合并算法
@@ -763,7 +763,7 @@ def DR(adata):
         except Exception as e:
             raise pipelineException(
                 location='Visualization - UMAP',
-                advice=':The error may be due to: 1. The dataset currently has too few cells; 2. The current dataset contains invalid data; 3. The parameter settings are unreasonable.',
+                advice=':The error may be due to: 1. Too few cells or genes remain after quality control and gene selection; 2. The current dataset contains invalid data; 3. The parameter settings are unreasonable.',
                 message=str(e))
     elif 'T-SNE' in adata.uns['params']['DR']:
         try:
@@ -790,7 +790,7 @@ def DR(adata):
         except Exception as e:
             raise pipelineException(
                 location='Visualization - t-SNE',
-                advice=':The error may be due to: 1. The dataset currently has too few cells; 2. The current dataset contains invalid data; 3. The parameter settings are unreasonable.',
+                advice=':The error may be due to: 1. Too few cells or genes remain after quality control and gene selection; 2. The current dataset contains invalid data; 3. The parameter settings are unreasonable.',
                 message=str(e))
     elif 'PCA' in adata.uns['params']['DR']:
         try:
@@ -799,7 +799,7 @@ def DR(adata):
         except Exception as e:
             raise pipelineException(
                 location='Visualization - PCA',
-                advice=':The error may be due to: 1. The dataset currently has too few cells; 2. The current dataset contains invalid data;',
+                advice=':The error may be due to: 1. Too few cells or genes remain after quality control and gene selection; 2. The current dataset contains invalid data;',
                 message=str(e))
 
     ## 保存TD
@@ -824,7 +824,7 @@ def CL(adata):
         except Exception as e:
             raise pipelineException(
                 location='Clustering - leiden - Pre-dimensionality reduction',
-                advice=':The error may be due to: 1. The dataset currently has too few genes or cells; 2. The current dataset contains invalid data;',
+                advice=':The error may be due to: 1. Too few cells or genes remain after quality control and gene selection; 2. The current dataset contains invalid data;',
                 message=str(e))
         try: ##neighbor
             neigh_params = {}
@@ -835,7 +835,7 @@ def CL(adata):
         except Exception as e:
             raise pipelineException(
                 location='Clustering - leiden - neighboring',
-                advice=':The error may be due to: 1. The dataset currently has too few cells; 2. The current dataset contains invalid data;',
+                advice=':The error may be due to: 1. Too few cells or genes remain after quality control and gene selection; 2. The current dataset contains invalid data;',
                 message=str(e))
         try:
             leiden_params = {}
@@ -845,7 +845,7 @@ def CL(adata):
         except Exception as e:
             raise pipelineException(
                 location='Clustering - leiden',
-                advice=':The error may be due to: 1. The dataset currently has too few cells; 2. The current dataset contains invalid data;',
+                advice=':The error may be due to: 1. Too few cells or genes remain after quality control and gene selection; 2. The current dataset contains invalid data;',
                 message=str(e))
         adata.obs['label'] = adata.obs['leiden']
     # elif 'louvain' in adata.uns['params']['CL']:
@@ -883,7 +883,7 @@ def CL(adata):
         except Exception as e:
             raise pipelineException(
                 location='Clustering - k-means - Auto Number',
-                advice=':The error may be due to: 1. The dataset currently has too few genes or cells; 2. The current dataset contains invalid data;',
+                advice=':The error may be due to: 1. Too few cells or genes remain after quality control and gene selection; 2. The current dataset contains invalid data;',
                 message=str(e))
 
         try: # 预降维
@@ -895,7 +895,7 @@ def CL(adata):
         except Exception as e:
             raise pipelineException(
                 location='Clustering - k-means - Pre-dimensionality reduction',
-                advice=':The error may be due to: 1. The dataset currently has too few genes or cells; 2. The current dataset contains invalid data;',
+                advice=':The error may be due to: 1. Too few cells or genes remain after quality control and gene selection; 2. The current dataset contains invalid data;',
                 message=str(e))
         try: # 聚类
             kmeans_params = {}
@@ -916,7 +916,7 @@ def CL(adata):
         except Exception as e:
             raise pipelineException(
                 location='Clustering - k-means',
-                advice=':The error may be due to: 1. The dataset currently has too few cells; 2. The current dataset contains invalid data;',
+                advice=':The error may be due to: 1. Too few cells or genes remain after quality control and gene selection; 2. The current dataset contains invalid data;',
                 message=str(e))
         adata.obs['label'] = labels
 
@@ -932,7 +932,7 @@ def CL(adata):
         except Exception as e:
             raise pipelineException(
                 location='Clustering - sc3s - Auto Number',
-                advice=':The error may be due to: 1. The dataset currently has too few genes or cells; 2. The current dataset contains invalid data;',
+                advice=':The error may be due to: 1. Too few cells or genes remain after quality control and gene selection; 2. The current dataset contains invalid data;',
                 message=str(e))
             
         try: # 预降维
@@ -944,7 +944,7 @@ def CL(adata):
         except Exception as e:
             raise pipelineException(
                 location='Clustering - sc3s - Pre-dimensionality reduction',
-                advice=':The error may be due to: 1. The dataset currently has too few genes or cells; 2. The current dataset contains invalid data;',
+                advice=':The error may be due to: 1. Too few cells or genes remain after quality control and gene selection; 2. The current dataset contains invalid data;',
                 message=str(e))
         try: # 聚类
             sc3s_params = {}
@@ -959,7 +959,7 @@ def CL(adata):
         except Exception as e:
             raise pipelineException(
                 location='Clustering - sc3s',
-                advice=':The error may be due to: 1. The dataset currently has too few cells; 2. The current dataset contains invalid data;',
+                advice=':The error may be due to: 1. Too few cells or genes remain after quality control and gene selection; 2. The current dataset contains invalid data;',
                 message=str(e))
         adata.obs['label'] = adata.obs['sc3s_' + str(final_cluster_num)]
         try: ##尾部处理
@@ -1013,7 +1013,7 @@ def MK(adata):
         except Exception as e:
             raise pipelineException(
                 location='Marker Identification - t-test',
-                advice=':The error may be due to: 1. The dataset currently has too few genes; 2. The current dataset contains invalid data; 3. Clustering is not performed',
+                advice=':The error may be due to: 1. Too few cells or genes remain after quality control and gene selection; 2. The current dataset contains invalid data; 3. Clustering is not performed',
                 message=str(e))
     elif MarkerParams['method'] == 't-test_overestim_var': ##  t-test(overestimate variance)
         try:
@@ -1026,7 +1026,7 @@ def MK(adata):
         except Exception as e:
             raise pipelineException(
                 location='Marker Identification - t-test(overestimate variance)',
-                advice=':The error may be due to: 1. The dataset currently has too few genes; 2. The current dataset contains invalid data; 3. Clustering is not performed',
+                advice=':The error may be due to: 1. Too few cells or genes remain after quality control and gene selection; 2. The current dataset contains invalid data; 3. Clustering is not performed',
                 message=str(e))
     elif MarkerParams['method'] == 'wilcoxon-test': ## wilcoxon-test
         try:
@@ -1039,7 +1039,7 @@ def MK(adata):
         except Exception as e:
             raise pipelineException(
                 location='Marker Identification - wilcoxon-test',
-                advice=':The error may be due to: 1. The dataset currently has too few genes; 2. The current dataset contains invalid data; 3. Clustering is not performed',
+                advice=':The error may be due to: 1. Too few cells or genes remain after quality control and gene selection; 2. The current dataset contains invalid data; 3. Clustering is not performed',
                 message=str(e))
     elif MarkerParams['method'] == 'wilcoxon-test(TLE)': ## wilcoxon-test(TLE)
         try:
@@ -1052,7 +1052,7 @@ def MK(adata):
         except Exception as e:
             raise pipelineException(
                 location='Marker Identification - wilcoxon-test(TLE)',
-                advice=':The error may be due to: 1. The dataset currently has too few genes; 2. The current dataset contains invalid data; 3. Clustering is not performed',
+                advice=':The error may be due to: 1. Too few cells or genes remain after quality control and gene selection; 2. The current dataset contains invalid data; 3. Clustering is not performed',
                 message=str(e))
     elif MarkerParams['method'] == 'logreg': ## logreg
         try:
@@ -1065,7 +1065,7 @@ def MK(adata):
         except Exception as e:
             raise pipelineException(
                 location='Marker Identification - logreg',
-                advice=':The error may be due to: 1. The dataset currently has too few genes; 2. The current dataset contains invalid data; 3. Clustering is not performed',
+                advice=':The error may be due to: 1. Too few cells or genes remain after quality control and gene selection; 2. The current dataset contains invalid data; 3. Clustering is not performed',
                 message=str(e))
     elif MarkerParams['method'] == 'COSG': ## COSG
         try:
@@ -1076,7 +1076,7 @@ def MK(adata):
         except Exception as e:
             raise pipelineException(
                 location='Marker Identification - COSG',
-                advice=':The error may be due to: 1. The dataset currently has too few genes; 2. The current dataset contains invalid data; 3. Clustering is not performed',
+                advice=':The error may be due to: 1. Too few cells or genes remain after quality control and gene selection; 2. The current dataset contains invalid data; 3. Clustering is not performed',
                 message=str(e))
 
     ## 把raw marker附着
@@ -1121,7 +1121,7 @@ def CC(adata):
         except Exception as e:
             raise pipelineException(
                 location='Cell Chat - Cell Chat',
-                advice=':The error may be due to: 1. Clustering is not performed or Too few clusters; 2. Inproper dataset',
+                advice=':The error may be due to: 1. Clustering is not performed or Too few clusters; 2. Too few cells or genes remain after quality control and gene selection. 3. Inproper organism selection',
                 message=str(e))
             
                     
@@ -1185,7 +1185,7 @@ def CC(adata):
         except Exception as e:
             raise pipelineException(
                 location='Cell Chat - CellPhoneDB',
-                advice=':The error may be due to: 1. Clustering is not performed or Too few clusters; 2. Inproper dataset',
+                advice=':The error may be due to: 1. Clustering is not performed or Too few clusters; 2. Too few cells or genes remain after quality control and gene selection. 3. Inproper organism selection',
                 message=str(e))
     
     return adata

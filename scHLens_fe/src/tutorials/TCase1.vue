@@ -52,7 +52,7 @@
           <td>Quality Control</td>
           <td>Filter Outlying Cells</td>
           <td>max Genes</td>
-          <td>2500</td>
+          <td></td>
         </tr>
         <tr>
           <td>Quality Control</td>
@@ -163,7 +163,7 @@
       <b>Step 2.</b>
       After executing the above pipeline, we obtained a plot consisting of eight
       groups (Figure 1-1). We then opened the Group Panel, selected Human -
-      Azimuth 2023 as the gene set database and Enrichr as the annotation
+      Azimuth Cell Types 2021 as the gene set database and Enrichr as the annotation
       recommendation method to annotate each group. During the annotation
       process, we applied different logfoldchange thresholds to filter marker
       genes for each group: c_0: 1, c_1: 4, c_2: 4, c_3: 2.3, c_4: 3, c_5: 4,

@@ -1,5 +1,11 @@
 <template>
     <div id="app">
+
+        <div style="position:absolute;right:20px;top:7px;z-index: 500;">
+            <el-button  type="text"  @click="$router.push('/tutorial/help')"><b style="font-size:25px;color:white">Help</b></el-button>
+        </div>
+        
+        
         <div style="display:flex">
             <div class="TitleBoard">
                 <b class="SystemTitle">scHLens</b>

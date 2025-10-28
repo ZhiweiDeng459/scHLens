@@ -440,7 +440,9 @@
 <script>
 export default {
   name: "TAnalysiswithViews",
-  methods: {},
+  methods: {
+    
+  },
 };
 </script>
 

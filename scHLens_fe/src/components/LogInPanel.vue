@@ -1,6 +1,8 @@
 <template>
         <div class="LogInContainer">
-
+            <div style="position:absolute;right:20px;top:10px">
+                <el-button  type="text"  @click="$router.push('/tutorial/help')"><b style="font-size:20px">Help</b></el-button>
+            </div>
             <b class="LogInTitle">scHLens</b>
             <el-input 
                 v-model="loadJobId"
