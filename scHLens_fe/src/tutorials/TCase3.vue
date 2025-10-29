@@ -11,27 +11,34 @@
     </p>
     <p class="body">
       We will next describe the analysis process for each case in detail,
-      allowing users to reproduce our results in manuscript. <b>However, some
-        methods in our pipeline involve stochastic processes, so the generated
-        visualizations may not be exactly identical to those shown in the
-        manuscript figures (for example, the relative positions of groups in the
-        Cell Projection View). We have tested and confirmed that such randomness
-        only introduces minor variations and does not affect the overall
-        conclusions.</b>
+      allowing users to reproduce our results in manuscript.
+      <b
+        >However, some methods in our pipeline involve stochastic processes, so
+        the generated visualizations may not be exactly identical to those shown
+        in the manuscript figures (for example, the relative positions of groups
+        in the Cell Projection View). We have tested and confirmed that such
+        randomness only introduces minor variations and does not affect the
+        overall conclusions.</b
+      >
     </p>
     <h1 id="t_re_case3">
-      Case3: scHLens hierarchically identifies detailed cell subtypes from the large-scale human lung cancer dataset.
+      Case3: scHLens hierarchically identifies detailed cell subtypes from the
+      large-scale human lung cancer dataset.
     </h1>
     <p class="body">
-      The target dataset for this case is Human Lung Cancer dataset. which is from 9 treatment-naïve LUAD patients from
-      Brigham and Women’s Hospital. This dataset can be accessed at
-      <a herf="https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE253013"
-        target="_blank">https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE253013.</a>
-      This dataset contains 256,379 cells with 32,805 genes.
-      The original annotation of this dataset contains 9 types, including Airway Epithelium, B cells, CD45+, Endothelial,
-      Epithelial, Fibroblasts, Granulocytes, Myeloid, and T cells.
+      The target dataset for this case is Human Lung Cancer dataset. which is
+      from 9 treatment-naïve LUAD patients from Brigham and Women’s Hospital.
+      This dataset can be accessed at
+      <a
+        herf="https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE253013"
+        target="_blank"
+        >https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE253013.</a
+      >
+      This dataset contains 256,379 cells with 32,805 genes. The original
+      annotation of this dataset contains 9 types, including Airway Epithelium,
+      B cells, CD45+, Endothelial, Epithelial, Fibroblasts, Granulocytes,
+      Myeloid, and T cells.
     </p>
-
 
     <!-- step 1-->
     <p class="body">
@@ -133,19 +140,18 @@
       <b class="image-title">Figure 3-1</b>
     </div>
 
-
-
     <p class="body">
       <b>Step 2.</b>The unannotated Global Plot &#9312; consists ten groups
       (Shown as Figure 3-1). We selected Human - PanglaoDB Augmented 2021 as the
       gene set database and Enrichr as the annotation recommendation method to
       annotate each group. During the annotation process, we applied the same
-      logfoldchange thresholds to filter marker genes for each group: logfoldchanges > 2.
-      Based on the recommendations from the Annotation module, four cell types were accurately identified: B cells, Mast
-      cells, Plasmacytoid Dendritic cells, Endothelial cells, and a subset of Epithelial cells. Clusters c_0, c_1, c_2,
-      and c_3 exhibit distinct subtypes. (Figure 3-2) Therefore, we selected these four clusters along with all epithelial
-      cell types
-      for reanalysis.
+      logfoldchange thresholds to filter marker genes for each group:
+      logfoldchanges > 1. Based on the recommendations from the Annotation
+      module, four cell types were accurately identified: B cells, Mast cells,
+      Plasmacytoid Dendritic cells, Endothelial cells, and a subset of
+      Epithelial cells. Clusters c_0, c_1, c_2, and c_3 exhibit distinct
+      subtypes. (Figure 3-2) Therefore, we selected these four clusters along
+      with all epithelial cell types for reanalysis.
     </p>
 
     <!--Figure 3-2-->
@@ -155,19 +161,20 @@
     </div>
 
     <p class="body">
-      <b>Step 3.</b>First, we select cluster c_0 in Global Plot &#9312; (Figure 3-2) to run local pipeline as shown in
-      Table 3-2.
-      resulting in Local Plot &#9313;. In Local Plot
-      &#9313;, there are three groups, and we again used Human - PanglaoDB
-      Augmented 2021 as the gene set database and Enrichr as the annotation
-      recommendation method to annotate each group. We applied different
-      logfoldchange thresholds to filter marker genes for each group: c_0: 1,
-      c_1: 3, c_2: 2. The cell type recommendations are shown as Figure 3-3.
-      The final cell type was selected as the most significant recommended type
-      or the parent type of the top recommended types. Therefore, we can
-      annotate it as Figure 3-4. As shown in Figure 3-5, we utilized 2d-density plots to exhibit the marker genes for T
-      cells and NK cells The higher expression of <em>CD3</em> in T cells and <em>FCGR3A</em> in NK cells, along with the lower
-      expression of <em>CD3</em> in NK cells, supported these annotations.
+      <b>Step 3.</b>First, we select cluster c_0 in Global Plot &#9312; (Figure
+      3-2) to run local pipeline as shown in Table 3-2. resulting in Local Plot
+      &#9313;. In Local Plot &#9313;, there are three groups, and we again used
+      Human - PanglaoDB Augmented 2021 as the gene set database and Enrichr as
+      the annotation recommendation method to annotate each group. We applied
+      different logfoldchange thresholds to filter marker genes for each group:
+      c_0: 1, c_1: 3, c_2: 2. The cell type recommendations are shown as Figure
+      3-3. The final cell type was selected as the most significant recommended
+      type or the parent type of the top recommended types. Therefore, we can
+      annotate it as Figure 3-4. As shown in Figure 3-5, we utilized 2d-density
+      plots to exhibit the marker genes for T cells and NK cells The higher
+      expression of <em>CD3</em> in T cells and <em>FCGR3A</em> in NK cells,
+      along with the lower expression of <em>CD3</em> in NK cells, supported
+      these annotations.
     </p>
 
     <!--Local Plot 2 Parameter-->
@@ -276,16 +283,19 @@
     </div>
 
     <p class="body">
-      <b>Step 4.</b>We then performed a further analysis for sub-cluster c_2 in Local Plot &#9313; to create new Local
-      Plot, &#9314; (The pipeline parameter is in Table 3-3). This is because we believed it contained multiple
-      subtypes according to its EnrichR result (Figure 3-3). We identified three sub-clusters. We used Human - PanglaoDB
-      Augmented 2021 as the gene set database and Enrichr as the annotation
-      recommendation method to annotate each group. We applied different
-      logfoldchange thresholds to filter marker genes for each group: c_0: 2,
-      c_1: 2, c_2: 4. The cell type recommendations are shown as Figure 3-6.
-      In Local Plot &#9314;. These sub-clusers were annotated as T
-      cells, B cells, and B cells (Figure 3-7). The expression of markers (<em>CD3</em> for T cells;
-      <em>CD19</em>, <em>CD79A</em>, <em>CD79B</em> for B cells) in Figure 3-8 validated the reliability of our annotations
+      <b>Step 4.</b>We then performed a further analysis for sub-cluster c_2 in
+      Local Plot &#9313; to create new Local Plot, &#9314; (The pipeline
+      parameter is in Table 3-3). This is because we believed it contained
+      multiple subtypes according to its EnrichR result (Figure 3-3). We
+      identified three sub-clusters. We used Human - PanglaoDB Augmented 2021 as
+      the gene set database and Enrichr as the annotation recommendation method
+      to annotate each group. We applied different logfoldchange thresholds to
+      filter marker genes for each group: c_0: 2, c_1: 2, c_2: 4. The cell type
+      recommendations are shown as Figure 3-6. In Local Plot &#9314;. These
+      sub-clusers were annotated as T cells, B cells, and B cells (Figure 3-7).
+      The expression of markers (<em>CD3</em> for T cells; <em>CD19</em>,
+      <em>CD79A</em>, <em>CD79B</em> for B cells) in Figure 3-8 validated the
+      reliability of our annotations
     </p>
 
     <!--Local Plot 3 Parameter-->
@@ -382,15 +392,15 @@
     </div>
 
     <p class="body">
-      <b>Step 5.</b> Returning to the Global Plot &#9312;, we next select c_1 to generate a new Local Plot &#9315; (the
-      pipeline
-      parameters are listed in Table 3–4).
-      In Local Plot &#9315;, we identified two sub-clusters. We used Human - PanglaoDB
-      Augmented 2021 as the gene set database and Enrichr as the annotation
-      recommendation method to annotate each group. We applied
+      <b>Step 5.</b> Returning to the Global Plot &#9312;, we next select c_1 to
+      generate a new Local Plot &#9315; (the pipeline parameters are listed in
+      Table 3–4). In Local Plot &#9315;, we identified two sub-clusters. We used
+      Human - PanglaoDB Augmented 2021 as the gene set database and Enrichr as
+      the annotation recommendation method to annotate each group. We applied
       logfoldchange thresholds to filter marker genes for each group: c_0: 2,
-      c_1: 2. The cell type recommendations are shown as Figure 3-9. Therefore, these sub-clusers were annotated as
-      Dendritic Cells and Monocytes (Figure 3-10).
+      c_1: 2. The cell type recommendations are shown as Figure 3-9. Therefore,
+      these sub-clusers were annotated as Dendritic Cells and Monocytes (Figure
+      3-10).
     </p>
     <!--Local Plot 4 Parameter-->
     <div class="table-container">
@@ -491,18 +501,24 @@
       <b class="image-title">Figure 3-10</b>
     </div>
 
-
     <p class="body">
-      <b>Step 6.</b> Returning to the Global Plot &#9312;, according to the high expression of <em>EPCAM</em>, we select all
-      epithelial cells (Figure 3-11) to create Local Plot &#9316; (the pipeline parameters are listed in Table 3–5).
-      The Global Plot &#9316; was identified as nine sub-clussters. We used Human - PanglaoDB
-      Augmented 2021 as the gene set database and Enrichr as the annotation
-      recommendation method. We applied logfoldchange thresholds to filter marker genes: c_5: 4,
-      c_7: 4, c_8: 4. The cell type recommendations are shown as Figure 3-12. Therefore, c_5, c_7, c_8 were annotated as
-      Goblet cells, Ciliated Cells, and Ciliated Cells (Figure 3-13). The remaining cells exhibited high expression of
-      <em>SFTPB</em> (Figure 3-13), allowing them
-      to be broadly classified as alveolar cells. The expression of markers (<em>KRT7, MUC5AC, MUC5B</em> for
-      Goblet cells; <em>FOXJ1, CCDC17, TUBB4B</em> for Ciliated cells and <em>SFTPB</em> for Alveolar cells) in Figure 3-14 validated the
+      <b>Step 6.</b> Returning to the Global Plot &#9312;, according to the high
+      expression of <em>EPCAM</em>, we select all epithelial cells (Figure 3-11)
+      to create Local Plot &#9316; (the pipeline parameters are listed in Table
+      3–5). The Global Plot &#9316; was identified as nine sub-clussters. We
+      used Human - Azimuth Cell Types 2021, Human - CellMarker 2024, and Human -
+      CellMarker 2024 as the gene set databases for subclusters c_5, c_7, and
+      c_8, respectively, and applied Enrichr as the annotation recommendation
+      method. We applied logfoldchange thresholds to filter marker genes: c_5:
+      4, c_7: 4, c_8: 4. The cell type recommendations are shown as Figure 3-12.
+      Therefore, c_5, c_7, c_8 were annotated as Goblet cells, Ciliated Cells,
+      and Ciliated Cells (Figure 3-13). The remaining cells exhibited high
+      expression of <em>SFTPB</em> (Figure 3-13), allowing them to be broadly
+      classified as alveolar cells. The expression of markers (<em
+        >KRT7, MUC5AC, MUC5B</em
+      >
+      for Goblet cells; <em>FOXJ1, CCDC17, TUBB4B</em> for Ciliated cells and
+      <em>SFTPB</em> for Alveolar cells) in Figure 3-14 validated the
       reliability of our annotations.
     </p>
 
@@ -641,24 +657,25 @@
       <b class="image-title">Figure 3-14</b>
     </div>
 
-
     <p class="body">
-      <b>Step 7.</b> Then, we selecte the SFTPB+ cells in Local Plot &#9316; for further analysis. We create Local Plot
-      &#9317; with the pipeline parameter in Table 3-6. The Local Plot &#9317; was identified as nine sub-clussters.
-      We used Human - Azimuth Cell Types 2021 (for c_5), CellMarker2024 (for c_7), CellMarker2024(for c_8) as the gene set
-      databases and Enrichr as the annotation
-      recommendation method. We applied logfoldchange thresholds to filter marker genes: c_5: 4,
-      c_7: 4, c_8: 4. The cell type recommendations are shown as Figure 3-15, 3-16. The expression of markers (
-      <em>SFTPC, SFTPB, SFTPA1, SFTPD</em> for Pulmonary Alveolar Type II Cells and <em>AGER, CAV1, PDPN, CLIC5</em>
-      for Pulmonary Alveolar Type I Cells) in Figure 3-15, 3-16 validated the
-      reliability of our annotations. Besides, the expression patterns of clusters c_1 and c_6 have not been reported in
-      previous studies. Cluster c_1 exhibited dual positive <em>SMIM22+</em> and <em>SFTPB+</em> (Figure 3-17), while cluster c_6 displayed
-      club cell
-      related genes <em>SCGB3A1-</em> and <em>SCGB3A2+</em> (Figure 3-17). Therefore, we empirically named these two epithelial cell
-      subtypes based on
-      their marker genes. The annotation results are shown in Figure 3-18.
+      <b>Step 7.</b> Then, we selecte the SFTPB+ cells in Local Plot &#9316; for
+      further analysis. We create Local Plot &#9317; with the pipeline parameter
+      in Table 3-6. The Local Plot &#9317; was identified as nine sub-clussters.
+      We used Human - PanglaoDB Augmented 2021 as the gene set database and
+      Enrichr as the annotation recommendation method to annotate c_0, c_3, c_5.
+      We applied the same logfoldchange thresholds to filter marker genes: 1.
+      The cell type recommendations are shown as Figure 3-15, 3-16. The
+      expression of markers ( <em>SFTPC, SFTPB, SFTPA1, SFTPD</em> for Pulmonary
+      Alveolar Type II Cells and <em>AGER, CAV1, PDPN, CLIC5</em> for Pulmonary
+      Alveolar Type I Cells) in Figure 3-15, 3-16 validated the reliability of
+      our annotations. Besides, the expression patterns of clusters c_1 and c_6
+      have not been reported in previous studies. Cluster c_1 exhibited dual
+      positive <em>SMIM22+</em> and <em>SFTPB+</em> (Figure 3-17), while cluster
+      c_6 displayed club cell related genes <em>SCGB3A1-</em> and
+      <em>SCGB3A2+</em> (Figure 3-17). Therefore, we empirically named these two
+      epithelial cell subtypes based on their marker genes. The annotation
+      results are shown in Figure 3-18.
     </p>
-
 
     <!--Local Plot 6 Parameter-->
     <div class="table-container">
@@ -771,7 +788,6 @@
       </figcaption>
     </div>
 
-
     <!--Figure 3-15-->
     <div class="image-container">
       <img class="image" src="tutorials/img/repo-Figure3-15.jpg" />
@@ -796,22 +812,20 @@
       <b class="image-title">Figure 3-18</b>
     </div>
 
-
     <p class="body">
-      <b>Step 8.</b> We select the unannotated cells in Local Plot &#9317; for further analysis. We create Local Plot
-      &#9318; with the pipeline parameter in Table 3-7. The Local Plot &#9318; was identified as six sub-clussters. We
-      used Human - PanglaoDB
-      Augmented 2021 as the gene set database and Enrichr as the annotation
-      recommendation method. We applied logfoldchange threshold to filter marker genes: c_5: 1. The recommendation result
-      are shown as Figure 3-19. Therefore, c_5 was annotated as basal cells.
-
-      Accorrding to the high expression of BASCs markers (Figure 3-20), c_0 and c_2 can be annotated as BASCs.
-
-      Similarly, c_1 can be annotated as <em>GNB2L1+</em> AT II cells. c_3 can be annotated as <em>HLA-DRB5+SFTPB+</em> ECs amd c_4 can be
-      annotated as <em>RACK+SFTPB-ECs</em> (unreported epithelial cell types).
-      
-      The annotation results are shown as Figure 3-21.
-
+      <b>Step 8.</b> We select the unannotated cells in Local Plot &#9317; for
+      further analysis. We create Local Plot &#9318; with the pipeline parameter
+      in Table 3-7. The Local Plot &#9318; was identified as six sub-clussters.
+      We used Human - CellMarker 2024 as the gene set database and
+      Enrichr as the annotation recommendation method. We applied logfoldchange
+      threshold to filter marker genes: c_5: 1. The recommendation result are
+      shown as Figure 3-19. Therefore, c_5 was annotated as basal cells.
+      Accorrding to the high expression of BASCs markers (Figure 3-20), c_0 and
+      c_2 can be annotated as BASCs. Similarly, c_1 can be annotated as
+      <em>GNB2L1+</em> AT II cells. c_3 can be annotated as
+      <em>HLA-DRB5+SFTPB+</em> ECs amd c_4 can be annotated as
+      <em>RACK+SFTPB-ECs</em> (unreported epithelial cell types). The annotation
+      results are shown as Figure 3-21.
     </p>
 
     <!--Local Plot 7 Parameter-->
@@ -944,16 +958,15 @@
     </div>
 
     <p class="body">
-      <b>Step 9.</b> Returning to the Global Plot &#9312;, we next select c_3 to generate a new Local Plot &#9319; (the
-      pipeline
-      parameters are listed in Table 3–8).
-      In Local Plot &#9319;, we identified three sub-clusters. We used Human - PanglaoDB
-      Augmented 2021 as the gene set database and Enrichr as the annotation
-      recommendation method to annotate each group. We applied
+      <b>Step 9.</b> Returning to the Global Plot &#9312;, we next select c_3 to
+      generate a new Local Plot &#9319; (the pipeline parameters are listed in
+      Table 3–8). In Local Plot &#9319;, we identified three sub-clusters. We
+      used Human - PanglaoDB Augmented 2021 as the gene set database and Enrichr
+      as the annotation recommendation method to annotate each group. We applied
       logfoldchange thresholds to filter marker genes for each group: c_0: 5,
-      c_1: 3, c_2: 5. The cell type recommendations are shown as Figure 3-22. Therefore, these sub-clusers were annotated
-      as
-      Endothelial cells, Mesenchymal cells and Leukocytes (Figure 3-23).
+      c_1: 3, c_2: 5. The cell type recommendations are shown as Figure 3-22.
+      Therefore, these sub-clusers were annotated as Endothelial cells,
+      Mesenchymal cells and Leukocytes (Figure 3-23).
     </p>
 
     <!--Local Plot 8 Parameter-->
@@ -1056,34 +1069,25 @@
       <b class="image-title">Figure 3-23</b>
     </div>
 
-
     <p class="body">
-      <b>Step 10.</b> After all annotation operations, the hierarchical tree is shown as Figure 3-24.
-
-      we first merge the Local &#9314; to the Local Plot &#9313;, and this merge option includes
-      "Merge
-      with Labels(Annotations)", "Merge Labels(Annotations) with the same name"
-      , and "Merge small Labels(Annotations)".
-
-
-      Next, we merge the Local Plot &#9318; to the Local Plot &#9317; ,and then merge the Local Plot &#9317; to the Local
-      Plot &#9316;. These merge options includes "Merge
-      with Labels(Annotations)", "Merge Labels(Annotations) with the same name"
-      , and "Merge small Labels(Annotations)".
-
-      Thrid, we merge the Local Plot &#9313;, the Local Plot &#9315; and then merge the Local Plot &#9316; to the Global Plot &#9312;. This merge option includes "Merge
-      with Labels(Annotations)", "Merge Labels(Annotations) with the same name"
-      , and "Merge small Labels(Annotations)".
-
-      At last, we merge the Local Plot &#9319; to the Global Plot &#9312;.
-      This merge option includes "Merge with Projection" , "Merge
-      with Labels(Annotations)", "Merge Labels(Annotations) with the same name"
-      , and "Merge small Labels(Annotations)".
-
-      The merged result are shown as
-      Figure 3-25.
+      <b>Step 10.</b> After all annotation operations, the hierarchical tree is
+      shown as Figure 3-24. we first merge the Local &#9314; to the Local Plot
+      &#9313;, and this merge option includes "Merge with Labels(Annotations)",
+      "Merge Labels(Annotations) with the same name" , and "Merge small
+      Labels(Annotations)". Next, we merge the Local Plot &#9318; to the Local
+      Plot &#9317; ,and then merge the Local Plot &#9317; to the Local Plot
+      &#9316;. These merge options includes "Merge with Labels(Annotations)",
+      "Merge Labels(Annotations) with the same name" , and "Merge small
+      Labels(Annotations)". Thrid, we merge the Local Plot &#9313;, the Local
+      Plot &#9315; and then merge the Local Plot &#9316; to the Global Plot
+      &#9312;. This merge option includes "Merge with Labels(Annotations)",
+      "Merge Labels(Annotations) with the same name" , and "Merge small
+      Labels(Annotations)". At last, we merge the Local Plot &#9319; to the
+      Global Plot &#9312;. This merge option includes "Merge with Projection" ,
+      "Merge with Labels(Annotations)", "Merge Labels(Annotations) with the same
+      name" , and "Merge small Labels(Annotations)". The merged result are shown
+      as Figure 3-25.
     </p>
-
 
     <!--Figure 3-24-->
     <div class="image-container">
@@ -1096,8 +1100,6 @@
       <img class="image" src="tutorials/img/repo-Figure3-24.jpg" />
       <b class="image-title">Figure 3-25</b>
     </div>
-
-
   </div>
 </template>
 
