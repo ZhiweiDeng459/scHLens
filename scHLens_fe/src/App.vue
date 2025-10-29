@@ -27,9 +27,9 @@
                 <el-menu-item index="/tutorial">
                     <span class="menu-item-text" slot="title">Tutorial</span>
                 </el-menu-item>
-                <el-menu-item index="/contact">
+                <!-- <el-menu-item index="/contact">
                     <span class="menu-item-text" slot="title">Contact us</span>
-                </el-menu-item>
+                </el-menu-item> -->
             </el-menu>
         </div>
         <keep-alive>
