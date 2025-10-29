@@ -162,6 +162,11 @@ export default {
          */
         handleAnnoRecomShow(index){//推荐框弹出，弹出时将最近的一次基因集选择记录传入
             this.$refs['AnnoRecom'][index].show(this.curGeneSet);//同时会将所有推荐窗口中，最新选择的基因库传递给弹出的推荐窗口
+            //强制重新绘图plot
+            setTimeout(()=>{  
+                this.$refs['AnnoRecom'][index].reDraw()
+            }, 100); // 1000毫秒等于1秒
+            
         },
         handleAnnotationFinish(cluster_id){ //用户手动完成了一次注释，提交修改后的注释到groups，并向后端更新
             this.commitLocalGroupName(cluster_id);
