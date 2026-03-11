@@ -529,7 +529,9 @@ def readData(datasetConfig,JobId):
     if datasetConfig['type'] == '10x-mtx': #10x-mtx
         adata = sc.read_10x_mtx(path, var_names='gene_symbols')
     elif datasetConfig['type'] == 'csv': #csv
-        adata = sc.read(path + '/' + 'expression.csv')
+        csv_files = [f for f in os.listdir(path) if f.endswith('.csv')]
+        first_csv = csv_files[0]
+        adata = sc.read(os.path.join(path, first_csv))
     elif datasetConfig['type'] == 'h5ad': #h5ad
         filename = None
         for fn in os.listdir(path):
